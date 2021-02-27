@@ -1,0 +1,11 @@
+{
+  "schemaPath": "schema.gql",
+  "extensions": {
+    "endpoints": {
+      "dev": {
+        "url": "https://my-choice.loca.lt/graphql",
+        "introspect": true
+      }
+    }
+  }
+}

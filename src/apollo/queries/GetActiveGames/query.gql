@@ -1,0 +1,9 @@
+query GetActiveGames {
+    getActiveGames{
+        _id,
+        name,
+        players {
+            _id
+        }
+    }
+}

@@ -1,0 +1,5 @@
+mutation CreateGame ($name: String!, $observerMode: Boolean) {
+    createGame(createGameInput: {name: $name, observerMode: $observerMode}) {
+        _id,
+    }
+}

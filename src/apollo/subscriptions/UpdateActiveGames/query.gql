@@ -1,0 +1,9 @@
+subscription UpdateActiveGames {
+    updateActiveGames {
+        _id,
+        name,
+        players {
+            _id
+        }
+    }
+}

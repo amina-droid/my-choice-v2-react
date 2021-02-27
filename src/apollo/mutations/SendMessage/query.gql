@@ -1,0 +1,3 @@
+mutation SendMessage ($message: String!, $topic: String!) {
+    sendMessage(message: $message, topic: $topic)
+}

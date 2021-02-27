@@ -1,0 +1,11 @@
+query GetMessages($topic: String!) {
+    messages(topic: $topic) {
+        _id
+        author {
+            nickname
+            avatar
+        }
+        createdAt
+        message
+    }
+}

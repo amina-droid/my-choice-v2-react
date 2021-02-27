@@ -1,0 +1,11 @@
+subscription OnMessage ($topic: String!) {
+    onMessage(topic: $topic) {
+        _id
+        author {
+            nickname
+            avatar
+        }
+        createdAt
+        message
+    }
+}

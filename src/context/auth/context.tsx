@@ -1,0 +1,69 @@
+import React, { useEffect, useState } from 'react';
+import jwtDecode from 'jwt-decode';
+import { useLazyQuery } from '@apollo/client';
+import { GET_USER, GetUser, GetUserVariables } from '../../apollo/queries/GetUser';
+
+interface State {
+  token: string | null;
+  user?: GetUser['user'] | null;
+  userLoad?: boolean;
+  login: Login;
+  logout: () => void;
+}
+
+export interface Login {
+  (token: string): void;
+}
+
+export const AuthContext = React.createContext<State>({
+  token: null,
+  user: null,
+
+  login: () => {
+    /* do nothing. */
+  },
+  logout: () => {
+    /* do nothing. */
+  },
+});
+
+const INITIAL_TOKEN = localStorage.getItem('token');
+const INITIAL_USER = INITIAL_TOKEN ? (jwtDecode(INITIAL_TOKEN) as any) : null;
+export const AuthContextProvider: React.FC = ({ children }) => {
+  const [token, setToken] = useState<string | null>(INITIAL_TOKEN);
+
+  const [getUser, { data, loading }] = useLazyQuery<GetUser, GetUserVariables>(GET_USER);
+
+  useEffect(() => {
+    if (token && !data?.user) {
+      const { _id } = jwtDecode(token) as any;
+      getUser({ variables: { userId: _id } });
+    }
+  }, [token, data, getUser]);
+
+  const login: Login = (newToken: string) => {
+    setToken(newToken);
+    localStorage.setItem('token', newToken);
+    window.location.reload();
+  };
+
+  const logout = () => {
+    setToken(null);
+    localStorage.removeItem('token');
+    window.location.reload();
+  };
+
+  return (
+    <AuthContext.Provider
+      value={{
+        logout,
+        login,
+        token,
+        user: data?.user,
+        userLoad: loading,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
+};

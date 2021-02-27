@@ -1,0 +1,14 @@
+query GetUser($userId: ObjectId!) {
+    user(_id: $userId) {
+        _id
+        role
+        name {
+            familyName
+            givenName
+        }
+        nickname
+        photos {
+            url
+        }
+    }
+}

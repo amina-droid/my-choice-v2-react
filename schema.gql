@@ -1,0 +1,198 @@
+# This file was generated based on ".graphqlconfig". Do not edit manually.
+
+schema {
+    query: Query
+    mutation: Mutation
+    subscription: Subscription
+}
+
+interface Card {
+    _id: ObjectId!
+    description: String!
+    typeName: String!
+}
+
+type AuthRedirect {
+    url: String!
+}
+
+type AuthResponse {
+    token: String!
+}
+
+type Author {
+    _id: ObjectId!
+    avatar: String
+    nickname: String!
+}
+
+type ChoiceCard implements Card {
+    _id: ObjectId!
+    choices: [Option!]!
+    description: String!
+    typeName: String!
+}
+
+type Game {
+    _id: ObjectId!
+    creator: User!
+    name: String!
+    players: [Player!]!
+}
+
+type GameSession {
+    _id: ObjectId!
+    name: String!
+    observers: Int!
+    players: [Player!]!
+    status: GameStatus!
+}
+
+type Incident implements Card {
+    _id: ObjectId!
+    description: String!
+    typeName: String!
+}
+
+type Message {
+    _id: ObjectId!
+    author: Author!
+    createdAt: DateTime!
+    message: String!
+}
+
+type Mutation {
+    authVK(code: String!): AuthResponse!
+    createCard(createFieldInput: CreateCardInput!): Card!
+    createGame(createGameInput: CreateGameInput!): GameSession!
+    joinGame(gameId: ObjectId!): Boolean!
+    leaveGame(gameId: ObjectId!): Boolean!
+    sendMessage(message: String!, topic: String!): Boolean!
+    updateNickname(nickname: String!): User!
+}
+
+type Option {
+    _id: ObjectId!
+    description: String!
+}
+
+type Player {
+    _id: ObjectId!
+    avatar: String
+    hold: Int
+    nickname: String!
+    position: PlayerPosition
+    resources: Resources
+    status: PlayerStatus!
+}
+
+type Query {
+    card(_id: ObjectId!): Card!
+    cards: [Card!]!
+    game(_id: ObjectId!): Game!
+    games: [Game!]!
+    getActiveGames: [GameSession!]!
+    getVKOAuthRedirect: AuthRedirect!
+    messages(topic: String!): [Message!]!
+    user(_id: ObjectId!): User
+}
+
+type Resources {
+    dark: Int
+    lives: Int
+    money: Int
+    white: Int
+}
+
+type Result {
+    gameover: Boolean
+    hold: Int
+    move: FieldType
+    resources: Resources
+}
+
+type Subscription {
+    inGame: GameSession!
+    onMessage(topic: String!): Message!
+    updateActiveGames: [GameSession!]!
+}
+
+type User {
+    _id: ObjectId!
+    email: String
+    name: UserName!
+    nickname: String!
+    photos: [UserPhoto!]!
+    role: UserRole!
+}
+
+type UserName {
+    familyName: String!
+    givenName: String!
+}
+
+type UserPhoto {
+    url: String!
+}
+
+type VKProvider {
+    id: String!
+    link: String!
+    token: String!
+}
+
+enum FieldType {
+    Activity
+    DreamTest
+    Incident
+    Offer
+    Opportunity
+    Problem
+    Reaction
+    Situation
+    Start
+}
+
+enum GameStatus {
+    Awaiting
+    Finished
+    InProgress
+}
+
+enum PlayerPosition {
+    Awaiting
+    Inner
+    Outer
+    Start
+}
+
+enum PlayerStatus {
+    Awaiting
+    Gameover
+    Hold
+    InGame
+    Winner
+}
+
+enum UserRole {
+    Admin
+    Moderator
+    User
+}
+
+input CreateCardInput {
+    description: String!
+    type: FieldType!
+}
+
+input CreateGameInput {
+    name: String!
+    observerMode: Boolean = false
+}
+
+
+"Mongo objectId scalar type"
+scalar ObjectId
+
+"A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format."
+scalar DateTime

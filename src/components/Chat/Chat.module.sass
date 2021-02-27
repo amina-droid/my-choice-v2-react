@@ -1,0 +1,60 @@
+.comments
+    &List
+        height: 400px
+
+
+.openBtn
+    width: 70px
+    height: 70px
+    position: absolute
+    bottom: 20px
+    right: 20px
+    font-size: 35px
+    display: flex
+    align-items: center
+    justify-content: center
+    border: none
+
+.tabsContainer
+    position: absolute
+    bottom: 20px
+    right: 20px
+
+    .closeBtn
+        position: absolute
+        top: 0
+        right: 0
+        border: none
+
+    .tabs
+
+        >div:first-child
+            margin-bottom: 0
+        .chatContainer
+            width: 360px
+            height: 520px
+            padding: 15px
+            padding-bottom: 0
+
+            background-color: white
+
+            display: flex
+            flex-direction: column
+            justify-content: space-between
+            > div:not(:last-child)
+                width: 100%
+
+
+.editorContainer
+    display: flex
+    align-items: center
+    justify-content: space-between
+    .textarea
+        width: 100%
+        flex-grow: 10
+        margin-right: 5px
+        margin-bottom: 0
+
+    .sendBtn
+        flex-grow: 1
+        margin-bottom: 0

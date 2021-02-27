@@ -1,0 +1,79 @@
+{
+  "name": "my-choice-v2-react",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "lint:fix": "npx eslint --fix",
+    "typegen:json": "npx apollo schema:download --endpoint=https://my-choice.loca.lt/graphql schema.json",
+    "typegen": "yarn typegen:json & npx apollo client:codegen types --localSchemaFile=schema.gql --target=typescript --includes=src/**/*.gql "
+  },
+  "dependencies": {
+    "@ant-design/icons": "^4.2.2",
+    "@apollo/client": "^3.2.5",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
+    "@types/jest": "^26.0.15",
+    "@types/node": "^12.0.0",
+    "@types/react": "^16.9.53",
+    "@types/react-custom-scroll": "^4.2.0",
+    "@types/react-dom": "^16.9.8",
+    "@types/react-router-dom": "^5.1.6",
+    "antd": "^4.8.0",
+    "apollo-link-ws": "^1.0.20",
+    "classnames": "^2.2.6",
+    "graphql": "^15.4.0",
+    "graphql.macro": "^1.4.2",
+    "jwt-decode": "^3.1.1",
+    "moment": "^2.29.1",
+    "node-sass": "4.14.1",
+    "react": "^17.0.1",
+    "react-custom-scroll": "^4.2.1",
+    "react-dom": "^17.0.1",
+    "react-player": "^2.6.2",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "4.0.0",
+    "subscriptions-transport-ws": "^0.9.18",
+    "typescript": "4.0.3",
+    "web-vitals": "^0.2.4"
+  },
+  "devDependencies": {
+    "@types/classnames": "^2.2.10",
+    "@types/jwt-decode": "^2.2.1",
+    "@typescript-eslint/eslint-plugin": "^3.6.1",
+    "@typescript-eslint/parser": "^3.6.1",
+    "eslint": "^7.4.0",
+    "eslint-config-airbnb": "^18.2.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-import-resolver-typescript": "^2.0.0",
+    "eslint-plugin-graphql": "^4.0.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.20.3",
+    "eslint-plugin-react-hooks": "^4.0.8",
+    "eslint-plugin-security": "^1.4.0"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

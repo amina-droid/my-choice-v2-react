@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="632a05cc-275b-496b-89d0-013380cb937f" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.eslintignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.eslintrc.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.graphqlconfig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.prettierrc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/favicon.ico" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/logo192.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/logo512.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/manifest.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/robots.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/schema.gql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/schema.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/apollo/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/apollo/mutations/AuthVK/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/apollo/mutations/AuthVK/query.gql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/apollo/mutations/AuthVK/types/AuthVK.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/apollo/mutations/CreateGame/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/apollo/mutations/CreateGame/query.gql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/apollo/mutations/SendMessage/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/apollo/mutations/SendMessage/query.gql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/apollo/mutations/UpdateNickname/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/apollo/mutations/UpdateNickname/query.gql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/apollo/mutations/UpdateNickname/types/UpdateNickname.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/apollo/mutations/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/apollo/queries/GetActiveGames/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/apollo/queries/GetActiveGames/query.gql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/apollo/queries/GetMessages/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/apollo/queries/GetMessages/query.gql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/apollo/queries/GetUser/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/apollo/queries/GetUser/query.gql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/apollo/queries/GetUser/types/GetUser.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/apollo/queries/GetVKRedirectUrl/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/apollo/queries/GetVKRedirectUrl/query.gql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/apollo/queries/GetVKRedirectUrl/types/GetVKOAuthRedirect.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/apollo/queries/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/apollo/subscriptions/OnMessage/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/apollo/subscriptions/OnMessage/query.gql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/apollo/subscriptions/UpdateActiveGames/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/apollo/subscriptions/UpdateActiveGames/query.gql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/apollo/subscriptions/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Chat/Chat.module.sass" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Chat/Chat.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Chat/CommentList.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Chat/Editor.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Chat/Topic.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/context/auth/context.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/context/auth/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/index.sass" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/index.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/Lobby/Lobby.module.sass" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/Lobby/Lobby.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/Login/Login.module.sass" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/Login/Login.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/Main/Main.module.sass" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/Main/Main.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/Statistic/Statistic.module.sass" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/Statistic/Statistic.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/react-app-env.d.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/reportWebVitals.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/shared/Card/Card.module.sass" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/shared/Card/Card.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/types/globalTypes.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/types/index.ts" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1oTfynZOFwpowSnZZrB5tcv2UgP" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/components/Chat" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="prettierjs.PrettierConfiguration.Package" value="C:\Users\MSI1\AppData\Roaming\npm\node_modules\prettier" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="ts.external.directory.path" value="D:\Code\amina-droid\my-choice-v2-react\node_modules\typescript\lib" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Code\amina-droid\my-choice-v2-react\src\components\Chat" />
+      <recent name="D:\Code\amina-droid\my-choice-v2-react\src\apollo\mutations\UpdateNickname" />
+      <recent name="D:\Code\amina-droid\my-choice-v2-react\src\apollo\queries\GetUser" />
+      <recent name="D:\Code\amina-droid\my-choice-v2-react\src" />
+      <recent name="D:\Code\amina-droid\my-choice-v2-react" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Code\amina-droid\my-choice-v2-react\src\components" />
+      <recent name="D:\Code\amina-droid\my-choice-v2-react\src\shared" />
+    </key>
+  </component>
+  <component name="RunManager" selected="npm.typegen">
+    <configuration name="typegen" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="typegen" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="typegen:json" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="typegen:json" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.typegen" />
+        <item itemvalue="npm.typegen:json" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="632a05cc-275b-496b-89d0-013380cb937f" name="Default Changelist" comment="" />
+      <created>1613315801378</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1613315801378</updated>
+      <workItem from="1613315802933" duration="2150000" />
+      <workItem from="1613317974042" duration="276000" />
+      <workItem from="1613318258298" duration="12249000" />
+      <workItem from="1613333349344" duration="7722000" />
+      <workItem from="1613415082884" duration="5354000" />
+      <workItem from="1613911375634" duration="8153000" />
+      <workItem from="1614422730530" duration="22205000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>

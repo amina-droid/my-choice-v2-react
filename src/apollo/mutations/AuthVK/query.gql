@@ -1,0 +1,5 @@
+mutation AuthVK($code: String!) {
+    authVK(code: $code) {
+        token
+    }
+}

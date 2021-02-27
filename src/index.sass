@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap')
+\:root
+  --section-padding: 80px
+
+  @media all and (max-width: 900px)
+    --section-padding: 40px
+
+  @media all and (max-width: 900px)
+    --section-padding: 20px
+body
+  margin: 0
+  -webkit-font-smoothing: antialiased
+  -moz-osx-font-smoothing: grayscale
+
+*
+  font-family: 'Roboto', sans-serif
+
+  outline: none
+  box-sizing: border-box
+
+button
+  border: none
+  cursor: pointer
+  background: none
+
+ol
+  counter-reset: section
+  list-style-type: none
+  & > li::before
+    counter-increment: section
+    content: counters(section,".")
+    margin-right: 5px
+
+li
+  margin-left: -20px
+
