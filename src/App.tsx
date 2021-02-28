@@ -1,5 +1,5 @@
 import React, { FC, useContext } from 'react';
-import { BrowserRouter, Route, Redirect, RouteProps } from 'react-router-dom';
+import { BrowserRouter, Route, Redirect, RouteProps, Switch } from 'react-router-dom';
 import { ApolloProvider } from '@apollo/client';
 import 'antd/dist/antd.css';
 import './App.css';
@@ -32,12 +32,11 @@ function App() {
       <AuthContextProvider>
         <BrowserRouter>
           <div className="App">
-            <Route exact path="/" component={Login} />
-            <ProtectedRoute exact path="/main" component={Main} />
-            {/* <ProtectedRoute exact path="/lobby" component={Lobby} /> */}
-            {/* <ProtectedRoute exact path="/statistic" component={Statistic} /> */}
-            {/* <ProtectedRoute exact path="/game/:id" component={Game} /> */}
-            <Route component={NotFound} />
+            <Switch>
+              <Route exact path="/" component={Login} />
+              <ProtectedRoute exact path="/main" component={Main} />
+              <Route component={NotFound} exact />
+            </Switch>
           </div>
         </BrowserRouter>
       </AuthContextProvider>
