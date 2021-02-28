@@ -9,12 +9,12 @@ export * from './subscriptions';
 
 const GRAPHQL_URL =
   process.env.NODE_ENV === 'production'
-    ? 'http://api.finfest-tyumen.ru/graphql'
+    ? 'http://xn--72-9kcd8arods1i.xn--p1ai/graphql'
     : 'https://my-choice.loca.lt/graphql';
 
 const WS_GRAPHQL_URL =
   process.env.NODE_ENV === 'production'
-    ? 'ws://api.finfest-tyumen.ru/graphql'
+    ? 'ws://xn--72-9kcd8arods1i.xn--p1ai/graphql'
     : 'wss://my-choice.loca.lt/graphql';
 
 const wsLink = new WebSocketLink({
