@@ -9,6 +9,10 @@
     display: flex
 
 .containCard
-    justify-content: space-between
-    height: 250px
-    align-items: stretch
+    & :global
+        .ant-card-body
+            display: flex
+            flex-direction: column
+            justify-content: space-between
+            height: 250px
+            align-items: stretch

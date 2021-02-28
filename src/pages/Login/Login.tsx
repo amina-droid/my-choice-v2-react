@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Button } from 'antd';
 import { useHistory } from 'react-router-dom';
 import { useApolloClient, useMutation } from '@apollo/client';
+import { Button, Card } from 'antd';
 import {
   AUTH_VK,
   AuthVK,
@@ -10,8 +10,6 @@ import {
   GetVKOAuthRedirect,
 } from '../../apollo';
 import { AuthContext } from '../../context/auth';
-
-import Card from '../../shared/Card/Card';
 
 import s from './Login.module.sass';
 
@@ -81,7 +79,7 @@ const Login = () => {
   return (
     <>
       <div className={s.contain}>
-        <Card title='Игра "Мой выбор"'>
+        <Card title='Игра "Мой выбор"' className={s.card}>
           <Button loading={authLoading} onClick={vkSignHandler} type="primary">
             Войти в игру
           </Button>

@@ -1,5 +1,5 @@
-import React, { useContext, useEffect } from 'react';
-import { useMutation, useQuery } from '@apollo/client';
+import React, { useCallback, useContext, useEffect, useMemo } from 'react';
+import { useLazyQuery, useMutation, useQuery } from '@apollo/client';
 import { Comment } from 'antd';
 
 import CommentList from './CommentList';
@@ -23,48 +23,55 @@ type Props = {
 };
 
 export const Topic: React.FC<Props> = ({ topic }) => {
+  const variables = useMemo(() => ({ topic }), [topic]);
   const [sendMessage, { loading }] = useMutation<SendMessage, SendMessageVariables>(SEND_MESSAGE);
-  const { data, loading: initLoading, subscribeToMore } = useQuery<
+  const [getMessages, { data, loading: initLoading, subscribeToMore }] = useLazyQuery<
     GetMessages,
     GetMessagesVariables
   >(GET_MESSAGES, {
-    fetchPolicy: 'network-only',
-    variables: {
-      topic,
-    },
+    variables,
+    nextFetchPolicy: 'cache-only',
   });
 
   useEffect(() => {
-    subscribeToMore<OnMessage, OnMessageVariables>({
+    getMessages();
+  }, []);
+
+  useEffect(() => {
+    if (!subscribeToMore) return () => {};
+    const unsubscribe = subscribeToMore<OnMessage, OnMessageVariables>({
       updateQuery: (previousQueryResult, { subscriptionData }) => {
         if (!subscriptionData?.data?.onMessage) return previousQueryResult;
 
         const newMessage = subscriptionData.data.onMessage;
 
         return {
-          messages: [...(previousQueryResult.messages || []), newMessage],
+          messages: [newMessage, ...(previousQueryResult.messages || [])],
         };
       },
       document: ON_MESSAGE,
-      variables: {
-        topic,
-      },
+      variables,
     });
-  }, [subscribeToMore]);
 
-  const handleSubmit = async (message: string) => {
-    if (!message) return;
+    return () => unsubscribe();
+  }, [subscribeToMore, variables]);
 
-    await sendMessage({
-      variables: {
-        message,
-        topic,
-      },
-    });
-  };
+  const handleSubmit = useCallback(
+    async (message: string) => {
+      if (!message) return;
+
+      await sendMessage({
+        variables: {
+          message,
+          topic,
+        },
+      });
+    },
+    [sendMessage],
+  );
   return (
     <div className={s.chatContainer}>
-      <CommentList comments={data?.messages || []} />
+      <CommentList comments={data?.messages.slice().reverse() || []} />
       <Comment content={<Editor onSubmit={handleSubmit} submitting={loading} />} />
     </div>
   );

@@ -1,11 +1,11 @@
 import React, { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, Card } from 'antd';
 import { useMutation } from '@apollo/client';
+import Chat from '../../components/Chat/Chat';
 
 import { AuthContext } from '../../context/auth';
 import { UPDATE_NICKNAME, UpdateNickname, UpdateNicknameVariables } from '../../apollo';
-import Card from '../../shared/Card/Card';
 
 import s from './Main.module.sass';
 
@@ -61,6 +61,7 @@ const Main = () => {
           </Button>
         </Card>
       )}
+      <Chat />
     </div>
   );
 };

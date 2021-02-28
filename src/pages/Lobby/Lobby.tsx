@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Form, Input, Modal, Typography } from 'antd';
+import { Button, Form, Input, message, Modal, Typography } from 'antd';
 import { CommentOutlined, PlusOutlined } from '@ant-design/icons';
 import { useForm } from 'antd/es/form/Form';
+import { useHistory } from 'react-router-dom';
 
 import { useMutation, useQuery, useSubscription } from '@apollo/client';
 import s from './Lobby.module.sass';
@@ -28,6 +29,7 @@ const Lobby = () => {
   const [form] = useForm();
   const { data, loading, subscribeToMore } = useQuery<GetActiveGames>(GET_ACTIVE_GAMES);
   const [createGame] = useMutation<CreateGame, CreateGameVariables>(CREATE_GAME);
+  const history = useHistory();
 
   useEffect(() => {
     if (!subscribeToMore) return;
@@ -51,11 +53,18 @@ const Lobby = () => {
     setVisible(false);
   };
 
+  const redirectToGame = (id: string) => {
+    history.push(`/game/${id}`);
+  };
+
   const handleCreateGame = async (values: CreateGameValues) => {
-    await createGame({
+    const { data: res } = await createGame({
       variables: { name: values.gameName },
     });
+    if (!res?.createGame._id) return;
     cancelModal();
+    redirectToGame(res.createGame._id);
+    message.success('Игра создана');
   };
 
   return (
@@ -64,6 +73,9 @@ const Lobby = () => {
         Лобби
       </Title>
       <div className={s.containCards}>
+        <Button className={s.cardAdd} type="default" onClick={showModal}>
+          <PlusOutlined />
+        </Button>
         {data?.getActiveGames.map(game => {
           return (
             <Card
@@ -71,12 +83,10 @@ const Lobby = () => {
               key={game._id}
               title={game.name}
               playersCount={game.players.length}
+              onClick={() => redirectToGame(game._id)}
             />
           );
         })}
-        <Button className={s.cardAdd} type="default" onClick={showModal}>
-          <PlusOutlined />
-        </Button>
         <Modal
           visible={visible}
           onCancel={cancelModal}

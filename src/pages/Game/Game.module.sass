@@ -1,0 +1,37 @@
+.gameContainer
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    gap: 30px
+    padding: 50px
+    width: 100%
+    height: 100%
+    position: relative
+
+    .playingField
+        max-width: 1200px
+        width: 100%
+
+        .svg
+            max-height: 100%
+
+    .header
+        width: 100%
+        height: 50px
+        .openTableBtn, .table
+            position: absolute
+
+
+.closeBtn
+    position: absolute
+    top: 0
+    right: 0
+
+.tabs
+    .tab
+        color: black
+        cursor: none
+    & :global
+        .ant-tabs-nav
+            margin-bottom: 0

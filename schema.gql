@@ -65,7 +65,6 @@ type Mutation {
     authVK(code: String!): AuthResponse!
     createCard(createFieldInput: CreateCardInput!): Card!
     createGame(createGameInput: CreateGameInput!): GameSession!
-    joinGame(gameId: ObjectId!): Boolean!
     leaveGame(gameId: ObjectId!): Boolean!
     sendMessage(message: String!, topic: String!): Boolean!
     updateNickname(nickname: String!): User!
@@ -93,6 +92,7 @@ type Query {
     games: [Game!]!
     getActiveGames: [GameSession!]!
     getVKOAuthRedirect: AuthRedirect!
+    joinGame(gameId: ObjectId!): GameSession!
     messages(topic: String!): [Message!]!
     user(_id: ObjectId!): User
 }
@@ -112,8 +112,8 @@ type Result {
 }
 
 type Subscription {
-    inGame: GameSession!
     onMessage(topic: String!): Message!
+    updateActiveGame(gameId: ObjectId!): GameSession!
     updateActiveGames: [GameSession!]!
 }
 

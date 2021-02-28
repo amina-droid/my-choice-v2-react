@@ -1,0 +1,22 @@
+query JoinGame($gameId: ObjectId!){
+    joinGame(gameId: $gameId) {
+        _id,
+        name,
+        observers,
+        players{
+            _id,
+            nickname,
+            position,
+            status,
+            resources{
+                lives,
+                white,
+                dark,
+                money
+            },
+            hold,
+            avatar,
+        }
+
+    }
+}

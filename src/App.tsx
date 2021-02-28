@@ -9,6 +9,8 @@ import Login from './pages/Login/Login';
 import Main from './pages/Main/Main';
 import Lobby from './pages/Lobby/Lobby';
 import Statistic from './pages/Statistic/Statistic';
+import Game from './pages/Game/Game';
+import NotFound from './pages/NotFound/NotFound';
 
 const ProtectedRoute: FC<RouteProps> = ({ component: Component, ...rest }) => {
   const { token } = useContext(AuthContext);
@@ -32,8 +34,10 @@ function App() {
           <div className="App">
             <Route exact path="/" component={Login} />
             <ProtectedRoute exact path="/main" component={Main} />
-            <ProtectedRoute exact path="/lobby" component={Lobby} />
-            <ProtectedRoute exact path="/statistic" component={Statistic} />
+            {/* <ProtectedRoute exact path="/lobby" component={Lobby} /> */}
+            {/* <ProtectedRoute exact path="/statistic" component={Statistic} /> */}
+            {/* <ProtectedRoute exact path="/game/:id" component={Game} /> */}
+            <Route component={NotFound} />
           </div>
         </BrowserRouter>
       </AuthContextProvider>

@@ -10,12 +10,13 @@ type CardProps = {
   title?: string;
   playersCount?: number;
   className?: string;
+  onClick?: () => void;
 };
 
-const Card: FC<CardProps> = ({ title, playersCount, className, children }) => {
+const Card: FC<CardProps> = ({ title, playersCount, className, onClick, children }) => {
   const classNames = cn(className, s.contain);
   return (
-    <div className={classNames}>
+    <button type="button" onClick={onClick} className={classNames}>
       {title && (
         <Title level={3} className={s.nameGame}>
           {title}
@@ -23,7 +24,7 @@ const Card: FC<CardProps> = ({ title, playersCount, className, children }) => {
       )}
       {playersCount && <span className={s.playersCount}>Подключено: {playersCount}</span>}
       {children}
-    </div>
+    </button>
   );
 };
 
