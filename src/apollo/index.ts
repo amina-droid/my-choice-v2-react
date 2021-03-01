@@ -9,12 +9,12 @@ export * from './subscriptions';
 
 const GRAPHQL_URL =
   process.env.NODE_ENV === 'production'
-    ? 'http://xn--72-9kcd8arods1i.xn--p1ai/graphql'
+    ? 'https://xn--72-9kcd8arods1i.xn--p1ai/graphql'
     : 'https://my-choice.loca.lt/graphql';
 
 const WS_GRAPHQL_URL =
   process.env.NODE_ENV === 'production'
-    ? 'ws://xn--72-9kcd8arods1i.xn--p1ai/graphql'
+    ? 'wss://xn--72-9kcd8arods1i.xn--p1ai/graphql'
     : 'wss://my-choice.loca.lt/graphql';
 
 const wsLink = new WebSocketLink({
