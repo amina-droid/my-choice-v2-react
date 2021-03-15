@@ -5,11 +5,14 @@ import { useQuery } from '@apollo/client';
 import { JOIN_GAME, JoinGame, JoinGameVariables } from '../../apollo/queries/JoinGame';
 import StaticField from './StaticField';
 import DreamFields from './DreamFields';
+import LeaveGame from './LeaveGame/LeaveGame';
 
 import s from './Game.module.sass';
 import Chat from '../../components/Chat/Chat';
 import PlayersTable from './PlayersTable';
 import CloseButton from '../../shared/CloseButton/CloseButton';
+import ChangeResources from './ChangeResources/ChangeResources';
+import Dice from './Dice/Dice';
 
 const Game: FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
   const [tableIsOpen, setTableIsOpen] = useState<boolean>(false);
@@ -36,6 +39,9 @@ const Game: FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
   return (
     <div className={s.gameContainer}>
       <div className={s.header}>
+        <Dice />
+      </div>
+      <div className={s.playersTableContainer}>
         <Button
           type="default"
           className={s.openTableBtn}
@@ -49,6 +55,11 @@ const Game: FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
           <PlayersTable data={data.joinGame.players} />
         </div>
       </div>
+      <div className={s.actionsContainer}>
+        <ChangeResources />
+        <LeaveGame />
+        <Chat game={{ name: data?.joinGame.name, topic: data?.joinGame._id }} />
+      </div>
       <div className={s.playingField}>
         <svg
           className={s.svg}
@@ -60,7 +71,6 @@ const Game: FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
           <DreamFields />
         </svg>
       </div>
-      <Chat game={{ name: data?.joinGame.name, topic: data?.joinGame._id }} />
     </div>
   );
 };

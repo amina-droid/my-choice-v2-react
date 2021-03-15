@@ -1,15 +1,16 @@
 .gameContainer
-    display: flex
-    flex-direction: column
-    justify-content: center
-    align-items: center
-    gap: 30px
+    display: grid
+    grid-template-areas: "playersTableContainer header actionsContainer" "playersTableContainer playingField actionsContainer"
+    grid-template-rows: 60px 1fr
+    grid-template-columns: 20% 1fr 5%
+    grid-gap: 10px
     padding: 50px
     width: 100%
     height: 100%
     position: relative
 
     .playingField
+        grid-area: playingField
         max-width: 1200px
         width: 100%
 
@@ -17,10 +18,22 @@
             max-height: 100%
 
     .header
+        grid-area: header
         width: 100%
         height: 50px
         .openTableBtn, .table
             position: absolute
+
+    .playersTableContainer
+        grid-area: playersTableContainer
+
+    .actionsContainer
+        grid-area: actionsContainer
+        display: flex
+        flex-direction: column
+        align-items: flex-end
+        gap: 30px
+
 
 
 .closeBtn
@@ -29,9 +42,13 @@
     right: 0
 
 .tabs
-    .tab
-        color: black
-        cursor: none
+    & :global
+        .ant-tabs-tab
+            cursor: default
+    & :global
+        .ant-tabs-tab-btn
+            color: black!important
+            cursor: default
     & :global
         .ant-tabs-nav
             margin-bottom: 0

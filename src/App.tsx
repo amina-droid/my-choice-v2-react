@@ -1,5 +1,5 @@
 import React, { FC, useContext } from 'react';
-import { BrowserRouter, Route, Redirect, RouteProps, Switch } from 'react-router-dom';
+import { BrowserRouter, Redirect, Route, RouteProps, Switch } from 'react-router-dom';
 import { ApolloProvider } from '@apollo/client';
 import 'antd/dist/antd.css';
 import './App.css';
@@ -11,6 +11,8 @@ import Lobby from './pages/Lobby/Lobby';
 import Statistic from './pages/Statistic/Statistic';
 import Game from './pages/Game/Game';
 import NotFound from './pages/NotFound/NotFound';
+import AddCard from './pages/CardsEditor/CardsEditor';
+import { UserRole } from './types';
 
 const ProtectedRoute: FC<RouteProps> = ({ component: Component, ...rest }) => {
   const { token } = useContext(AuthContext);
@@ -35,6 +37,11 @@ function App() {
             <Switch>
               <Route exact path="/" component={Login} />
               <ProtectedRoute exact path="/main" component={Main} />
+
+              <ProtectedRoute exact path="/lobby" component={Lobby} />
+              <ProtectedRoute exact path="/statistic" component={Statistic} />
+              <ProtectedRoute exact path="/game/:id" component={Game} />
+              <ProtectedRoute exact path="/add-card" component={AddCard} />
               <Route component={NotFound} exact />
             </Switch>
           </div>

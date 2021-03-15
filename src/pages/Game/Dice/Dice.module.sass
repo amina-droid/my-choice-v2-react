@@ -1,0 +1,45 @@
+.container
+    display: flex
+    align-self: center
+    justify-content: center
+
+    .diceBtn
+        transition: all 0.3s ease
+        color: #338ffd
+
+
+
+        .dice
+            &:hover
+
+    .disabledDice
+        color: #898989
+        cursor: not-allowed
+
+.rollDice
+    animation: shake 0.15s linear alternate-reverse infinite
+
+.readyDice
+    animation: pulse 0.3s linear alternate-reverse infinite
+    &:hover
+        transform: scale(1.2)
+
+
+@keyframes pulse
+    0%
+        transform: scale(1)
+    50%
+        transform: scale(1.2)
+    100%
+        transform: scale(1.1)
+
+
+
+@keyframes shake
+    0%
+        transform: translateX(-30px)
+    50%
+        transform: translateX(0)
+    100%
+        transform: translateX(30px)
+

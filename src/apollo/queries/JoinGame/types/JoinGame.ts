@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { PlayerPosition, PlayerStatus } from "./../../../../../types/globalTypes";
+import { PlayerPosition, PlayerStatus } from "./../../../../types/globalTypes";
 
 // ====================================================
 // GraphQL query operation: JoinGame

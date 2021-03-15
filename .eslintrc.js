@@ -77,7 +77,7 @@ module.exports = {
     indent: ['warn', 2],
     'dot-notation': [0],
     'no-nested-ternary': [0],
-    'no-underscore-dangle': ['error', { allow: ['_id'] }],
+    'no-underscore-dangle': ['error', { allow: ['_id', '__typename', '__ref'] }],
     camelcase: [0],
     'jsx-a11y/anchor-is-valid': [
       'error',

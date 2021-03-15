@@ -9,6 +9,7 @@ schema {
 interface Card {
     _id: ObjectId!
     description: String!
+    type: FieldType!
     typeName: String!
 }
 
@@ -30,6 +31,7 @@ type ChoiceCard implements Card {
     _id: ObjectId!
     choices: [Option!]!
     description: String!
+    type: FieldType!
     typeName: String!
 }
 
@@ -51,6 +53,7 @@ type GameSession {
 type Incident implements Card {
     _id: ObjectId!
     description: String!
+    type: FieldType!
     typeName: String!
 }
 
@@ -63,10 +66,13 @@ type Message {
 
 type Mutation {
     authVK(code: String!): AuthResponse!
-    createCard(createFieldInput: CreateCardInput!): Card!
+    createChoicesCard(createChoicesCard: ChoicesCardInput!): Card!
     createGame(createGameInput: CreateGameInput!): GameSession!
-    leaveGame(gameId: ObjectId!): Boolean!
+    createIncidentCard(createIncidentCard: IncidentCardInput!): Card!
+    leaveGame: Boolean!
+    removeCard(cardId: ObjectId!): Card!
     sendMessage(message: String!, topic: String!): Boolean!
+    startGame(gameId: ObjectId!): Boolean!
     updateNickname(nickname: String!): User!
 }
 
@@ -78,6 +84,7 @@ type Option {
 type Player {
     _id: ObjectId!
     avatar: String
+    disconnected: Boolean!
     hold: Int
     nickname: String!
     position: PlayerPosition
@@ -143,7 +150,7 @@ type VKProvider {
 
 enum FieldType {
     Activity
-    DreamTest
+    Dream
     Incident
     Offer
     Opportunity
@@ -180,7 +187,14 @@ enum UserRole {
     User
 }
 
-input CreateCardInput {
+input ActionInput {
+    less: ResourcesInput
+    more: ResourcesInput
+    result: ResultInput
+}
+
+input ChoicesCardInput {
+    choices: [OptionInput!]!
     description: String!
     type: FieldType!
 }
@@ -188,6 +202,30 @@ input CreateCardInput {
 input CreateGameInput {
     name: String!
     observerMode: Boolean = false
+}
+
+input IncidentCardInput {
+    action: ActionInput!
+    description: String!
+}
+
+input OptionInput {
+    description: String!
+    resources: ResourcesInput!
+}
+
+input ResourcesInput {
+    dark: Int
+    lives: Int
+    money: Int
+    white: Int
+}
+
+input ResultInput {
+    gameover: Boolean
+    hold: Int
+    move: FieldType
+    resources: ResourcesInput
 }
 
 

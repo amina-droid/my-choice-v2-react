@@ -1,0 +1,7 @@
+mutation CreateChoice ($input: ChoicesCardInput!) {
+    createChoicesCard(createChoicesCard: $input) {
+        typeName,
+        description,
+        _id,
+    }
+}

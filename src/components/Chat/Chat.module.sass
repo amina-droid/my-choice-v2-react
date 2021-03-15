@@ -13,7 +13,9 @@
     display: flex
     align-items: center
     justify-content: center
-    border: none
+    transition: all 0.3s ease
+    &:hover
+        transform: scale(1.2)
 
 .tabsContainer
     position: fixed
@@ -42,6 +44,10 @@
             flex-direction: column
             justify-content: space-between
             & :global
+                .rcs-outer-container
+                    margin-right: -10px
+                .ant-list-items
+                    margin-right: 20px
                 .rcs-custom-scroll
                     width: 100%
 

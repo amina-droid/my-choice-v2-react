@@ -1,0 +1,7 @@
+query GetCards {
+    cards {
+        description,
+        typeName,
+        _id
+    }
+}

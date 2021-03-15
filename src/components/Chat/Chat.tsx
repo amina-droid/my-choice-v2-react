@@ -1,10 +1,11 @@
 import React, { useContext, useState } from 'react';
 import { Button, Tabs } from 'antd';
-import { CommentOutlined } from '@ant-design/icons';
 import { AuthContext } from '../../context/auth';
 
 import Topic from './Topic';
 import CloseButton from '../../shared/CloseButton/CloseButton';
+
+import { ReactComponent as OpenChatBtn } from './chat.svg';
 
 import s from './Chat.module.sass';
 
@@ -29,9 +30,9 @@ export const Chat: React.FC<Props> = ({ game }) => {
 
   return (
     <>
-      <Button hidden={isOpen} className={s.openBtn} onClick={() => setIsOpen(true)}>
-        <CommentOutlined />
-      </Button>
+      <button type="button" hidden={isOpen} className={s.openBtn} onClick={() => setIsOpen(true)}>
+        <OpenChatBtn />
+      </button>
       <div className={s.tabsContainer} hidden={!isOpen}>
         <Tabs defaultActiveKey="1" type="card" className={s.tabs}>
           <TabPane tab="Общий" key="1">

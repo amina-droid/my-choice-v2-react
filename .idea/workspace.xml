@@ -2,31 +2,46 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="632a05cc-275b-496b-89d0-013380cb937f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/apollo/queries/JoinGame/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/apollo/queries/JoinGame/query.gql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/Game/DreamFields.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/Game/GameSVG.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/Game/PlayersTable.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/Game/StaticField.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/NotFound/NotFound.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/shared/CloseButton/CloseButton.module.sass" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/shared/CloseButton/CloseButton.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/apollo/mutations/CreateCard/CreateChoice/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/apollo/mutations/CreateCard/CreateChoice/query.gql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/apollo/mutations/CreateCard/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/apollo/mutations/DeleteCard/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/apollo/mutations/DeleteCard/query.gql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/apollo/queries/GetCards/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/apollo/queries/GetCards/query.gql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/CardsEditor/AddCard.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/CardsEditor/CardList.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/CardsEditor/CardsEditor.module.sass" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/CardsEditor/CardsEditor.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/Game/ChangeResources/ChangeResources.module.sass" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/Game/ChangeResources/ChangeResources.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/Game/Dice/Dice.module.sass" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/Game/Dice/Dice.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/Game/LeaveGame/LeaveGame.module.sass" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/Game/LeaveGame/LeaveGame.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/shared/PageAccessHOC/PageAccessHOC.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.eslintrc.js" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintrc.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/schema.gql" beforeDir="false" afterPath="$PROJECT_DIR$/schema.gql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/schema.json" beforeDir="false" afterPath="$PROJECT_DIR$/schema.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/apollo/mutations/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/apollo/mutations/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/apollo/queries/GetUser/types/GetUser.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/apollo/queries/GetUser/types/GetUser.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/apollo/queries/JoinGame/types/JoinGame.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/apollo/queries/JoinGame/types/JoinGame.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Chat/Chat.module.sass" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Chat/Chat.module.sass" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Chat/Chat.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Chat/Chat.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Chat/Topic.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Chat/Topic.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.sass" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.sass" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/Game/Game.module.sass" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Game/Game.module.sass" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/Game/Game.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Game/Game.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/Lobby/Lobby.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Lobby/Lobby.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Login/Login.module.sass" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Login/Login.module.sass" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Login/Login.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Login/Login.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Main/Main.module.sass" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Main/Main.module.sass" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/Main/Main.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Main/Main.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/shared/Card/Card.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/Card/Card.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/types/globalTypes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/types/globalTypes.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Statistic/Statistic.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Statistic/Statistic.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/types/globalTypes.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/types/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,10 +60,10 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/pages/Game" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="prettierjs.PrettierConfiguration.Package" value="C:\Users\MSI1\AppData\Roaming\npm\node_modules\prettier" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
+    <property name="settings.editor.selected.configurable" value="configurable.group.appearance" />
     <property name="ts.external.directory.path" value="D:\Code\amina-droid\my-choice-v2-react\node_modules\typescript\lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
@@ -61,6 +76,8 @@
       <recent name="D:\Code\amina-droid\my-choice-v2-react\src" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Code\amina-droid\my-choice-v2-react\src\types" />
+      <recent name="D:\Code\amina-droid\my-choice-v2-react\src\pages\Game\LeaveGame" />
       <recent name="D:\Code\amina-droid\my-choice-v2-react\src\components" />
       <recent name="D:\Code\amina-droid\my-choice-v2-react\src\shared" />
     </key>
@@ -108,8 +125,41 @@
       <workItem from="1613415082884" duration="5354000" />
       <workItem from="1613911375634" duration="8153000" />
       <workItem from="1614422730530" duration="22685000" />
-      <workItem from="1614512362068" duration="22224000" />
+      <workItem from="1614512362068" duration="22948000" />
+      <workItem from="1614537059495" duration="3337000" />
+      <workItem from="1614628855101" duration="77000" />
+      <workItem from="1615727328518" duration="29379000" />
+      <workItem from="1615832265669" duration="11872000" />
     </task>
+    <task id="LOCAL-00001" summary="fixed api url">
+      <created>1614537489011</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1614537489011</updated>
+    </task>
+    <task id="LOCAL-00002" summary="fixed package.json">
+      <created>1614538026458</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1614538026458</updated>
+    </task>
+    <task id="LOCAL-00003" summary="fixed page 'Not Found'">
+      <created>1614542108468</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1614542108468</updated>
+    </task>
+    <task id="LOCAL-00004" summary="fixed path">
+      <created>1614628902120</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1614628902120</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -126,6 +176,13 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="fixed api url" />
+    <MESSAGE value="fixed package.json" />
+    <MESSAGE value="fixed page 'Not Found'" />
+    <MESSAGE value="fixed path" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed path" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

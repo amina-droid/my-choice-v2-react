@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { Button, Form, Input, Card } from 'antd';
 import { useMutation } from '@apollo/client';
 import Chat from '../../components/Chat/Chat';
+import { UserRole } from '../../types';
 
 import { AuthContext } from '../../context/auth';
 import { UPDATE_NICKNAME, UpdateNickname, UpdateNicknameVariables } from '../../apollo';
@@ -29,6 +30,10 @@ const Main = () => {
 
   const goToStatistic = () => {
     history.push('/statistic');
+  };
+
+  const goToAddCard = () => {
+    history.push('/add-card');
   };
 
   return (
@@ -59,6 +64,11 @@ const Main = () => {
           <Button onClick={goToStatistic} type="primary">
             Статистика
           </Button>
+          {(user.role === UserRole.Admin || user.role === UserRole.Moderator) && (
+            <Button onClick={goToAddCard} type="primary">
+              Добавить карточки
+            </Button>
+          )}
         </Card>
       )}
       <Chat />

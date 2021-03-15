@@ -17,6 +17,8 @@ import {
   UPDATE_ACTIVE_GAMES,
   UpdateActiveGames,
 } from '../../apollo';
+import { withPageAccess } from '../../shared/PageAccessHOC/PageAccessHOC';
+import { UserRole } from '../../types';
 
 const { Title } = Typography;
 
@@ -117,4 +119,4 @@ const Lobby = () => {
   );
 };
 
-export default Lobby;
+export default withPageAccess([UserRole.Admin])(Lobby);

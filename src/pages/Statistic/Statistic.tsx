@@ -1,6 +1,8 @@
 import React from 'react';
 
 import s from './Statistic.module.sass';
+import { withPageAccess } from '../../shared/PageAccessHOC/PageAccessHOC';
+import { UserRole } from '../../types';
 
 const Statistic = () => {
   return (
@@ -10,4 +12,4 @@ const Statistic = () => {
   );
 };
 
-export default Statistic;
+export default withPageAccess([UserRole.Admin])(Statistic);

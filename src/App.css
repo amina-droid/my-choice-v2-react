@@ -28,9 +28,11 @@ body {
 }
 
 #root, .App {
+    min-height: 100vh;
     height: 100%;
 }
 
 .App {
     background-color: #e5ebf1;
+    height: 100%;
 }
