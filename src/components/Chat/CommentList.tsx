@@ -9,14 +9,16 @@ import { GetMessages } from '../../apollo';
 
 type Props = {
   comments: GetMessages['messages'];
+  loading?: boolean;
 };
 
-const CommentList: React.FC<Props> = ({ comments }) => {
+const CommentList: React.FC<Props> = ({ comments, loading }) => {
   return (
     <CustomScroll allowOuterScroll keepAtBottom>
       <List
         dataSource={comments}
         itemLayout="horizontal"
+        loading={loading}
         className={s.commentsList}
         renderItem={({ author, message, createdAt }) => {
           const date = moment(createdAt);

@@ -35,7 +35,7 @@ export const Topic: React.FC<Props> = ({ topic }) => {
 
   useEffect(() => {
     getMessages();
-  }, []);
+  }, [getMessages]);
 
   useEffect(() => {
     if (!subscribeToMore) return () => {};
@@ -67,11 +67,11 @@ export const Topic: React.FC<Props> = ({ topic }) => {
         },
       });
     },
-    [sendMessage],
+    [sendMessage, topic],
   );
   return (
     <div className={s.chatContainer}>
-      <CommentList comments={data?.messages.slice().reverse() || []} />
+      <CommentList loading={initLoading} comments={data?.messages.slice().reverse() || []} />
       <Comment content={<Editor onSubmit={handleSubmit} submitting={loading} />} />
     </div>
   );

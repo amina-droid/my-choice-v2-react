@@ -11,10 +11,8 @@ import { UPDATE_NICKNAME, UpdateNickname, UpdateNicknameVariables } from '../../
 import s from './Main.module.sass';
 
 const Main = () => {
-  const [mutation, { data, loading }] = useMutation<UpdateNickname, UpdateNicknameVariables>(
-    UPDATE_NICKNAME,
-  );
-  const { user } = useContext(AuthContext);
+  const [mutation] = useMutation<UpdateNickname, UpdateNicknameVariables>(UPDATE_NICKNAME);
+  const { user, logout } = useContext(AuthContext);
   const history = useHistory();
   const [isChange, setIsChange] = useState<boolean>(false);
   const [form] = Form.useForm();
@@ -69,6 +67,9 @@ const Main = () => {
               Добавить карточки
             </Button>
           )}
+          <Button onClick={logout} type="primary" danger>
+            Выйти
+          </Button>
         </Card>
       )}
       <Chat />

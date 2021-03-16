@@ -17,7 +17,7 @@ import Dice from './Dice/Dice';
 const Game: FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
   const [tableIsOpen, setTableIsOpen] = useState<boolean>(false);
   const history = useHistory();
-  const { data, loading, error } = useQuery<JoinGame, JoinGameVariables>(JOIN_GAME, {
+  const { data, error } = useQuery<JoinGame, JoinGameVariables>(JOIN_GAME, {
     variables: {
       gameId: match.params.id,
     },
@@ -28,7 +28,7 @@ const Game: FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
       message.error(error.message);
       history.push('/lobby');
     }
-  }, [error]);
+  }, [error, history]);
 
   if (!data) return null;
 

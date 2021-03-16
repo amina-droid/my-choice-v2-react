@@ -4,8 +4,7 @@ import { Button, Card, Form, InputNumber, message, Select, Space, Typography } f
 import { MinusCircleOutlined } from '@ant-design/icons';
 import TextArea from 'antd/es/input/TextArea';
 import { useForm } from 'antd/es/form/Form';
-import { withPageAccess } from '../../shared/PageAccessHOC/PageAccessHOC';
-import { FieldType, UserRole } from '../../types';
+import { FieldType } from '../../types';
 
 import s from './CardsEditor.module.sass';
 import { CREATE_CHOICE, CreateChoice, CreateChoiceVariables } from '../../apollo';
@@ -13,19 +12,6 @@ import { FIELD_DICTIONARY } from './CardsEditor';
 import { GET_CARDS, GetCards } from '../../apollo/queries/GetCards';
 
 const CHOICES_CARD = [FieldType.Dream, FieldType.Situation, FieldType.Reaction, FieldType.Offer];
-
-type Resources = {
-  lives?: number;
-  money?: number;
-  white?: number;
-  dark?: number;
-};
-
-type ChoiceInputConfig = {
-  id: string;
-  description: string;
-  resources: Resources;
-};
 
 const AddCard = () => {
   const [createChoice, { data }] = useMutation<CreateChoice, CreateChoiceVariables>(CREATE_CHOICE, {

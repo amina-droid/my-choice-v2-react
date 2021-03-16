@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import jwtDecode from 'jwt-decode';
 import { useLazyQuery } from '@apollo/client';
-import { GET_USER, GetUser, GetUserVariables } from '../../apollo/queries/GetUser';
+import { GET_USER, GetUser, GetUserVariables } from '../../apollo';
 
 interface State {
   token: string | null;
@@ -28,7 +28,6 @@ export const AuthContext = React.createContext<State>({
 });
 
 const INITIAL_TOKEN = localStorage.getItem('token');
-const INITIAL_USER = INITIAL_TOKEN ? (jwtDecode(INITIAL_TOKEN) as any) : null;
 export const AuthContextProvider: React.FC = ({ children }) => {
   const [token, setToken] = useState<string | null>(INITIAL_TOKEN);
 
@@ -41,17 +40,17 @@ export const AuthContextProvider: React.FC = ({ children }) => {
     }
   }, [token, data, getUser]);
 
-  const login: Login = (newToken: string) => {
+  const login: Login = useCallback((newToken: string) => {
     setToken(newToken);
     localStorage.setItem('token', newToken);
     window.location.reload();
-  };
+  }, []);
 
-  const logout = () => {
+  const logout = useCallback(() => {
     setToken(null);
     localStorage.removeItem('token');
     window.location.reload();
-  };
+  }, []);
 
   return (
     <AuthContext.Provider

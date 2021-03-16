@@ -18,7 +18,6 @@ const CardList = () => {
       cache.modify({
         fields: {
           cards(existingCards = []) {
-            console.log({ existingCards });
             return existingCards.filter((card: any) => card.__ref !== removedRef);
           },
         },
@@ -32,7 +31,7 @@ const CardList = () => {
       message.success('Карточка удалена');
     } catch (e) {
       message.error('Произошла ошибка, попробуйте снова');
-      console.log(e);
+      console.error(e);
     }
   };
 
@@ -47,6 +46,7 @@ const CardList = () => {
           renderItem={item => (
             <List.Item>
               <List.Item.Meta
+                description={`ID: ${item._id}`}
                 title={
                   <>
                     {item.typeName}{' '}
