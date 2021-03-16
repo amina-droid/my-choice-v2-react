@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, List, message, Popconfirm } from 'antd';
+import { Card, List, message, Popconfirm, Typography } from 'antd';
 import { MinusCircleOutlined } from '@ant-design/icons';
 import { useMutation, useQuery } from '@apollo/client';
 import CustomScroll from 'react-custom-scroll';
@@ -46,7 +46,16 @@ const CardList = () => {
           renderItem={item => (
             <List.Item>
               <List.Item.Meta
-                description={`ID: ${item._id}`}
+                description={
+                  <Typography.Text
+                    copyable={{
+                      text: item._id,
+                      tooltips: ['Скопировать ID', 'Скопировано!'],
+                    }}
+                  >
+                    ID: {item._id}
+                  </Typography.Text>
+                }
                 title={
                   <>
                     {item.typeName}{' '}

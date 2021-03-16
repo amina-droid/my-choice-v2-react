@@ -91,7 +91,7 @@
       <workItem from="1614537059495" duration="3337000" />
       <workItem from="1614628855101" duration="77000" />
       <workItem from="1615727328518" duration="29379000" />
-      <workItem from="1615832265669" duration="15356000" />
+      <workItem from="1615832265669" duration="16287000" />
     </task>
     <task id="LOCAL-00001" summary="fixed api url">
       <created>1614537489011</created>
@@ -135,7 +135,14 @@
       <option name="project" value="LOCAL" />
       <updated>1615881078040</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="add list of comments count">
+      <created>1615882173265</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1615882173265</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -160,7 +167,8 @@
     <MESSAGE value="fixed path" />
     <MESSAGE value="added CardEditor, GameIcons" />
     <MESSAGE value="add logout" />
-    <option name="LAST_COMMIT_MESSAGE" value="add logout" />
+    <MESSAGE value="add list of comments count" />
+    <option name="LAST_COMMIT_MESSAGE" value="add list of comments count" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
