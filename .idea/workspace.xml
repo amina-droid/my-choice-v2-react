@@ -3,14 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="632a05cc-275b-496b-89d0-013380cb937f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Chat/CommentList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Chat/CommentList.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Chat/Topic.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Chat/Topic.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/context/auth/context.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/context/auth/context.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.sass" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.sass" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/CardsEditor/AddCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/CardsEditor/AddCard.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/CardsEditor/CardList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/CardsEditor/CardList.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Game/Game.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Game/Game.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Main/Main.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Main/Main.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -98,7 +91,7 @@
       <workItem from="1614537059495" duration="3337000" />
       <workItem from="1614628855101" duration="77000" />
       <workItem from="1615727328518" duration="29379000" />
-      <workItem from="1615832265669" duration="14275000" />
+      <workItem from="1615832265669" duration="15356000" />
     </task>
     <task id="LOCAL-00001" summary="fixed api url">
       <created>1614537489011</created>
@@ -135,7 +128,14 @@
       <option name="project" value="LOCAL" />
       <updated>1615844860458</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="add logout">
+      <created>1615881078040</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1615881078040</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

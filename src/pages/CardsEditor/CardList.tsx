@@ -36,7 +36,7 @@ const CardList = () => {
   };
 
   return (
-    <Card className={s.cards} title="Созданные карточки">
+    <Card className={s.cards} title={`Созданные карточки (${data?.cards.length || 0})`}>
       <CustomScroll allowOuterScroll keepAtBottom>
         <List
           loading={loading}
