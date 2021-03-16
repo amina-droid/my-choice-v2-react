@@ -44,9 +44,7 @@ const Main = () => {
             onChange={() => setIsChange(true)}
             className={s.form}
             initialValues={{
-              nickname: user?.nickname
-                ? user.nickname
-                : `${user?.name.givenName} ${user?.name.familyName}`,
+              nickname: user.nickname
             }}
           >
             <Form.Item style={{ marginRight: 10 }} name="nickname" required>
