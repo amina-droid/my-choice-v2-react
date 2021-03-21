@@ -1,0 +1,7 @@
+#import "./../../fragments/ActiveGame/fragment.gql"
+
+subscription UpdateActiveGame($gameId: ObjectId!) {
+    updateActiveGame(gameId: $gameId) {
+        ...ActiveGame
+    }
+}

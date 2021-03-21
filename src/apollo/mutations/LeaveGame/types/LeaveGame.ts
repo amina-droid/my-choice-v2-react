@@ -3,14 +3,9 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: SendMessage
+// GraphQL mutation operation: LeaveGame
 // ====================================================
 
-export interface SendMessage {
-  sendMessage: boolean;
-}
-
-export interface SendMessageVariables {
-  message: string;
-  topic: string;
+export interface LeaveGame {
+  leaveGame: boolean;
 }

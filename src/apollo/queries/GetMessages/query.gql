@@ -1,11 +1,7 @@
+#import "./../../fragments/ChatMessage/fragment.gql"
+
 query GetMessages($topic: String!) {
     messages(topic: $topic) {
-        _id
-        author {
-            nickname
-            avatar
-        }
-        createdAt
-        message
+        ...ChatMessage
     }
 }

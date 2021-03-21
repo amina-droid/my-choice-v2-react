@@ -5,10 +5,10 @@
 import { PlayerPosition, PlayerStatus } from "./../../../../types/globalTypes";
 
 // ====================================================
-// GraphQL query operation: JoinGame
+// GraphQL fragment: ActiveGame
 // ====================================================
 
-export interface JoinGame_joinGame_players_resources {
+export interface ActiveGame_players_resources {
   __typename: "Resources";
   lives: number | null;
   white: number | null;
@@ -16,29 +16,21 @@ export interface JoinGame_joinGame_players_resources {
   money: number | null;
 }
 
-export interface JoinGame_joinGame_players {
+export interface ActiveGame_players {
   __typename: "Player";
   _id: any;
   nickname: string;
   position: PlayerPosition | null;
   status: PlayerStatus;
-  resources: JoinGame_joinGame_players_resources | null;
+  resources: ActiveGame_players_resources | null;
   hold: number | null;
   avatar: string | null;
 }
 
-export interface JoinGame_joinGame {
+export interface ActiveGame {
   __typename: "GameSession";
   _id: any;
   name: string;
   observers: number;
-  players: JoinGame_joinGame_players[];
-}
-
-export interface JoinGame {
-  joinGame: JoinGame_joinGame;
-}
-
-export interface JoinGameVariables {
-  gameId: any;
+  players: ActiveGame_players[];
 }

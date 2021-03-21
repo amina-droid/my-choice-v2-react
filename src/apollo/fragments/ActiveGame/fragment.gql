@@ -1,0 +1,19 @@
+fragment ActiveGame on GameSession {
+    _id,
+    name,
+    observers,
+    players{
+        _id,
+        nickname,
+        position,
+        status,
+        resources{
+            lives,
+            white,
+            dark,
+            money
+        },
+        hold,
+        avatar,
+    }
+}

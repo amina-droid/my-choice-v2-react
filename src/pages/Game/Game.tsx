@@ -1,11 +1,17 @@
 import React, { FC, useEffect, useState } from 'react';
-import { Button, message, Popconfirm } from 'antd';
+import { message, Popconfirm } from 'antd';
 import { RouteComponentProps, useHistory } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
-import { JOIN_GAME, JoinGame, JoinGameVariables } from '../../apollo/queries/JoinGame';
+import { useMutation, useLazyQuery } from '@apollo/client';
+import {
+  JOIN_GAME,
+  JoinGame,
+  JoinGameVariables, LEAVE_GAME,
+  LeaveGame as TLeaveGame,
+  UPDATE_ACTIVE_GAME,
+  UpdateActiveGame,
+  UpdateActiveGameVariables,
+} from '../../apollo';
 import { ReactComponent as GameField } from './GameSVG.svg';
-import StaticField from './StaticField';
-import DreamFields from './DreamFields';
 import LeaveGame from './LeaveGame/LeaveGame';
 
 import s from './Game.module.sass';
@@ -28,11 +34,37 @@ export const COLORS = [
 const Game: FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
   const [tableIsOpen, setTableIsOpen] = useState<boolean>(false);
   const history = useHistory();
-  const { data, error } = useQuery<JoinGame, JoinGameVariables>(JOIN_GAME, {
+  const [leaveGameReq] = useMutation<TLeaveGame>(LEAVE_GAME);
+  const [
+    joinGame,
+    { data, error, subscribeToMore },
+    ] = useLazyQuery<JoinGame, JoinGameVariables>(JOIN_GAME, {
     variables: {
       gameId: match.params.id,
     },
   });
+
+  useEffect(() => {
+    joinGame();
+  }, []);
+
+  useEffect(() => {
+    if (!subscribeToMore) return () => {};
+    const unsubscribe = subscribeToMore<UpdateActiveGame, UpdateActiveGameVariables>({
+      updateQuery: (previousQueryResult, { subscriptionData }) => {
+        if (!subscriptionData?.data?.updateActiveGame) return previousQueryResult;
+        const newData = subscriptionData.data.updateActiveGame;
+
+        return {
+          joinGame: newData,
+        };
+      },
+      variables: { gameId: match.params.id },
+      document: UPDATE_ACTIVE_GAME,
+    });
+
+    return () => unsubscribe();
+  }, [subscribeToMore, match.params.id]);
 
   useEffect(() => {
     if (error) {
@@ -49,8 +81,9 @@ const Game: FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
 
   console.log(data);
 
-  const leaveGame = () => {
-    console.log('dsd');
+  const leaveGame = async () => {
+    history.push('/lobby');
+    await leaveGameReq();
   };
 
   return (

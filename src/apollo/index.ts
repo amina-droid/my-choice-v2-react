@@ -6,6 +6,7 @@ import { getMainDefinition } from '@apollo/client/utilities';
 export * from './queries';
 export * from './mutations';
 export * from './subscriptions';
+export * from './fragments';
 
 const GRAPHQL_URL =
   process.env.NODE_ENV === 'production'

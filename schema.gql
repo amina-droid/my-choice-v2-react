@@ -13,6 +13,12 @@ interface Card {
     typeName: String!
 }
 
+type Action {
+    less: Resources
+    more: Resources
+    result: Result
+}
+
 type AuthRedirect {
     url: String!
 }
@@ -52,6 +58,7 @@ type GameSession {
 
 type Incident implements Card {
     _id: ObjectId!
+    action: Action!
     description: String!
     type: FieldType!
     typeName: String!
@@ -66,6 +73,7 @@ type Message {
 
 type Mutation {
     authVK(code: String!): AuthResponse!
+    choiceDream(dream: Float!): Boolean!
     createChoicesCard(createChoicesCard: ChoicesCardInput!): Card!
     createGame(createGameInput: CreateGameInput!): GameSession!
     createIncidentCard(createIncidentCard: IncidentCardInput!): Card!
@@ -79,12 +87,14 @@ type Mutation {
 type Option {
     _id: ObjectId!
     description: String!
+    resources: Resources!
 }
 
 type Player {
     _id: ObjectId!
     avatar: String
     disconnected: Boolean!
+    dream: Int
     hold: Int
     nickname: String!
     position: PlayerPosition
@@ -162,6 +172,7 @@ enum FieldType {
 
 enum GameStatus {
     Awaiting
+    ChoiceDream
     Finished
     InProgress
 }

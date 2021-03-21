@@ -1,0 +1,9 @@
+fragment ChatMessage on Message {
+    _id
+    author {
+        nickname
+        avatar
+    }
+    createdAt
+    message
+}
