@@ -1,12 +1,16 @@
-import React from 'react';
-import { ReactComponent as LeaveGameBtn } from './leave.svg';
+import React, { FC } from 'react';
+import { ReactComponent as LeaveGameBtn } from './Leave.svg';
 
 import s from './LeaveGame.module.sass';
 
-const LeaveGame = () => {
+type LeaveGameProps = {
+  className: string;
+};
+
+const LeaveGame: FC<LeaveGameProps> = ({ className }) => {
   return (
     <button type="button" className={s.btn}>
-      <LeaveGameBtn />
+      <LeaveGameBtn className={className} />
     </button>
   );
 };

@@ -58,7 +58,7 @@ const CardList = () => {
                 }
                 title={
                   <>
-                    {item.typeName}{' '}
+                    {item.typeName}
                     <Popconfirm
                       placement="right"
                       title="Вы уверены что хотите удалить эту карточку?"

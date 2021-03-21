@@ -2,8 +2,28 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="632a05cc-275b-496b-89d0-013380cb937f" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/pages/Game/PlayersTable/PlayersTable.module.sass" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/Game/PlayersTable/PlayersTable.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Chat/chat.svg" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Chat/chat.svg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/CardsEditor/CardList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/CardsEditor/CardList.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Game/ChangeResources/ChangeResources.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Game/ChangeResources/ChangeResources.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Game/Dice/Dice.module.sass" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Game/Dice/Dice.module.sass" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Game/Dice/Dice0.svg" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Game/Dice/Dice0.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Game/Dice/Dice1.svg" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Game/Dice/Dice1.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Game/Dice/Dice2.svg" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Game/Dice/Dice2.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Game/Dice/Dice3.svg" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Game/Dice/Dice3.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Game/Dice/Dice4.svg" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Game/Dice/Dice4.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Game/Dice/Dice5.svg" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Game/Dice/Dice5.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Game/Dice/Dice6.svg" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Game/Dice/Dice6.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Game/Game.module.sass" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Game/Game.module.sass" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Game/Game.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Game/Game.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Game/GameSVG.svg" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Game/GameSVG.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Game/LeaveGame/LeaveGame.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Game/LeaveGame/LeaveGame.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Game/LeaveGame/leave.svg" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Game/LeaveGame/leave.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Game/PlayersTable.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Game/changer.svg" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Game/changer.svg" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,7 +42,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../My-Choice" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="prettierjs.PrettierConfiguration.Package" value="C:\Users\MSI1\AppData\Roaming\npm\node_modules\prettier" />
     <property name="settings.editor.selected.configurable" value="configurable.group.appearance" />
@@ -91,7 +111,8 @@
       <workItem from="1614537059495" duration="3337000" />
       <workItem from="1614628855101" duration="77000" />
       <workItem from="1615727328518" duration="29379000" />
-      <workItem from="1615832265669" duration="16287000" />
+      <workItem from="1615832265669" duration="17254000" />
+      <workItem from="1616317666324" duration="11214000" />
     </task>
     <task id="LOCAL-00001" summary="fixed api url">
       <created>1614537489011</created>
@@ -142,7 +163,28 @@
       <option name="project" value="LOCAL" />
       <updated>1615882173265</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="add list of comments count">
+      <created>1615883080813</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1615883080813</updated>
+    </task>
+    <task id="LOCAL-00009" summary="change autonickname">
+      <created>1615883177693</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1615883177693</updated>
+    </task>
+    <task id="LOCAL-00010" summary="change autonickname">
+      <created>1615883196937</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1615883196937</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -168,7 +210,8 @@
     <MESSAGE value="added CardEditor, GameIcons" />
     <MESSAGE value="add logout" />
     <MESSAGE value="add list of comments count" />
-    <option name="LAST_COMMIT_MESSAGE" value="add list of comments count" />
+    <MESSAGE value="change autonickname" />
+    <option name="LAST_COMMIT_MESSAGE" value="change autonickname" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

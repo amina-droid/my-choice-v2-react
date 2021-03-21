@@ -1,7 +1,14 @@
-body {
-
+:root {
+    --game-green: #a1d62f;
+    --game-blue: #338ffd;
+    --game-yellow: #f7d540;
+    --game-pink: #cc63a2;
+    --game-grey: #898989;
+    --game-violet: violet;
+    --game-orange: orange;
+    --game-black: #000;
+    --game-white: #fff;
 }
-
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -33,6 +40,6 @@ body {
 }
 
 .App {
-    background-color: #e5ebf1;
+    background: left 5% / 15% repeat url('./assets/Pattern.jpg') ;
     height: 100%;
 }
