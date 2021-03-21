@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @generated
 // This file was automatically generated and should not be edited.
 
 //==============================================================
@@ -16,6 +17,13 @@ export enum FieldType {
   Reaction = "Reaction",
   Situation = "Situation",
   Start = "Start",
+}
+
+export enum GameStatus {
+  Awaiting = "Awaiting",
+  ChoiceDream = "ChoiceDream",
+  Finished = "Finished",
+  InProgress = "InProgress",
 }
 
 export enum PlayerPosition {

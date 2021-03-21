@@ -1,17 +1,24 @@
-import React, { FC, useEffect, useState } from 'react';
-import { message, Popconfirm } from 'antd';
+import React, { FC, useContext, useEffect, useState } from 'react';
+import { Button, message, Popconfirm } from 'antd';
 import { RouteComponentProps, useHistory } from 'react-router-dom';
-import { useMutation, useLazyQuery } from '@apollo/client';
+import { useLazyQuery, useMutation } from '@apollo/client';
 import {
   JOIN_GAME,
   JoinGame,
-  JoinGameVariables, LEAVE_GAME,
+  JoinGameVariables,
+  LEAVE_GAME,
   LeaveGame as TLeaveGame,
   UPDATE_ACTIVE_GAME,
   UpdateActiveGame,
   UpdateActiveGameVariables,
+  START_GAME,
+  StartGame,
+  StartGameVariables,
+  CHOICE_DREAM,
+  ChoiceDream,
+  ChoiceDreamVariables,
 } from '../../apollo';
-import { ReactComponent as GameField } from './GameSVG.svg';
+
 import LeaveGame from './LeaveGame/LeaveGame';
 
 import s from './Game.module.sass';
@@ -19,6 +26,9 @@ import Chat from '../../components/Chat/Chat';
 import PlayersTable from './PlayersTable/PlayersTable';
 import ChangeResources from './ChangeResources/ChangeResources';
 import Dice from './Dice/Dice';
+import { AuthContext } from '../../context/auth';
+import { GameStatus } from '../../types';
+import GameField from './GameField/GameField';
 
 export const COLORS = [
   '--game-green',
@@ -32,17 +42,19 @@ export const COLORS = [
 ];
 
 const Game: FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
-  const [tableIsOpen, setTableIsOpen] = useState<boolean>(false);
   const history = useHistory();
+  const { user } = useContext(AuthContext);
   const [leaveGameReq] = useMutation<TLeaveGame>(LEAVE_GAME);
-  const [
-    joinGame,
-    { data, error, subscribeToMore },
-    ] = useLazyQuery<JoinGame, JoinGameVariables>(JOIN_GAME, {
-    variables: {
-      gameId: match.params.id,
+  const [choiceDream] = useMutation<ChoiceDream, ChoiceDreamVariables>(CHOICE_DREAM);
+  const [startGameReq] = useMutation<StartGame, StartGameVariables>(START_GAME);
+  const [joinGame, { data, error, subscribeToMore }] = useLazyQuery<JoinGame, JoinGameVariables>(
+    JOIN_GAME,
+    {
+      variables: {
+        gameId: match.params.id,
+      },
     },
-  });
+  );
 
   useEffect(() => {
     joinGame();
@@ -75,21 +87,28 @@ const Game: FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
 
   if (!data) return null;
 
-  const onClose = () => {
-    setTableIsOpen(false);
-  };
-
-  console.log(data);
-
   const leaveGame = async () => {
     history.push('/lobby');
     await leaveGameReq();
   };
 
+  const startGame = (id: string) => {
+    startGameReq({ variables: { gameId: id } });
+  };
+
+  const handleChoiceDream = (id: number) => {
+    choiceDream({ variables: { dream: id } });
+  };
+  console.log(data.joinGame.status === GameStatus.InProgress);
   return (
     <div className={s.gameContainer}>
       <div className={s.header}>
-        <Dice />
+        {data.joinGame.status === GameStatus.Awaiting && data.joinGame.creator === user?._id && (
+          <Button type="primary" onClick={() => startGame(data?.joinGame._id)}>
+            Начать игру
+          </Button>
+        )}
+        {data.joinGame.status === GameStatus.InProgress && <Dice />}
       </div>
       <div className={s.playersTableContainer}>
         <PlayersTable players={data.joinGame.players} />
@@ -112,7 +131,7 @@ const Game: FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
         <Chat game={{ name: data?.joinGame.name, topic: data?.joinGame._id }} />
       </div>
       <div className={s.playingField}>
-        <GameField />
+        <GameField game={data.joinGame} onChoiceDream={handleChoiceDream} />
       </div>
     </div>
   );

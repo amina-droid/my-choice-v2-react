@@ -2,44 +2,41 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="632a05cc-275b-496b-89d0-013380cb937f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/apollo/fragments/ActiveGame/fragment.gql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/apollo/fragments/ActiveGame/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/apollo/fragments/ChatMessage/fragment.gql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/apollo/fragments/ChatMessage/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/apollo/fragments/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/apollo/mutations/LeaveGame/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/apollo/mutations/LeaveGame/query.gql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/apollo/subscriptions/UpdateActiveGame/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/apollo/subscriptions/UpdateActiveGame/query.gql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/apollo/mutations/ChoiceDream/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/apollo/mutations/ChoiceDream/query.gql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/apollo/mutations/StartGame/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/apollo/mutations/StartGame/query.gql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/Game/GameField/GameField.module.sass" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/Game/GameField/GameField.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/schema.gql" beforeDir="false" afterPath="$PROJECT_DIR$/schema.gql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/apollo/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/apollo/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/schema.json" beforeDir="false" afterPath="$PROJECT_DIR$/schema.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/apollo/fragments/ActiveGame/fragment.gql" beforeDir="false" afterPath="$PROJECT_DIR$/src/apollo/fragments/ActiveGame/fragment.gql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/apollo/fragments/ActiveGame/types/ActiveGame.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/apollo/fragments/ActiveGame/types/ActiveGame.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/apollo/fragments/ChatMessage/types/ChatMessage.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/apollo/fragments/ChatMessage/types/ChatMessage.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/apollo/mutations/AuthVK/types/AuthVK.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/apollo/mutations/AuthVK/types/AuthVK.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/apollo/mutations/CreateCard/CreateChoice/types/CreateChoice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/apollo/mutations/CreateCard/CreateChoice/types/CreateChoice.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/apollo/mutations/CreateGame/types/CreateGame.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/apollo/mutations/CreateGame/types/CreateGame.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/apollo/mutations/DeleteCard/types/DeleteCard.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/apollo/mutations/DeleteCard/types/DeleteCard.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/apollo/mutations/LeaveGame/types/LeaveGame.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/apollo/mutations/LeaveGame/types/LeaveGame.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/apollo/mutations/SendMessage/types/SendMessage.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/apollo/mutations/SendMessage/types/SendMessage.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/apollo/mutations/UpdateNickname/types/UpdateNickname.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/apollo/mutations/UpdateNickname/types/UpdateNickname.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/apollo/mutations/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/apollo/mutations/index.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/apollo/queries/GetActiveGames/types/GetActiveGames.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/apollo/queries/GetActiveGames/types/GetActiveGames.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/apollo/queries/GetCards/types/GetCards.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/apollo/queries/GetCards/types/GetCards.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/apollo/queries/GetMessages/query.gql" beforeDir="false" afterPath="$PROJECT_DIR$/src/apollo/queries/GetMessages/query.gql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/apollo/queries/GetMessages/types/GetMessages.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/apollo/queries/GetMessages/types/GetMessages.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/apollo/queries/GetUser/types/GetUser.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/apollo/queries/GetUser/types/GetUser.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/apollo/queries/GetVKRedirectUrl/types/GetVKOAuthRedirect.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/apollo/queries/GetVKRedirectUrl/types/GetVKOAuthRedirect.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/apollo/queries/JoinGame/query.gql" beforeDir="false" afterPath="$PROJECT_DIR$/src/apollo/queries/JoinGame/query.gql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/apollo/queries/JoinGame/types/JoinGame.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/apollo/queries/JoinGame/types/JoinGame.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/apollo/queries/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/apollo/queries/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/apollo/subscriptions/OnMessage/query.gql" beforeDir="false" afterPath="$PROJECT_DIR$/src/apollo/subscriptions/OnMessage/query.gql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/apollo/subscriptions/OnMessage/types/OnMessage.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/apollo/subscriptions/OnMessage/types/OnMessage.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/apollo/subscriptions/UpdateActiveGames/query.gql" beforeDir="false" afterPath="$PROJECT_DIR$/src/apollo/subscriptions/UpdateActiveGames/query.gql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/apollo/subscriptions/UpdateActiveGame/types/UpdateActiveGame.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/apollo/subscriptions/UpdateActiveGame/types/UpdateActiveGame.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/apollo/subscriptions/UpdateActiveGames/types/UpdateActiveGames.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/apollo/subscriptions/UpdateActiveGames/types/UpdateActiveGames.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/apollo/subscriptions/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/apollo/subscriptions/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Game/Dice/Dice.module.sass" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Game/Dice/Dice.module.sass" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/Game/Game.module.sass" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Game/Game.module.sass" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/Game/Game.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Game/Game.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Game/LeaveGame/leave.svg" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Game/LeaveGame/Leave.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Game/PlayersTable/PlayersTable.module.sass" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Game/PlayersTable/PlayersTable.module.sass" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Login/Login.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Login/Login.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Game/GameSVG.svg" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Game/GameField/GameSVG.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Lobby/Lobby.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Lobby/Lobby.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/types/globalTypes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/globalTypes.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -73,18 +70,19 @@
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\Code\amina-droid\my-choice-v2-react\src\types" />
-      <recent name="D:\Code\amina-droid\my-choice-v2-react\src\pages\Game\LeaveGame" />
-      <recent name="D:\Code\amina-droid\my-choice-v2-react\src\components" />
-      <recent name="D:\Code\amina-droid\my-choice-v2-react\src\shared" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Code\amina-droid\my-choice-v2-react\src\pages\Game" />
       <recent name="D:\Code\amina-droid\my-choice-v2-react\src\components\Chat" />
       <recent name="D:\Code\amina-droid\my-choice-v2-react\src\apollo\mutations\UpdateNickname" />
       <recent name="D:\Code\amina-droid\my-choice-v2-react\src\apollo\queries\GetUser" />
       <recent name="D:\Code\amina-droid\my-choice-v2-react\src" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Code\amina-droid\my-choice-v2-react\src\pages\Game\GameField" />
+      <recent name="D:\Code\amina-droid\my-choice-v2-react\src\types" />
+      <recent name="D:\Code\amina-droid\my-choice-v2-react\src\pages\Game\LeaveGame" />
+      <recent name="D:\Code\amina-droid\my-choice-v2-react\src\components" />
+      <recent name="D:\Code\amina-droid\my-choice-v2-react\src\shared" />
     </key>
   </component>
   <component name="RunManager" selected="npm.typegen">
@@ -115,7 +113,7 @@
       </list>
     </recent_temporary>
   </component>
-  <component name="SpellCheckerSettings" BundledDictionaries="0" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="false" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -221,13 +219,12 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="COLUMN_ORDER" />
-            </State>
+            <State />
           </value>
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="fixed api url" />
@@ -239,32 +236,6 @@
     <MESSAGE value="add list of comments count" />
     <MESSAGE value="change autonickname" />
     <option name="LAST_COMMIT_MESSAGE" value="change autonickname" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="303" y="52" key="CommitChangelistDialog2" timestamp="1616334751021">
-      <screen x="0" y="0" width="1440" height="900" />
-    </state>
-    <state x="303" y="52" key="CommitChangelistDialog2/0.0.1440.900@0.0.1440.900" timestamp="1616334751021" />
-    <state width="1398" height="245" key="GridCell.Tab.0.bottom" timestamp="1616333138107">
-      <screen x="0" y="0" width="1440" height="900" />
-    </state>
-    <state width="1398" height="245" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1616333138107" />
-    <state width="1398" height="245" key="GridCell.Tab.0.center" timestamp="1616333138106">
-      <screen x="0" y="0" width="1440" height="900" />
-    </state>
-    <state width="1398" height="245" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1616333138106" />
-    <state width="1398" height="245" key="GridCell.Tab.0.left" timestamp="1616333138105">
-      <screen x="0" y="0" width="1440" height="900" />
-    </state>
-    <state width="1398" height="245" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1616333138105" />
-    <state width="1398" height="245" key="GridCell.Tab.0.right" timestamp="1616333138106">
-      <screen x="0" y="0" width="1440" height="900" />
-    </state>
-    <state width="1398" height="245" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1616333138106" />
-    <state x="376" y="207" width="687" height="486" key="find.popup" timestamp="1616334591350">
-      <screen x="0" y="0" width="1440" height="900" />
-    </state>
-    <state x="376" y="207" width="687" height="486" key="find.popup/0.0.1440.900@0.0.1440.900" timestamp="1616334591350" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
