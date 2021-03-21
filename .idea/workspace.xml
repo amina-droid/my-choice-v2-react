@@ -2,45 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="632a05cc-275b-496b-89d0-013380cb937f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/apollo/fragments/ActiveGame/fragment.gql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/apollo/fragments/ActiveGame/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/apollo/fragments/ChatMessage/fragment.gql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/apollo/fragments/ChatMessage/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/apollo/fragments/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/apollo/mutations/LeaveGame/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/apollo/mutations/LeaveGame/query.gql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/apollo/subscriptions/UpdateActiveGame/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/apollo/subscriptions/UpdateActiveGame/query.gql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schema.gql" beforeDir="false" afterPath="$PROJECT_DIR$/schema.gql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/apollo/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/apollo/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/apollo/mutations/AuthVK/types/AuthVK.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/apollo/mutations/AuthVK/types/AuthVK.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/apollo/mutations/CreateCard/CreateChoice/types/CreateChoice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/apollo/mutations/CreateCard/CreateChoice/types/CreateChoice.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/apollo/mutations/CreateGame/types/CreateGame.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/apollo/mutations/CreateGame/types/CreateGame.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/apollo/mutations/DeleteCard/types/DeleteCard.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/apollo/mutations/DeleteCard/types/DeleteCard.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/apollo/mutations/SendMessage/types/SendMessage.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/apollo/mutations/SendMessage/types/SendMessage.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/apollo/mutations/UpdateNickname/types/UpdateNickname.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/apollo/mutations/UpdateNickname/types/UpdateNickname.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/apollo/mutations/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/apollo/mutations/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/apollo/queries/GetActiveGames/types/GetActiveGames.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/apollo/queries/GetActiveGames/types/GetActiveGames.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/apollo/queries/GetCards/types/GetCards.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/apollo/queries/GetCards/types/GetCards.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/apollo/queries/GetMessages/query.gql" beforeDir="false" afterPath="$PROJECT_DIR$/src/apollo/queries/GetMessages/query.gql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/apollo/queries/GetMessages/types/GetMessages.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/apollo/queries/GetMessages/types/GetMessages.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/apollo/queries/GetUser/types/GetUser.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/apollo/queries/GetUser/types/GetUser.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/apollo/queries/GetVKRedirectUrl/types/GetVKOAuthRedirect.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/apollo/queries/GetVKRedirectUrl/types/GetVKOAuthRedirect.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/apollo/queries/JoinGame/query.gql" beforeDir="false" afterPath="$PROJECT_DIR$/src/apollo/queries/JoinGame/query.gql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/apollo/queries/JoinGame/types/JoinGame.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/apollo/queries/JoinGame/types/JoinGame.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/apollo/queries/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/apollo/queries/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/apollo/subscriptions/OnMessage/query.gql" beforeDir="false" afterPath="$PROJECT_DIR$/src/apollo/subscriptions/OnMessage/query.gql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/apollo/subscriptions/OnMessage/types/OnMessage.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/apollo/subscriptions/OnMessage/types/OnMessage.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/apollo/subscriptions/UpdateActiveGames/query.gql" beforeDir="false" afterPath="$PROJECT_DIR$/src/apollo/subscriptions/UpdateActiveGames/query.gql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/apollo/subscriptions/UpdateActiveGames/types/UpdateActiveGames.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/apollo/subscriptions/UpdateActiveGames/types/UpdateActiveGames.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/apollo/subscriptions/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/apollo/subscriptions/index.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/Game/Game.module.sass" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Game/Game.module.sass" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/Game/Game.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Game/Game.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Game/LeaveGame/leave.svg" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Game/LeaveGame/Leave.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Game/PlayersTable/PlayersTable.module.sass" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Game/PlayersTable/PlayersTable.module.sass" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Login/Login.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Login/Login.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/types/globalTypes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/globalTypes.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -210,7 +175,14 @@
       <option name="project" value="LOCAL" />
       <updated>1615883196937</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="add UpdateActiveGame">
+      <created>1616334787947</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1616334787947</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -238,13 +210,14 @@
     <MESSAGE value="add logout" />
     <MESSAGE value="add list of comments count" />
     <MESSAGE value="change autonickname" />
-    <option name="LAST_COMMIT_MESSAGE" value="change autonickname" />
+    <MESSAGE value="add UpdateActiveGame" />
+    <option name="LAST_COMMIT_MESSAGE" value="add UpdateActiveGame" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="303" y="52" key="CommitChangelistDialog2" timestamp="1616334751021">
+    <state x="303" y="52" key="CommitChangelistDialog2" timestamp="1616334787554">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
-    <state x="303" y="52" key="CommitChangelistDialog2/0.0.1440.900@0.0.1440.900" timestamp="1616334751021" />
+    <state x="303" y="52" key="CommitChangelistDialog2/0.0.1440.900@0.0.1440.900" timestamp="1616334787554" />
     <state width="1398" height="245" key="GridCell.Tab.0.bottom" timestamp="1616333138107">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
@@ -261,6 +234,10 @@
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state width="1398" height="245" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1616333138106" />
+    <state x="320" y="190" key="Vcs.Push.Dialog.v2" timestamp="1616334789844">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="320" y="190" key="Vcs.Push.Dialog.v2/0.0.1440.900@0.0.1440.900" timestamp="1616334789844" />
     <state x="376" y="207" width="687" height="486" key="find.popup" timestamp="1616334591350">
       <screen x="0" y="0" width="1440" height="900" />
     </state>

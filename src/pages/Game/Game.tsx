@@ -112,7 +112,7 @@ const Game: FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
         <Chat game={{ name: data?.joinGame.name, topic: data?.joinGame._id }} />
       </div>
       <div className={s.playingField}>
-        <GameField />
+        <GameField className={s.svg} />
       </div>
     </div>
   );
