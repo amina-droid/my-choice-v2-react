@@ -50,6 +50,7 @@ type Game {
 
 type GameSession {
     _id: ObjectId!
+    creator: ObjectId!
     name: String!
     observers: Int!
     players: [Player!]!
@@ -73,7 +74,7 @@ type Message {
 
 type Mutation {
     authVK(code: String!): AuthResponse!
-    choiceDream(dream: Float!): Boolean!
+    choiceDream(dream: Int!): Boolean!
     createChoicesCard(createChoicesCard: ChoicesCardInput!): Card!
     createGame(createGameInput: CreateGameInput!): GameSession!
     createIncidentCard(createIncidentCard: IncidentCardInput!): Card!

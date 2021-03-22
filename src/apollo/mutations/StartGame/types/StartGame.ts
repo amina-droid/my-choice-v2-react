@@ -4,16 +4,13 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: GetCards
+// GraphQL mutation operation: StartGame
 // ====================================================
 
-export interface GetCards_cards {
-  __typename: "ChoiceCard" | "Incident";
-  description: string;
-  typeName: string;
-  _id: any;
+export interface StartGame {
+  startGame: boolean;
 }
 
-export interface GetCards {
-  cards: GetCards_cards[];
+export interface StartGameVariables {
+  gameId: any;
 }

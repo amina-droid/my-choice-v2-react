@@ -60,6 +60,7 @@ const Lobby = () => {
   };
 
   const handleCreateGame = async (values: CreateGameValues) => {
+    form.resetFields();
     const { data: res } = await createGame({
       variables: { name: values.gameName },
     });
@@ -108,7 +109,10 @@ const Lobby = () => {
           }
         >
           <Form form={form}>
-            <Form.Item name="gameName">
+            <Form.Item
+              name="gameName"
+              rules={[{ required: true, message: 'Введите название игры' }]}
+            >
               <Input placeholder="Введите название игры" />
             </Form.Item>
           </Form>

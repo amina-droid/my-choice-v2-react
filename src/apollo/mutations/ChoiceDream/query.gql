@@ -1,0 +1,3 @@
+mutation ChoiceDream ($dream: Int! ) {
+    choiceDream(dream: $dream)
+}

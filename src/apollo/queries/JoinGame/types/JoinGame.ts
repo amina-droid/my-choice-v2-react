@@ -1,8 +1,9 @@
 /* tslint:disable */
 /* eslint-disable */
+// @generated
 // This file was automatically generated and should not be edited.
 
-import { PlayerPosition, PlayerStatus } from "./../../../../types/globalTypes";
+import { GameStatus, PlayerPosition, PlayerStatus } from "./../../../../types/globalTypes";
 
 // ====================================================
 // GraphQL query operation: JoinGame
@@ -22,6 +23,7 @@ export interface JoinGame_joinGame_players {
   nickname: string;
   position: PlayerPosition | null;
   status: PlayerStatus;
+  dream: number | null;
   resources: JoinGame_joinGame_players_resources | null;
   hold: number | null;
   avatar: string | null;
@@ -32,6 +34,8 @@ export interface JoinGame_joinGame {
   _id: any;
   name: string;
   observers: number;
+  creator: any;
+  status: GameStatus;
   players: JoinGame_joinGame_players[];
 }
 

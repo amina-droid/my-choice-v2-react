@@ -2,11 +2,14 @@ fragment ActiveGame on GameSession {
     _id,
     name,
     observers,
+    creator,
+    status,
     players{
         _id,
         nickname,
         position,
         status,
+        dream,
         resources{
             lives,
             white,

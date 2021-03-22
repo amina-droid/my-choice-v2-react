@@ -1,0 +1,16 @@
+@keyframes pulse
+    0%
+        transform: scale(1, 1)
+    50%
+        transform: scale(1.1, 1.1)
+    100%
+        transform: scale(1.05, 1.05)
+
+
+.activeDream
+    transform-box: fill-box
+    transform-origin: center center
+    animation: pulse 0.5s linear alternate-reverse infinite
+    cursor: pointer
+    &:hover
+        transform: scale(1.2)
