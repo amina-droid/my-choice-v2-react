@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { Button } from 'antd';
 import cn from 'classnames';
 import { ReactComponent as Dice0 } from './Dice0.svg';
@@ -30,29 +30,38 @@ type DiceProps = {
   onRoll?: (value: number) => void;
 };
 
+type DiceStatus = 'ready' | 'roll' | 'disabled';
+
 const Dice: FC<DiceProps> = ({ ready, onRoll }) => {
-  const [diceIsActive, setDiceIsActive] = useState<boolean>(false);
+  const [diceStatus, setDiceStatus] = useState<DiceStatus>('disabled');
   const [currentDice, setCurrentDice] = useState<number>(0);
 
+  useEffect(() => {
+    if (ready) {
+      setDiceStatus('ready');
+    }
+  }, [ready]);
+
   const clickDice = () => {
-    setDiceIsActive(true);
+    setDiceStatus('roll');
     const randomNumber = getRandom();
-    onRoll && onRoll(randomNumber);
+    if (onRoll) {
+      onRoll(randomNumber);
+    }
     setTimeout(() => {
       setCurrentDice(randomNumber);
-      setDiceIsActive(false);
+      setDiceStatus('disabled');
     }, 1500);
   };
 
-  const className = ready ? (diceIsActive ? s.rollDice : s.readyDice) : s.disabledDice;
-
+  const className = s[`${diceStatus}Dice`];
   return (
     <div className={s.container}>
       <button
         type="button"
         className={cn(s.diceBtn, className)}
         onClick={clickDice}
-        disabled={!ready}
+        disabled={diceStatus === 'disabled'}
       >
         {diceEdges[currentDice]}
       </button>
