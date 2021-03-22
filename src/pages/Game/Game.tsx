@@ -99,9 +99,7 @@ const Game: FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
         <Popconfirm
           placement="right"
           title="Вы уверены что хотите выйти из игры?"
-          onConfirm={() => {
-            leaveGame();
-          }}
+          onConfirm={leaveGame}
           okText="Да"
           cancelText="Нет"
         >
