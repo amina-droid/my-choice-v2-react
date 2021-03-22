@@ -4,11 +4,11 @@ fragment ActiveGame on GameSession {
     observers,
     creator,
     status,
+    mover,
     players{
         _id,
         nickname,
         position,
-        status,
         dream,
         resources{
             lives,
@@ -17,6 +17,7 @@ fragment ActiveGame on GameSession {
             money
         },
         hold,
+        gameover,
         avatar,
     }
 }

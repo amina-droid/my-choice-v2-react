@@ -13,8 +13,10 @@ type GameFieldProps = {
 
 const addActiveToDream = (cb: any) => (el: Element, i: number, parent: Element[]) => {
   el.classList.add(s.activeDream);
-  const listener = (evt: any) => cb(Number((evt.currentTarget as any)?.dataset.position));
-  el.addEventListener('click', listener);
+  const listener = (evt: any) => {
+    cb(Number((evt.currentTarget as any)?.dataset.position));
+  };
+  el.addEventListener('click', listener, { once: true });
   return () => {
     el.removeEventListener('click', listener);
     parent.forEach(elm => elm.classList.remove(s.activeDream));

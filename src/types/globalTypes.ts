@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @generated
 // This file was automatically generated and should not be edited.
 
 //==============================================================
@@ -31,14 +30,6 @@ export enum PlayerPosition {
   Inner = "Inner",
   Outer = "Outer",
   Start = "Start",
-}
-
-export enum PlayerStatus {
-  Awaiting = "Awaiting",
-  Gameover = "Gameover",
-  Hold = "Hold",
-  InGame = "InGame",
-  Winner = "Winner",
 }
 
 export enum UserRole {

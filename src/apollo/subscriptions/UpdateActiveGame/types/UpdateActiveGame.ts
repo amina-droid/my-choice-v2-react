@@ -1,9 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
-// @generated
 // This file was automatically generated and should not be edited.
 
-import { GameStatus, PlayerPosition, PlayerStatus } from "./../../../../types/globalTypes";
+import { GameStatus, PlayerPosition } from "./../../../../types/globalTypes";
 
 // ====================================================
 // GraphQL subscription operation: UpdateActiveGame
@@ -22,10 +21,10 @@ export interface UpdateActiveGame_updateActiveGame_players {
   _id: any;
   nickname: string;
   position: PlayerPosition | null;
-  status: PlayerStatus;
   dream: number | null;
   resources: UpdateActiveGame_updateActiveGame_players_resources | null;
   hold: number | null;
+  gameover: boolean;
   avatar: string | null;
 }
 
@@ -36,6 +35,7 @@ export interface UpdateActiveGame_updateActiveGame {
   observers: number;
   creator: any;
   status: GameStatus;
+  mover: any | null;
   players: UpdateActiveGame_updateActiveGame_players[];
 }
 

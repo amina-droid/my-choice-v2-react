@@ -27,15 +27,17 @@ const getRandom = () => {
 
 type DiceProps = {
   ready?: boolean;
+  onRoll?: (value: number) => void;
 };
 
-const Dice: FC<DiceProps> = ({ ready }) => {
+const Dice: FC<DiceProps> = ({ ready, onRoll }) => {
   const [diceIsActive, setDiceIsActive] = useState<boolean>(false);
   const [currentDice, setCurrentDice] = useState<number>(0);
 
   const clickDice = () => {
     setDiceIsActive(true);
     const randomNumber = getRandom();
+    onRoll && onRoll(randomNumber);
     setTimeout(() => {
       setCurrentDice(randomNumber);
       setDiceIsActive(false);

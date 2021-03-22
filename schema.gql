@@ -51,6 +51,7 @@ type Game {
 type GameSession {
     _id: ObjectId!
     creator: ObjectId!
+    mover: ObjectId
     name: String!
     observers: Int!
     players: [Player!]!
@@ -96,11 +97,12 @@ type Player {
     avatar: String
     disconnected: Boolean!
     dream: Int
+    gameover: Boolean!
     hold: Int
     nickname: String!
     position: PlayerPosition
     resources: Resources
-    status: PlayerStatus!
+    winner: Boolean!
 }
 
 type Query {
@@ -183,14 +185,6 @@ enum PlayerPosition {
     Inner
     Outer
     Start
-}
-
-enum PlayerStatus {
-    Awaiting
-    Gameover
-    Hold
-    InGame
-    Winner
 }
 
 enum UserRole {

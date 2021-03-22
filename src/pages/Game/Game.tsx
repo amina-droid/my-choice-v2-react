@@ -1,5 +1,5 @@
 import React, { FC, useContext, useEffect, useState } from 'react';
-import { Button, message, Popconfirm } from 'antd';
+import { Button, message, Popconfirm, Spin } from 'antd';
 import { RouteComponentProps, useHistory } from 'react-router-dom';
 import { useLazyQuery, useMutation } from '@apollo/client';
 import {
@@ -47,9 +47,10 @@ const Game: FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
   const [leaveGameReq] = useMutation<TLeaveGame>(LEAVE_GAME);
   const [choiceDream] = useMutation<ChoiceDream, ChoiceDreamVariables>(CHOICE_DREAM);
   const [startGameReq] = useMutation<StartGame, StartGameVariables>(START_GAME);
-  const [joinGame, { data, error, subscribeToMore }] = useLazyQuery<JoinGame, JoinGameVariables>(
+  const [joinGameReq, { data, error, subscribeToMore }] = useLazyQuery<JoinGame, JoinGameVariables>(
     JOIN_GAME,
     {
+      fetchPolicy: 'cache-first',
       variables: {
         gameId: match.params.id,
       },
@@ -57,8 +58,8 @@ const Game: FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
   );
 
   useEffect(() => {
-    joinGame();
-  }, []);
+    joinGameReq();
+  }, [match.params.id]);
 
   useEffect(() => {
     if (!subscribeToMore) return () => {};
@@ -85,8 +86,6 @@ const Game: FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
     }
   }, [error, history]);
 
-  if (!data) return null;
-
   const leaveGame = async () => {
     history.push('/lobby');
     await leaveGameReq();
@@ -99,16 +98,25 @@ const Game: FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
   const handleChoiceDream = (id: number) => {
     choiceDream({ variables: { dream: id } });
   };
-  console.log(data.joinGame.status === GameStatus.InProgress);
+
+  if (!data?.joinGame) return <Spin size="large" />;
+  const {
+    creator,
+    status,
+    mover,
+    name: gameName,
+    _id: gameId,
+  } = data.joinGame;
+
   return (
     <div className={s.gameContainer}>
       <div className={s.header}>
-        {data.joinGame.status === GameStatus.Awaiting && data.joinGame.creator === user?._id && (
-          <Button type="primary" onClick={() => startGame(data?.joinGame._id)}>
+        {status === GameStatus.Awaiting && creator === user?._id && (
+          <Button type="primary" onClick={() => startGame(gameId)}>
             Начать игру
           </Button>
         )}
-        {data.joinGame.status === GameStatus.InProgress && <Dice />}
+        {status === GameStatus.InProgress && <Dice ready={mover} />}
       </div>
       <div className={s.playersTableContainer}>
         <PlayersTable players={data.joinGame.players} />
@@ -126,7 +134,7 @@ const Game: FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
             <LeaveGame className={s.action} />
           </div>
         </Popconfirm>
-        <Chat game={{ name: data?.joinGame.name, topic: data?.joinGame._id }} />
+        <Chat game={{ name: gameName, topic: gameId }} />
       </div>
       <div className={s.playingField}>
         <GameField game={data.joinGame} onChoiceDream={handleChoiceDream} />
