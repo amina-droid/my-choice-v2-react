@@ -16,7 +16,10 @@ import {
   StartGameVariables,
   CHOICE_DREAM,
   ChoiceDream,
-  ChoiceDreamVariables, GameMove, GameMoveVariables, GAME_MOVE,
+  ChoiceDreamVariables,
+  GameMove,
+  GameMoveVariables,
+  GAME_MOVE,
 } from '../../apollo';
 
 import LeaveGame from './LeaveGame/LeaveGame';
@@ -89,6 +92,7 @@ const Game: FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
   const [leaveGameReq] = useMutation<TLeaveGame>(LEAVE_GAME);
   const [choiceDream] = useMutation<ChoiceDream, ChoiceDreamVariables>(CHOICE_DREAM);
   const [startGameReq] = useMutation<StartGame, StartGameVariables>(START_GAME);
+  const [visible, setVisible] = useState<boolean>(false);
   const [joinGameReq, { data, error, subscribeToMore }] = useLazyQuery<JoinGame, JoinGameVariables>(
     JOIN_GAME,
     {
@@ -165,17 +169,21 @@ const Game: FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
   };
 
   if (!data?.joinGame) return <Spin size="large" />;
-  const {
-    creator,
-    status,
-    mover,
-    name: gameName,
-    _id: gameId,
-  } = data.joinGame;
+  const { creator, status, mover, name: gameName, _id: gameId } = data.joinGame;
+
+  const diceIsBreak = () => {
+    setVisible(true);
+  };
+
+  const closeModal = () => {
+    setVisible(false);
+  };
+
+  console.log(visible);
 
   return (
     <div className={s.gameContainer}>
-      <CardModal gameId={match.params.id} />
+      <CardModal gameId={match.params.id} visible={visible} closeModal={closeModal} />
       <div className={s.header}>
         {status === GameStatus.Awaiting && creator === user?._id && (
           <Button type="primary" onClick={() => startGame(gameId)}>
@@ -183,7 +191,7 @@ const Game: FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
           </Button>
         )}
         {status === GameStatus.InProgress && (
-          <Dice ready={mover} onRoll={gameMove} />
+          <Dice ready={mover} onRoll={gameMove} diceIsBreak={() => diceIsBreak()} />
         )}
       </div>
       <div className={s.playersTableContainer}>

@@ -80,6 +80,7 @@ type Message {
 
 type Mutation {
     authVK(code: String!): AuthResponse!
+    choice(cardId: ObjectId!, choiceId: ObjectId): Boolean!
     choiceDream(dream: Int!): Boolean!
     createChoicesCard(createChoicesCard: ChoicesCardInput!): Card!
     createGame(createGameInput: CreateGameInput!): GameSession!

@@ -1,30 +1,86 @@
 import React, { FC, useContext } from 'react';
-import { useSubscription } from '@apollo/client';
+import { Breadcrumb, Button, Modal, Typography } from 'antd';
+import { useMutation, useSubscription } from '@apollo/client';
 
 import {
   OnDroppedCard,
   OnDroppedCardVariables,
   ON_DROPPED_CARD,
+  Choice,
+  CHOICE,
+  ChoiceVariables,
 } from '../../../apollo';
 import { AuthContext } from '../../../context/auth';
 
-type CardModalProps = {
-  gameId: string
-}
-const CardModal: FC<CardModalProps> = ({ gameId }) => {
-  const { user } = useContext(AuthContext);
-  useSubscription<OnDroppedCard, OnDroppedCardVariables>(ON_DROPPED_CARD, {
-    variables: {
-      gameId,
-    },
-    fetchPolicy: 'network-only',
-    onSubscriptionData: ({ subscriptionData }) => {
-      if (!subscriptionData.data?.cardDropped) return;
-      const { cardDropped: card } = subscriptionData.data;
-    },
-  });
+import s from './CardModal.module.sass';
 
-  return <div />;
+type CardModalProps = {
+  gameId: string;
+  visible: boolean;
+  closeModal: () => void;
 };
+const CardModal: FC<CardModalProps> = React.memo(
+  ({ gameId, visible, closeModal }) => {
+    const { user } = useContext(AuthContext);
+    const [choiceReq] = useMutation<Choice, ChoiceVariables>(CHOICE);
+    const { data } = useSubscription<OnDroppedCard, OnDroppedCardVariables>(ON_DROPPED_CARD, {
+      variables: {
+        gameId,
+      },
+      fetchPolicy: 'network-only',
+      onSubscriptionData: ({ subscriptionData }) => {
+        if (!subscriptionData.data?.cardDropped) return;
+        const { cardDropped: card } = subscriptionData.data;
+      },
+    });
+
+    console.log(data);
+
+    const onClick = (cardId: string, choiceId?: string) => {
+      choiceReq({ variables: { cardId, choiceId } });
+      closeModal();
+    };
+
+    return (
+      <>
+        <Modal
+          visible={visible}
+          title={data?.cardDropped.card.typeName}
+          footer={false}
+          closable={false}
+          destroyOnClose
+        >
+          <Typography.Text>{data?.cardDropped.card.description}</Typography.Text>
+          <div className={s.choiceContainer}>
+            {data?.cardDropped.card.__typename === 'ChoiceCard' &&
+              data.cardDropped.card.choices.map(choice => (
+                <Button
+                  type="default"
+                  key={choice._id}
+                  onClick={() => onClick(data?.cardDropped.card._id, choice._id)}
+                  block
+                >
+                  {choice.description}
+                </Button>
+              ))}
+            {data?.cardDropped.card.__typename !== 'ChoiceCard' && (
+              <Button
+                type="primary"
+                key={data?.cardDropped.card._id}
+                onClick={() => onClick(data?.cardDropped.card._id)}
+                block
+              >
+                Ок
+              </Button>
+            )}
+          </div>
+        </Modal>
+      </>
+    );
+  },
+  (prevProps, nextProps) => {
+    return prevProps.gameId === nextProps.gameId && prevProps.visible === nextProps.visible;
+  },
+);
 
 export default CardModal;

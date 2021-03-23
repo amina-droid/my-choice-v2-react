@@ -4,16 +4,14 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: GetCards
+// GraphQL mutation operation: Choice
 // ====================================================
 
-export interface GetCards_cards {
-  __typename: "ChoiceCard" | "Incident";
-  description: string;
-  typeName: string;
-  _id: any;
+export interface Choice {
+  choice: boolean;
 }
 
-export interface GetCards {
-  cards: GetCards_cards[];
+export interface ChoiceVariables {
+  cardId: any;
+  choiceId?: any | null;
 }

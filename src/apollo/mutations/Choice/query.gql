@@ -1,0 +1,3 @@
+mutation Choice ($cardId: ObjectId!, $choiceId: ObjectId) {
+    choice(cardId: $cardId, choiceId: $choiceId)
+}

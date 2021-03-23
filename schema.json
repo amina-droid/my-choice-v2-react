@@ -50,7 +50,7 @@
             "deprecationReason": null
           },
           {
-            "name": "typeName",
+            "name": "description",
             "description": null,
             "args": [],
             "type": {
@@ -66,7 +66,7 @@
             "deprecationReason": null
           },
           {
-            "name": "description",
+            "name": "typeName",
             "description": null,
             "args": [],
             "type": {
@@ -671,6 +671,18 @@
             "deprecationReason": null
           },
           {
+            "name": "mover",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "ObjectId",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "players",
             "description": null,
             "args": [],
@@ -886,22 +898,6 @@
             "deprecationReason": null
           },
           {
-            "name": "status",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "ENUM",
-                "name": "PlayerStatus",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "resources",
             "description": null,
             "args": [],
@@ -926,17 +922,13 @@
             "deprecationReason": null
           },
           {
-            "name": "disconnected",
+            "name": "cell",
             "description": null,
             "args": [],
             "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "Boolean",
-                "ofType": null
-              }
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -952,53 +944,47 @@
             },
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "disconnected",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "gameover",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "winner",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
         "inputFields": null,
         "interfaces": [],
         "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "ENUM",
-        "name": "PlayerStatus",
-        "description": null,
-        "specifiedByUrl": null,
-        "fields": null,
-        "inputFields": null,
-        "interfaces": null,
-        "enumValues": [
-          {
-            "name": "Awaiting",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "InGame",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "Hold",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "Winner",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "Gameover",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          }
-        ],
         "possibleTypes": null
       },
       {
@@ -1255,7 +1241,7 @@
             "deprecationReason": null
           },
           {
-            "name": "typeName",
+            "name": "description",
             "description": null,
             "args": [],
             "type": {
@@ -1271,7 +1257,7 @@
             "deprecationReason": null
           },
           {
-            "name": "description",
+            "name": "typeName",
             "description": null,
             "args": [],
             "type": {
@@ -1361,7 +1347,7 @@
             "deprecationReason": null
           },
           {
-            "name": "typeName",
+            "name": "description",
             "description": null,
             "args": [],
             "type": {
@@ -1377,7 +1363,7 @@
             "deprecationReason": null
           },
           {
-            "name": "description",
+            "name": "typeName",
             "description": null,
             "args": [],
             "type": {
@@ -1417,6 +1403,50 @@
             "ofType": null
           }
         ],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "DroppedCard",
+        "description": null,
+        "specifiedByUrl": null,
+        "fields": [
+          {
+            "name": "forPlayer",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "ObjectId",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "card",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "INTERFACE",
+                "name": "Card",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
         "enumValues": null,
         "possibleTypes": null
       },
@@ -1933,6 +1963,84 @@
                   "ofType": {
                     "kind": "SCALAR",
                     "name": "Int",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "move",
+            "description": null,
+            "args": [
+              {
+                "name": "moveCount",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Int",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "choice",
+            "description": null,
+            "args": [
+              {
+                "name": "choiceId",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "ObjectId",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "cardId",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "ObjectId",
                     "ofType": null
                   }
                 },
@@ -2570,6 +2678,39 @@
               "ofType": {
                 "kind": "OBJECT",
                 "name": "GameSession",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "cardDropped",
+            "description": null,
+            "args": [
+              {
+                "name": "gameId",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "ObjectId",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "DroppedCard",
                 "ofType": null
               }
             },

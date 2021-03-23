@@ -8,3 +8,4 @@ export * from './LeaveGame';
 export * from './SendMessage';
 export * from './StartGame';
 export * from './UpdateNickname';
+export * from './Choice';

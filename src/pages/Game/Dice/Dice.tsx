@@ -9,6 +9,7 @@ import { ReactComponent as Dice5 } from './Dice5.svg';
 import { ReactComponent as Dice6 } from './Dice6.svg';
 
 import s from './Dice.module.sass';
+import timeout from '../../../utils/timeout';
 
 const diceEdges = [
   <Dice0 key="0" />,
@@ -27,11 +28,12 @@ const getRandom = () => {
 type DiceProps = {
   ready?: boolean;
   onRoll?: (value: number) => void;
+  diceIsBreak: () => void;
 };
 
 type DiceStatus = 'ready' | 'roll' | 'disabled';
 
-const Dice: FC<DiceProps> = ({ ready, onRoll }) => {
+const Dice: FC<DiceProps> = ({ ready, onRoll, diceIsBreak }) => {
   const [diceStatus, setDiceStatus] = useState<DiceStatus>('disabled');
   const [currentDice, setCurrentDice] = useState<number>(0);
 
@@ -41,16 +43,18 @@ const Dice: FC<DiceProps> = ({ ready, onRoll }) => {
     }
   }, [ready]);
 
-  const clickDice = () => {
+  const clickDice = async () => {
     setDiceStatus('roll');
     const randomNumber = getRandom();
     if (onRoll) {
       onRoll(randomNumber);
     }
-    setTimeout(() => {
-      setCurrentDice(randomNumber);
-      setDiceStatus('disabled');
-    }, 1500);
+    await timeout(1500);
+    setCurrentDice(randomNumber);
+    setDiceStatus('disabled');
+
+    await timeout(500);
+    diceIsBreak();
   };
 
   const className = s[`${diceStatus}Dice`];
