@@ -1,5 +1,5 @@
 import React, { FC, useContext, useEffect, useState } from 'react';
-import { Button, message, Popconfirm, Spin } from 'antd';
+import { Button, message, Popconfirm, Spin, Modal } from 'antd';
 import { RouteComponentProps, useHistory } from 'react-router-dom';
 import { useLazyQuery, useMutation } from '@apollo/client';
 import {
@@ -16,7 +16,7 @@ import {
   StartGameVariables,
   CHOICE_DREAM,
   ChoiceDream,
-  ChoiceDreamVariables,
+  ChoiceDreamVariables, GameMove, GameMoveVariables, GAME_MOVE,
 } from '../../apollo';
 
 import LeaveGame from './LeaveGame/LeaveGame';
@@ -25,6 +25,7 @@ import s from './Game.module.sass';
 import Chat from '../../components/Chat/Chat';
 import PlayersTable from './PlayersTable/PlayersTable';
 import ChangeResources from './ChangeResources/ChangeResources';
+import CardModal from './CardModal/CardModal';
 import Dice from './Dice/Dice';
 import { AuthContext } from '../../context/auth';
 import { GameStatus } from '../../types';
@@ -41,6 +42,47 @@ export const COLORS = [
   '--game-black',
 ];
 
+function closePage(onOk: () => void) {
+  return (e: BeforeUnloadEvent) => {
+    Modal.confirm({
+      title: 'Выход',
+      cancelText: 'Нет',
+      okText: 'Да',
+      closable: true,
+      content: (
+        <div>
+          <p>Вы уверены что хотите выйти из игры?</p>
+        </div>
+      ),
+      onOk,
+    });
+    e.preventDefault();
+    e.returnValue = 'Are you sure you want to close?';
+  };
+}
+
+function changePage(onOk: () => void) {
+  return (e: PopStateEvent) => {
+    e.preventDefault();
+    // eslint-disable-next-line no-restricted-globals
+    window.history.pushState(null, 'Мой выбор: игровая сессия', location.href);
+    // eslint-disable-next-line no-restricted-globals
+    window.history.go(1);
+    Modal.confirm({
+      title: 'Выход',
+      cancelText: 'Нет',
+      okText: 'Да',
+      closable: true,
+      content: (
+        <div>
+          <p>Вы уверены что хотите выйти из игры?</p>
+        </div>
+      ),
+      onOk,
+    });
+  };
+}
+
 const Game: FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
   const history = useHistory();
   const { user } = useContext(AuthContext);
@@ -56,6 +98,21 @@ const Game: FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
       },
     },
   );
+  const [moveReq] = useMutation<GameMove, GameMoveVariables>(GAME_MOVE);
+
+  useEffect(() => {
+    const listener = closePage(leaveGameReq);
+    window.addEventListener('beforeunload', listener);
+
+    return () => window.removeEventListener('beforeunload', listener);
+  }, []);
+
+  useEffect(() => {
+    const listener = changePage(leaveGameReq);
+    window.addEventListener('popstate', listener);
+
+    return () => window.removeEventListener('popstate', listener);
+  }, []);
 
   useEffect(() => {
     joinGameReq();
@@ -95,6 +152,14 @@ const Game: FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
     startGameReq({ variables: { gameId: id } });
   };
 
+  const gameMove = (move: number) => {
+    moveReq({
+      variables: {
+        move,
+      },
+    });
+  };
+
   const handleChoiceDream = (id: number) => {
     choiceDream({ variables: { dream: id } });
   };
@@ -110,13 +175,16 @@ const Game: FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
 
   return (
     <div className={s.gameContainer}>
+      <CardModal gameId={match.params.id} />
       <div className={s.header}>
         {status === GameStatus.Awaiting && creator === user?._id && (
           <Button type="primary" onClick={() => startGame(gameId)}>
             Начать игру
           </Button>
         )}
-        {status === GameStatus.InProgress && <Dice ready={mover} />}
+        {status === GameStatus.InProgress && (
+          <Dice ready={mover} onRoll={gameMove} />
+        )}
       </div>
       <div className={s.playersTableContainer}>
         <PlayersTable players={data.joinGame.players} />

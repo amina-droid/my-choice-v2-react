@@ -21,10 +21,11 @@ export interface ActiveGame_players {
   _id: any;
   nickname: string;
   position: PlayerPosition | null;
+  cell: number | null;
   dream: number | null;
   resources: ActiveGame_players_resources | null;
   hold: number | null;
-  gameover: boolean;
+  gameover: boolean | null;
   avatar: string | null;
 }
 

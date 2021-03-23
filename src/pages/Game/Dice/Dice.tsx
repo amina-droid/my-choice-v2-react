@@ -1,5 +1,4 @@
 import React, { FC, useEffect, useState } from 'react';
-import { Button } from 'antd';
 import cn from 'classnames';
 import { ReactComponent as Dice0 } from './Dice0.svg';
 import { ReactComponent as Dice1 } from './Dice1.svg';

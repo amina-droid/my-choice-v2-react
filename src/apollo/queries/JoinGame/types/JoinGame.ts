@@ -21,10 +21,11 @@ export interface JoinGame_joinGame_players {
   _id: any;
   nickname: string;
   position: PlayerPosition | null;
+  cell: number | null;
   dream: number | null;
   resources: JoinGame_joinGame_players_resources | null;
   hold: number | null;
-  gameover: boolean;
+  gameover: boolean | null;
   avatar: string | null;
 }
 

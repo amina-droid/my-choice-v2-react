@@ -1,10 +1,12 @@
-import React, { FC, useContext, useEffect, useRef } from 'react';
-import { ReactComponent as GameFieldSvg } from './GameSVG.svg';
+import React, { FC, useContext, useEffect, useRef, Suspense } from 'react';
+import { Spin } from 'antd';
 import { ActiveGame } from '../../../apollo';
 import { GameStatus } from '../../../types';
 import { AuthContext } from '../../../context/auth';
 
 import s from './GameField.module.sass';
+
+const GameFieldSvg = React.lazy(() => import('./GameFieldSvg'));
 
 type GameFieldProps = {
   game: ActiveGame;
@@ -30,11 +32,10 @@ const GameField: FC<GameFieldProps> = ({ game, onChoiceDream }) => {
   const myPlayer = game.players.find(player => player._id === user?._id);
 
   useEffect(() => {
-    console.log(game);
-    if (
-      game.status === GameStatus.ChoiceDream &&
-      game.players.some(player => player._id === user?._id && !player.dream)
-    ) {
+    const playerDreamNotExist = game.status === GameStatus.ChoiceDream &&
+      game.players.some(player => player._id === user?._id && !player.dream);
+
+    if (playerDreamNotExist) {
       const dreamFields = svgRef?.current?.querySelectorAll('[data-field="Dream"]');
 
       if (!dreamFields) return () => {};
@@ -45,7 +46,6 @@ const GameField: FC<GameFieldProps> = ({ game, onChoiceDream }) => {
 
     return () => {};
   }, [game.status, myPlayer?.dream]);
-  console.log(svgRef);
 
   return (
     <>
@@ -57,7 +57,11 @@ const GameField: FC<GameFieldProps> = ({ game, onChoiceDream }) => {
 const StaticGameField = React.memo(
   React.forwardRef<SVGSVGElement>((_, ref) => {
     console.log('FIELD RERENDER!!!');
-    return <GameFieldSvg ref={ref} />;
+    return (
+      <Suspense fallback={<Spin size="large" />}>
+        <GameFieldSvg ref={ref} />
+      </Suspense>
+    );
   }),
 );
 

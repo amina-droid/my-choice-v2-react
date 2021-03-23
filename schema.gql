@@ -41,6 +41,11 @@ type ChoiceCard implements Card {
     typeName: String!
 }
 
+type DroppedCard {
+    card: Card!
+    forPlayer: ObjectId!
+}
+
 type Game {
     _id: ObjectId!
     creator: User!
@@ -80,6 +85,7 @@ type Mutation {
     createGame(createGameInput: CreateGameInput!): GameSession!
     createIncidentCard(createIncidentCard: IncidentCardInput!): Card!
     leaveGame: Boolean!
+    move(moveCount: Int!): Boolean!
     removeCard(cardId: ObjectId!): Card!
     sendMessage(message: String!, topic: String!): Boolean!
     startGame(gameId: ObjectId!): Boolean!
@@ -95,14 +101,15 @@ type Option {
 type Player {
     _id: ObjectId!
     avatar: String
-    disconnected: Boolean!
+    cell: Int
+    disconnected: Boolean
     dream: Int
-    gameover: Boolean!
+    gameover: Boolean
     hold: Int
     nickname: String!
     position: PlayerPosition
     resources: Resources
-    winner: Boolean!
+    winner: Boolean
 }
 
 type Query {
@@ -132,6 +139,7 @@ type Result {
 }
 
 type Subscription {
+    cardDropped(gameId: ObjectId!): DroppedCard!
     onMessage(topic: String!): Message!
     updateActiveGame(gameId: ObjectId!): GameSession!
     updateActiveGames: [GameSession!]!

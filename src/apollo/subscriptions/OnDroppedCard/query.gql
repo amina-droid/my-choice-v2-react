@@ -1,0 +1,18 @@
+subscription OnDroppedCard($gameId: ObjectId!) {
+    cardDropped(gameId: $gameId) {
+        forPlayer
+        card {
+            _id
+            description
+            typeName
+            ... on ChoiceCard {
+                _id
+                description
+                choices {
+                    _id
+                    description
+                }
+            }
+        }
+    }
+}

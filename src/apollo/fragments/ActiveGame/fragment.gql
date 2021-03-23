@@ -5,10 +5,11 @@ fragment ActiveGame on GameSession {
     creator,
     status,
     mover,
-    players{
+    players {
         _id,
         nickname,
         position,
+        cell,
         dream,
         resources{
             lives,
