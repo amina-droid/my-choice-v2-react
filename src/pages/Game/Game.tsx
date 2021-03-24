@@ -171,7 +171,7 @@ const Game: FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
   if (!data?.joinGame) return <Spin size="large" />;
   const { creator, status, mover, name: gameName, _id: gameId } = data.joinGame;
 
-  const diceIsBreak = () => {
+  const handleDiceRollComplete = () => {
     setVisible(true);
   };
 
@@ -191,7 +191,11 @@ const Game: FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
           </Button>
         )}
         {status === GameStatus.InProgress && (
-          <Dice ready={mover} onRoll={gameMove} diceIsBreak={() => diceIsBreak()} />
+          <Dice
+            ready={mover === user?._id}
+            onRoll={gameMove}
+            onRollComplete={handleDiceRollComplete}
+          />
         )}
       </div>
       <div className={s.playersTableContainer}>

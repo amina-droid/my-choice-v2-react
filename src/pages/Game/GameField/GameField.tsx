@@ -1,12 +1,13 @@
-import React, { FC, useContext, useEffect, useRef, Suspense } from 'react';
-import { Spin } from 'antd';
+import React, { FC, Fragment, useContext, useEffect, useRef } from 'react';
 import { ActiveGame } from '../../../apollo';
-import { GameStatus } from '../../../types';
+import { FieldType, GameStatus } from '../../../types';
 import { AuthContext } from '../../../context/auth';
+import { getSelector, getPlayerAvatarSVG } from './utils';
+import { GameFieldSVG } from './GameFieldSVG';
+import PlayerDream from './PlayerDream';
+import PlayerMarker from './PlayerMarker';
 
 import s from './GameField.module.sass';
-
-const GameFieldSvg = React.lazy(() => import('./GameFieldSvg'));
 
 type GameFieldProps = {
   game: ActiveGame;
@@ -32,11 +33,12 @@ const GameField: FC<GameFieldProps> = ({ game, onChoiceDream }) => {
   const myPlayer = game.players.find(player => player._id === user?._id);
 
   useEffect(() => {
-    const playerDreamNotExist = game.status === GameStatus.ChoiceDream &&
-      game.players.some(player => player._id === user?._id && !player.dream);
+    const playerDreamNotExist = game.status === GameStatus.ChoiceDream && !myPlayer?.dream;
 
     if (playerDreamNotExist) {
-      const dreamFields = svgRef?.current?.querySelectorAll('[data-field="Dream"]');
+      const dreamFields = svgRef?.current?.querySelectorAll(
+        getSelector({ field: FieldType.Dream })
+      );
 
       if (!dreamFields) return () => {};
       const unlisteners = Array.from(dreamFields).map(addActiveToDream(onChoiceDream));
@@ -49,20 +51,44 @@ const GameField: FC<GameFieldProps> = ({ game, onChoiceDream }) => {
 
   return (
     <>
-      <StaticGameField ref={svgRef} />
+      <GameFieldSVG ref={svgRef}>
+        <defs>
+          <filter id="marker_shadow" x="0.543398" y="0.725572" width="108" height="120.5" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+            <feFlood floodOpacity="0" result="BackgroundImageFix" />
+            <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" />
+            <feOffset dx="0.451684" dy="-0.348287" />
+            <feGaussianBlur stdDeviation="3.34259" />
+            <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.27 0" />
+            <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow" />
+            <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" />
+            <feOffset dx="2.13524" dy="-1.64645" />
+            <feGaussianBlur stdDeviation="3.62407" />
+            <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.164 0" />
+            <feBlend mode="normal" in2="effect1_dropShadow" result="effect2_dropShadow" />
+            <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" />
+            <feOffset dx="5.5434" dy="-4.27443" />
+            <feGaussianBlur stdDeviation="19" />
+            <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.106 0" />
+            <feBlend mode="normal" in2="effect2_dropShadow" result="effect3_dropShadow" />
+            <feBlend mode="normal" in="SourceGraphic" in2="effect3_dropShadow" result="shape" />
+          </filter>
+        </defs>
+        {
+          game.players.map((player, i) => (
+            <Fragment key={player._id}>
+              <defs>
+                <pattern id={getPlayerAvatarSVG(player._id)} height="100%" width="100%" patternContentUnits="objectBoundingBox">
+                  <image xlinkHref={player.avatar ?? undefined} preserveAspectRatio="xMidYMid slice" width="1" height="1" />
+                </pattern>
+              </defs>
+              <PlayerDream index={i} player={player} players={game.players} />
+              <PlayerMarker player={player} players={game.players} index={i} />
+            </Fragment>
+          ))
+        }
+      </GameFieldSVG>
     </>
   );
 };
-
-const StaticGameField = React.memo(
-  React.forwardRef<SVGSVGElement>((_, ref) => {
-    console.log('FIELD RERENDER!!!');
-    return (
-      <Suspense fallback={<Spin size="large" />}>
-        <GameFieldSvg ref={ref} />
-      </Suspense>
-    );
-  }),
-);
 
 export default GameField;

@@ -28,18 +28,20 @@ const getRandom = () => {
 type DiceProps = {
   ready?: boolean;
   onRoll?: (value: number) => void;
-  diceIsBreak: () => void;
+  onRollComplete: () => void;
 };
 
 type DiceStatus = 'ready' | 'roll' | 'disabled';
 
-const Dice: FC<DiceProps> = ({ ready, onRoll, diceIsBreak }) => {
+const Dice: FC<DiceProps> = ({ ready, onRoll, onRollComplete }) => {
   const [diceStatus, setDiceStatus] = useState<DiceStatus>('disabled');
   const [currentDice, setCurrentDice] = useState<number>(0);
 
   useEffect(() => {
     if (ready) {
       setDiceStatus('ready');
+    } else {
+      setCurrentDice(0);
     }
   }, [ready]);
 
@@ -54,7 +56,7 @@ const Dice: FC<DiceProps> = ({ ready, onRoll, diceIsBreak }) => {
     setDiceStatus('disabled');
 
     await timeout(500);
-    diceIsBreak();
+    onRollComplete();
   };
 
   const className = s[`${diceStatus}Dice`];

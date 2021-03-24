@@ -1,5 +1,5 @@
 import React, { FC, useContext } from 'react';
-import { Breadcrumb, Button, Modal, Typography } from 'antd';
+import { Button, Modal, Typography } from 'antd';
 import { useMutation, useSubscription } from '@apollo/client';
 
 import {
@@ -23,18 +23,16 @@ const CardModal: FC<CardModalProps> = React.memo(
   ({ gameId, visible, closeModal }) => {
     const { user } = useContext(AuthContext);
     const [choiceReq] = useMutation<Choice, ChoiceVariables>(CHOICE);
-    const { data } = useSubscription<OnDroppedCard, OnDroppedCardVariables>(ON_DROPPED_CARD, {
+    const { data, error } = useSubscription<
+      OnDroppedCard, OnDroppedCardVariables
+      >(ON_DROPPED_CARD, {
       variables: {
         gameId,
       },
       fetchPolicy: 'network-only',
-      onSubscriptionData: ({ subscriptionData }) => {
-        if (!subscriptionData.data?.cardDropped) return;
-        const { cardDropped: card } = subscriptionData.data;
-      },
     });
 
-    console.log(data);
+    console.log(error);
 
     const onClick = (cardId: string, choiceId?: string) => {
       choiceReq({ variables: { cardId, choiceId } });
