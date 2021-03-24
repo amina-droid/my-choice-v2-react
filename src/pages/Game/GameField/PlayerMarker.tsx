@@ -32,6 +32,21 @@ function getStartCoords(startSVGElement: SVGGElement | null, playerIndex: number
   };
 }
 
+function getInnerCoords(cell: number, playerIndex: number, svg: SVGSVGElement): Coords {
+  const odd = playerIndex % 2;
+  const svgSize = svg?.getBBox();
+  const cx = (svgSize?.width ?? 0) / 2 + svgSize.x;
+  const cy = (svgSize?.height ?? 0) / 2 + svgSize.y;
+
+  const innerFieldBBox = (svg?.getElementById('InnerField') as SVGGElement)?.getBBox();
+  const radius = innerFieldBBox.height / 2;
+
+  return {
+    x: cx + (radius * Math.cos(cell * 18)),
+    y: cy + (radius * Math.sin(cell * 18)),
+  };
+}
+
 const TIMING = {
   duration: 800,
   ease: easeExpOut,
@@ -49,6 +64,10 @@ const PlayerMarker: FC<PlayerControlProps> = ({ player, index, players }) => {
         ) as SVGGElement | null;
 
         setMarkerCoords(getStartCoords(startBox, index));
+        break;
+      }
+      case PlayerPosition.Inner: {
+        setMarkerCoords(getInnerCoords(player?.cell ?? 0, index, svg?.current!));
         break;
       }
       default: {
