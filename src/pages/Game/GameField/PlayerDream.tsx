@@ -25,9 +25,9 @@ const PlayerDream: FC<PlayerControlProps> = ({ player, index, players }) => {
   const avatarUrlSvg = getPlayerURLAvatarSVG(player._id);
   return (
     <>
-      {dreamCoords && (
-        <circle cx={dreamCoords?.current?.x} cy={dreamCoords?.current?.y} r="8.5" fill={avatarUrlSvg} stroke={color} />
-        )}
+      {dreamCoords.current && (
+        <circle cx={dreamCoords.current?.x} cy={dreamCoords.current?.y} r="8.5" fill={avatarUrlSvg} stroke={color} />
+      )}
     </>
   );
 };
