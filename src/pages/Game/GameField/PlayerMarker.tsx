@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
 import { useSVGContext } from './GameFieldSVG';
 import { FieldType, PlayerPosition } from '../../../types';
 import { Coords, getPlayerURLAvatarSVG, getSelector, PlayerControlProps } from './utils';
@@ -31,7 +31,7 @@ function getStartCoords(startSVGElement: SVGGElement | null, playerIndex: number
 }
 
 const PlayerMarker: FC<PlayerControlProps> = ({ player, index, players }) => {
-  const [markerCoords, setMarkerCoords] = useState<Coords>();
+  const markerCoords = useRef<Coords>();
   const svg = useSVGContext();
 
   useEffect(() => {
@@ -41,11 +41,11 @@ const PlayerMarker: FC<PlayerControlProps> = ({ player, index, players }) => {
           getSelector({ field: FieldType.Start }),
         ) as SVGGElement | null;
 
-        setMarkerCoords(getStartCoords(startBox, index));
+        markerCoords.current = getStartCoords(startBox, index);
         break;
       }
       default: {
-        setMarkerCoords({});
+        markerCoords.current = {};
       }
     }
   }, [player.cell, player.position]);
@@ -53,7 +53,14 @@ const PlayerMarker: FC<PlayerControlProps> = ({ player, index, players }) => {
   const color = `var(${COLORS[index]})`;
   const avatarUrlSvg = getPlayerURLAvatarSVG(player._id);
   return (markerCoords ? (
-    <svg fill="none" viewBox="0 0 109 122" width="109" height="122" x={markerCoords?.x} y={markerCoords?.y}>
+    <svg
+      fill="none"
+      viewBox="0 0 109 122"
+      width="109"
+      height="122"
+      x={markerCoords?.current?.x}
+      y={markerCoords?.current?.y}
+    >
       <g filter="url(#marker_shadow)">
         <circle cx="49" cy="58" r="13" fill={avatarUrlSvg} />
         <path

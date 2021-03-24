@@ -1,11 +1,11 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
 import { useSVGContext } from './GameFieldSVG';
 import { COLORS } from '../Game';
 import { Coords, getPlayerURLAvatarSVG, getSelector, PlayerControlProps } from './utils';
 import { FieldType } from '../../../types';
 
 const PlayerDream: FC<PlayerControlProps> = ({ player, index, players }) => {
-  const [dreamCoords, setDreamCoords] = useState<Coords>();
+  const dreamCoords = useRef<Coords>();
   const svg = useSVGContext();
   const color = `var(${COLORS[index]})`;
 
@@ -17,7 +17,7 @@ const PlayerDream: FC<PlayerControlProps> = ({ player, index, players }) => {
       const result = dreamBox?.getBBox();
 
       if (result) {
-        setDreamCoords({ x: result.x, y: result.y });
+        dreamCoords.current = ({ x: result.x, y: result.y });
       }
     }
   }, [player.dream]);
@@ -25,7 +25,9 @@ const PlayerDream: FC<PlayerControlProps> = ({ player, index, players }) => {
   const avatarUrlSvg = getPlayerURLAvatarSVG(player._id);
   return (
     <>
-      {dreamCoords && (<circle cx={dreamCoords?.x} cy={dreamCoords?.y} r="8.5" fill={avatarUrlSvg} stroke={color} />)}
+      {dreamCoords && (
+        <circle cx={dreamCoords?.current?.x} cy={dreamCoords?.current?.y} r="8.5" fill={avatarUrlSvg} stroke={color} />
+        )}
     </>
   );
 };
