@@ -37,7 +37,7 @@ const Login = () => {
       }
 
       // eslint-disable-next-line react/no-this-in-sfc
-      // this.close();
+      this.close();
       window.removeEventListener('message', authHandler);
 
       try {
