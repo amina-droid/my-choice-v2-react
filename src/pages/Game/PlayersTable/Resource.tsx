@@ -27,9 +27,7 @@ const Resource: FC<ResourceProps> = ({
     enter={{ resource: [resource], timing: TIMING }}
     update={{ resource: [resource], timing: TIMING }}
   >
-    {(state) => {
-      console.log(state);
-      return (
+    {(state) => (
         <div className={className}>
           <Tooltip
             placement="right"
@@ -40,8 +38,7 @@ const Resource: FC<ResourceProps> = ({
           </Tooltip>
           {Math.round(state.resource)}
         </div>
-      );
-    }}
+      )}
   </Animate>
 );
 

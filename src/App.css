@@ -38,8 +38,9 @@
     min-height: 100vh;
     height: 100%;
 }
-
+body {
+  background: left 5% / 15% repeat url('./assets/pattern.jpeg') ;
+}
 .App {
-    background: left 5% / 15% repeat url('./assets/pattern.jpeg') ;
     height: 100%;
 }
