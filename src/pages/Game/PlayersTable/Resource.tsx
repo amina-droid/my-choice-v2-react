@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import { isNil } from 'lodash';
 import { Animate } from 'react-move';
 import { easeExpOut } from 'd3-ease';
 import { Tooltip } from 'antd';
@@ -17,17 +18,31 @@ const TIMING = {
 
 const Resource: FC<ResourceProps> = ({
   className,
-  resource = 0,
+  resource,
   children,
   color,
   title,
-}) => (
-  <Animate
-    start={{ resource }}
-    enter={{ resource: [resource], timing: TIMING }}
-    update={{ resource: [resource], timing: TIMING }}
-  >
-    {(state) => (
+}) => {
+  if (isNil(resource)) {
+    return (
+      <div className={className}>
+        <Tooltip
+          placement="right"
+          title={title}
+          color={color}
+        >
+          {children}
+        </Tooltip>
+      </div>
+    );
+  }
+  return (
+    <Animate
+      start={{ resource }}
+      enter={{ resource: [resource], timing: TIMING }}
+      update={{ resource: [resource], timing: TIMING }}
+    >
+      {(state) => (
         <div className={className}>
           <Tooltip
             placement="right"
@@ -39,7 +54,8 @@ const Resource: FC<ResourceProps> = ({
           {Math.round(state.resource)}
         </div>
       )}
-  </Animate>
-);
+    </Animate>
+  );
+};
 
 export default Resource;
