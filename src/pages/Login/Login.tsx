@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useApolloClient, useMutation } from '@apollo/client';
 import { Button, Card } from 'antd';
@@ -16,7 +16,7 @@ import s from './Login.module.sass';
 const Login = () => {
   const history = useHistory();
   const [authLoading, setAuthLoading] = useState(false);
-  const { token, login, user } = useContext(AuthContext);
+  const { token, login } = useContext(AuthContext);
   const [authVK] = useMutation<AuthVK, AuthVKVariables>(AUTH_VK);
   const apolloClient = useApolloClient();
 
@@ -26,54 +26,56 @@ const Login = () => {
     }
   }, [token, history.location.pathname]);
 
-  const vkSignHandler = async (e: any) => {
+  const vkSignHandler = (e: any) => {
+    const loginWindow = window.open('', 'OAuth')!;
     e.preventDefault();
     setAuthLoading(true);
+    (async () => {
+      async function authHandler(this: Window, event: MessageEvent) {
+        // 'this' = children window
+        if (/^react-devtools/gi.test(event?.data?.source)) {
+          return;
+        }
 
-    async function authHandler(this: Window, event: MessageEvent) {
-      // 'this' = children window
-      if (/^react-devtools/gi.test(event?.data?.source)) {
-        return;
+        const code = event.data?.payload?.code;
+        if (code) {
+          // eslint-disable-next-line react/no-this-in-sfc
+          this.close();
+          window.removeEventListener('message', authHandler);
+
+          try {
+            const { data, errors } = await authVK({ variables: { code } });
+
+            if (errors || !data) return;
+
+            const { token: responseToken } = data.authVK;
+            console.log(responseToken);
+            login(responseToken);
+          } catch (error) {
+            // eslint-disable-next-line no-console
+            console.error(error);
+            throw error;
+          } finally {
+            setAuthLoading(false);
+          }
+        }
       }
 
-      // eslint-disable-next-line react/no-this-in-sfc
-      this.close();
-      window.removeEventListener('message', authHandler);
-
       try {
-        const code = event.data.payload?.code;
-        if (code) {
-          const { data, errors } = await authVK({ variables: { code } });
+        const { data } = await apolloClient.query<GetVKOAuthRedirect>({
+          query: GET_VK_OATH_REDIRECT_URL,
+        });
 
-          if (errors || !data) return;
+        const { url } = data.getVKOAuthRedirect;
 
-          const { token: responseToken } = data.authVK;
-          login(responseToken);
-        }
+        loginWindow.location.href = url;
+        window.addEventListener('message', authHandler.bind(loginWindow));
       } catch (error) {
         // eslint-disable-next-line no-console
         console.error(error);
         throw error;
-      } finally {
-        setAuthLoading(false);
       }
-    }
-
-    try {
-      const { data } = await apolloClient.query<GetVKOAuthRedirect>({
-        query: GET_VK_OATH_REDIRECT_URL,
-      });
-
-      const { url } = data.getVKOAuthRedirect;
-      // eslint-disable-next-line security/detect-non-literal-fs-filename
-      const loginWindow = window.open(url, 'OAuth')!;
-
-      window.addEventListener('message', authHandler.bind(loginWindow));
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error(error);
-      throw error;
-    }
+    })();
   };
 
   return (

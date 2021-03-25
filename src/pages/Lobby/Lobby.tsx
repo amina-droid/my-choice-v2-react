@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Form, Input, message, Modal, Typography } from 'antd';
-import { CommentOutlined, PlusOutlined } from '@ant-design/icons';
+import { PlusOutlined } from '@ant-design/icons';
 import { useForm } from 'antd/es/form/Form';
 import { useHistory } from 'react-router-dom';
 
-import { useMutation, useQuery, useSubscription } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import s from './Lobby.module.sass';
 import Card from '../../shared/Card/Card';
 import Chat from '../../components/Chat/Chat';
@@ -123,4 +123,4 @@ const Lobby = () => {
   );
 };
 
-export default withPageAccess([UserRole.Admin])(Lobby);
+export default withPageAccess([UserRole.Moderator])(Lobby);

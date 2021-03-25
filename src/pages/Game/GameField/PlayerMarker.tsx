@@ -16,6 +16,10 @@ enum StartPadding {
 }
 const StartMarkerMargin = 7.5;
 
+function toRadian(degree: number) {
+  return degree * (Math.PI / 180);
+}
+
 function getStartCoords(startSVGElement: SVGGElement | null, playerIndex: number) {
   const odd = playerIndex % 2;
 
@@ -23,27 +27,30 @@ function getStartCoords(startSVGElement: SVGGElement | null, playerIndex: number
     x = 0,
     y = 0,
   } = startSVGElement?.getBBox() ?? {};
+  console.log(odd, playerIndex);
   return odd ? {
-    x: StartPadding.X + (x - MarkerSize.Width) + ((playerIndex - 1) * StartMarkerMargin),
-    y: StartPadding.Y + (y - MarkerSize.Height / 2),
+    x: StartPadding.X + x + ((playerIndex - 1) * StartMarkerMargin),
+    y: StartPadding.Y + (y + MarkerSize.Height / 2),
   } : {
-    x: StartPadding.X + (x - MarkerSize.Width) + (playerIndex * StartMarkerMargin),
-    y: StartPadding.Y + (y - MarkerSize.Height),
+    x: StartPadding.X + x + (playerIndex * StartMarkerMargin),
+    y: StartPadding.Y + y,
   };
 }
 
 function getInnerCoords(cell: number, playerIndex: number, svg: SVGSVGElement): Coords {
   const odd = playerIndex % 2;
-  const svgSize = svg?.getBBox();
-  const cx = (svgSize?.width ?? 0) / 2 + svgSize.x;
-  const cy = (svgSize?.height ?? 0) / 2 + svgSize.y;
-
   const innerFieldBBox = (svg?.getElementById('InnerField') as SVGGElement)?.getBBox();
-  const radius = innerFieldBBox.height / 2;
+  const cx = (innerFieldBBox?.width ?? 0) / 2 + innerFieldBBox.x;
+  const cy = (innerFieldBBox?.height ?? 0) / 2 + innerFieldBBox.y;
 
+  const radius = innerFieldBBox.width / 2;
+  const circleSegment = Math.abs(cell + 8);
+  console.log(circleSegment);
+  // eslint-disable-next-line
+  debugger;
   return {
-    x: cx + (radius * Math.cos(cell * 18)),
-    y: cy + (radius * Math.sin(cell * 18)),
+    x: cx + (radius * Math.cos(toRadian(circleSegment * 18))),
+    y: cy + (radius * Math.sin(toRadian(circleSegment * 18))),
   };
 }
 
@@ -85,16 +92,20 @@ const PlayerMarker: FC<PlayerControlProps> = ({ player, index, players }) => {
       update={{ x: [markerCoords?.x ?? 0], y: [markerCoords?.y ?? 0], timing: TIMING }}
     >
       {(state) => (
+        <g
+          transform={`translate(-${MarkerSize.Width}, -${MarkerSize.Height})`}
+        >
         <svg
           fill="none"
           viewBox="0 0 109 122"
-          width="109"
-          height="122"
           x={state?.x}
           y={state?.y}
+          width="109"
+          height="122"
         >
           <MemoMarker playerId={player._id} color={color} />
         </svg>
+        </g>
       )}
     </Animate>
   ) : null);
