@@ -14,8 +14,8 @@ enum StartPadding {
   Y = 10,
   X = 10
 }
-const StartMarkerMargin = 7.5;
-
+const HALF_MARKER_MARGIN = 7.5;
+const MARKER_POSITION_TRANSFORM = `translate(-${MarkerSize.Width}, -${MarkerSize.Height})`;
 function toRadian(degree: number) {
   return degree * (Math.PI / 180);
 }
@@ -27,30 +27,52 @@ function getStartCoords(startSVGElement: SVGGElement | null, playerIndex: number
     x = 0,
     y = 0,
   } = startSVGElement?.getBBox() ?? {};
-  console.log(odd, playerIndex);
+
   return odd ? {
-    x: StartPadding.X + x + ((playerIndex - 1) * StartMarkerMargin),
+    x: StartPadding.X + x + ((playerIndex - 1) * HALF_MARKER_MARGIN),
     y: StartPadding.Y + (y + MarkerSize.Height / 2),
   } : {
-    x: StartPadding.X + x + (playerIndex * StartMarkerMargin),
+    x: StartPadding.X + x + (playerIndex * HALF_MARKER_MARGIN),
     y: StartPadding.Y + y,
   };
 }
 
+enum InnerValues {
+  SEGMENT_PADDING = 5,
+  MARKER_MARGIN = 12,
+  SEGMENT_ANGLE = 18,
+  RADIUS_PADDING = 10,
+}
 function getInnerCoords(cell: number, playerIndex: number, svg: SVGSVGElement): Coords {
   const odd = playerIndex % 2;
   const innerFieldBBox = (svg?.getElementById('InnerField') as SVGGElement)?.getBBox();
   const cx = (innerFieldBBox?.width ?? 0) / 2 + innerFieldBBox.x;
   const cy = (innerFieldBBox?.height ?? 0) / 2 + innerFieldBBox.y;
+  const isRightCirclePart = cell >= 8 && cell < 18;
 
-  const radius = innerFieldBBox.width / 2;
   const circleSegment = Math.abs(cell + 8);
-  console.log(circleSegment);
-  // eslint-disable-next-line
-  debugger;
+
+  const radius = (innerFieldBBox.width / 2)
+    - InnerValues.RADIUS_PADDING
+    - (odd
+      ? ((playerIndex - 1) * HALF_MARKER_MARGIN)
+      : (playerIndex * HALF_MARKER_MARGIN)
+    );
+
+  const angle = circleSegment * InnerValues.SEGMENT_ANGLE + (
+    (isRightCirclePart
+        ? 1
+        : -1
+    ) * (odd
+      ? InnerValues.SEGMENT_PADDING + InnerValues.MARKER_MARGIN
+      : InnerValues.SEGMENT_PADDING
+    ));
+
+  const radian = toRadian(angle);
+
   return {
-    x: cx + (radius * Math.cos(toRadian(circleSegment * 18))),
-    y: cy + (radius * Math.sin(toRadian(circleSegment * 18))),
+    x: cx + (radius * Math.cos(radian)),
+    y: cy + (radius * Math.sin(radian)),
   };
 }
 
@@ -93,7 +115,7 @@ const PlayerMarker: FC<PlayerControlProps> = ({ player, index, players }) => {
     >
       {(state) => (
         <g
-          transform={`translate(-${MarkerSize.Width}, -${MarkerSize.Height})`}
+          transform={MARKER_POSITION_TRANSFORM}
         >
         <svg
           fill="none"
