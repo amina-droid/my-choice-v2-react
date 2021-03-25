@@ -49,7 +49,7 @@ const Login = () => {
             if (errors || !data) return;
 
             const { token: responseToken } = data.authVK;
-            console.log(responseToken);
+
             login(responseToken);
           } catch (error) {
             // eslint-disable-next-line no-console

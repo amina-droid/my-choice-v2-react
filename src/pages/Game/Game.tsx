@@ -179,8 +179,6 @@ const Game: FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
     setVisible(false);
   };
 
-  console.log(visible);
-
   return (
     <div className={s.gameContainer}>
       <CardModal gameId={match.params.id} visible={visible} closeModal={closeModal} />
