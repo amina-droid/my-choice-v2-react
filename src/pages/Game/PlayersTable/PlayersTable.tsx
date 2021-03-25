@@ -1,5 +1,8 @@
 import React, { FC } from 'react';
 import { Avatar, Tooltip } from 'antd';
+
+import { COLORS } from '../Game';
+import Resource from './Resource';
 import { JoinGame_joinGame_players } from '../../../apollo/queries/JoinGame';
 import { ReactComponent as Lives } from '../Resources/Lives.svg';
 import { ReactComponent as Like } from '../Resources/Like.svg';
@@ -7,7 +10,6 @@ import { ReactComponent as Dislike } from '../Resources/Dislike.svg';
 import { ReactComponent as Money } from '../Resources/Money.svg';
 
 import s from './PlayersTable.module.sass';
-import { COLORS } from '../Game';
 
 type PlayersTableProps = {
   players: JoinGame_joinGame_players[];
@@ -26,38 +28,38 @@ const PlayersTable: FC<PlayersTableProps> = ({ players }) => {
             />
           </Tooltip>
           <div className={s.resources}>
-            <div className={s.resource}>
-              <Tooltip
-                placement="right"
-                title="Белый социальный капитал"
-                color={`var(${COLORS[index]})`}
-              >
-                <Like />
-              </Tooltip>
-              {player.resources?.white}
-            </div>
-            <div className={s.resource}>
-              <Tooltip
-                placement="right"
-                title="Черный социальный капитал"
-                color={`var(${COLORS[index]})`}
-              >
-                <Dislike />
-              </Tooltip>
-              {player.resources?.dark}
-            </div>
-            <div className={s.resource}>
-              <Tooltip placement="right" title="Деньги" color={`var(${COLORS[index]})`}>
-                <Money />
-              </Tooltip>
-              {player.resources?.money}
-            </div>
-            <div className={s.resource}>
-              <Tooltip placement="right" title="Жизни" color={`var(${COLORS[index]})`}>
-                <Lives />
-              </Tooltip>
-              {player.resources?.lives}
-            </div>
+            <Resource
+              className={s.resource}
+              color={`var(${COLORS[index]})`}
+              title="Белый социальный капитал"
+              resource={player.resources?.white}
+            >
+              <Like />
+            </Resource>
+            <Resource
+              className={s.resource}
+              color={`var(${COLORS[index]})`}
+              title="Черный социальный капитал"
+              resource={player.resources?.dark}
+            >
+              <Dislike />
+            </Resource>
+            <Resource
+              className={s.resource}
+              color={`var(${COLORS[index]})`}
+              title="Деньги"
+              resource={player.resources?.money}
+            >
+              <Money />
+            </Resource>
+            <Resource
+              className={s.resource}
+              color={`var(${COLORS[index]})`}
+              title="Жизни"
+              resource={player.resources?.lives}
+            >
+              <Lives />
+            </Resource>
           </div>
         </div>
       ))}
