@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useApolloClient, useMutation } from '@apollo/client';
+import { useApolloClient } from '@apollo/client';
 import { Button, Card } from 'antd';
 import {
   AUTH_VK,
@@ -10,19 +10,21 @@ import {
   GetVKOAuthRedirect,
 } from '../../apollo';
 import { AuthContext } from '../../context/auth';
+import useOAuthSignIn from './useOAuthSignIn';
 
 import s from './Login.module.sass';
-import useOAuthSign from './useOAuthSign';
 
 const Login = () => {
   const history = useHistory();
   const { token, login } = useContext(AuthContext);
-  const [authVK] = useMutation<AuthVK, AuthVKVariables>(AUTH_VK);
   const apolloClient = useApolloClient();
 
-  const [handlerLogin, loading] = useOAuthSign({
+  const [handlerLogin, loading] = useOAuthSignIn({
     onCode: async (code) => {
-      const { data, errors } = await authVK({ variables: { code } });
+      const { data, errors } = await apolloClient.mutate<AuthVK, AuthVKVariables>({
+        mutation: AUTH_VK,
+        variables: { code },
+      });
 
       if (errors) throw errors;
       if (!data) return;

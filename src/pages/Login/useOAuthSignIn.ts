@@ -4,42 +4,42 @@ type UseOAuthSignProps = {
   onError?: (error: any) => void;
   onComplete?: () => void;
   onCode: (code: string) => Promise<void>;
-  redirectLink: string | (() => Promise<string>);
+  redirectLink: string | (() => (Promise<string> | string));
 }
 
 type StartHandler<K = any, E extends SyntheticEvent<K> = SyntheticEvent<K>> = EventHandler<E>;
 type OAuthLoading = boolean;
-type UseOAuthSignTuple = [
-  StartHandler,
+type UseOAuthSignTuple<Handler = StartHandler> = [
+  Handler,
   OAuthLoading
 ];
 
-const useOAuthSign = ({
+const useOAuthSignIn = ({
   onError = console.error,
   onCode,
   onComplete,
   redirectLink,
-}: UseOAuthSignProps): UseOAuthSignTuple => {
+}: UseOAuthSignProps) => {
   const [loading, setLoading] = useState(false);
 
-  const OAuthHandler: StartHandler = useCallback((e) => {
+  const OAuthHandler = useCallback(<T, E>(event?: SyntheticEvent<T, E>) => {
     const loginWindow = window.open('', 'OAuth')!;
-    e?.preventDefault();
+    event?.preventDefault();
     setLoading(true);
 
     (async () => {
-      async function authHandler(this: Window, event: MessageEvent) {
+      async function authCodeListener(this: Window, e: MessageEvent) {
         // 'this' = children window
-        if (/^react-devtools/gi.test(event?.data?.source)) {
+        if (/^react-devtools/gi.test(e?.data?.source)) {
           return;
         }
 
-        const code = event.data?.payload?.code;
+        const code = e.data?.payload?.code;
 
         if (code) {
           // eslint-disable-next-line react/no-this-in-sfc
           this.close();
-          window.removeEventListener('message', authHandler);
+          window.removeEventListener('message', authCodeListener);
 
           try {
             await onCode(code);
@@ -57,7 +57,7 @@ const useOAuthSign = ({
 
       try {
         loginWindow.location.href = typeof redirectLink === 'string' ? redirectLink : await redirectLink();
-        window.addEventListener('message', authHandler.bind(loginWindow));
+        window.addEventListener('message', authCodeListener.bind(loginWindow));
       } catch (error) {
         onError(error);
         throw error;
@@ -68,7 +68,7 @@ const useOAuthSign = ({
   return [
     OAuthHandler,
     loading,
-  ];
+  ] as UseOAuthSignTuple<typeof OAuthHandler>;
 };
 
-export default useOAuthSign;
+export default useOAuthSignIn;
