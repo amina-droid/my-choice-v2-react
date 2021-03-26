@@ -7,26 +7,10 @@ type Selector = {
   type?: 'Segment' | 'Text' | 'Square';
 }
 
-export function getSelector({
-  field,
-  position,
-  type,
-  }: Selector) {
-  let selector = '';
-
-  if (field) {
-    selector += `[data-field="${field}"]`;
-  }
-
-  if (position) {
-    selector += `[data-position="${position}"]`;
-  }
-
-  if (type) {
-    selector += `[data-type="${type}"]`;
-  }
-
-  return selector;
+export function getSelector(config: Selector) {
+  return Object.entries(config).reduce((selector, [attr, value]) => {
+    return value ? `${selector}[data-${attr}="${value}"]` : selector;
+  }, '');
 }
 
 export type PlayerControlProps = {
