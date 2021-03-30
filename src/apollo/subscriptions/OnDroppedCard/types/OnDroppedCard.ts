@@ -8,7 +8,7 @@
 // ====================================================
 
 export interface OnDroppedCard_cardDropped_card_Incident {
-  __typename: "Incident";
+  __typename: "Incident" | "Opportunity";
   _id: any;
   description: string;
   typeName: string;

@@ -39,7 +39,7 @@ export enum UserRole {
   User = "User",
 }
 
-export interface ChoicesCardInput {
+export interface CreateChoicesCardInput {
   choices: OptionInput[];
   description: string;
   type: FieldType;

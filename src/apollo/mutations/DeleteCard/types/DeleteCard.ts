@@ -8,7 +8,7 @@
 // ====================================================
 
 export interface DeleteCard_removeCard {
-  __typename: "ChoiceCard" | "Incident";
+  __typename: "ChoiceCard" | "Incident" | "Opportunity";
   _id: any;
 }
 

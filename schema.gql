@@ -82,15 +82,24 @@ type Mutation {
     authVK(code: String!): AuthResponse!
     choice(cardId: ObjectId!, choiceId: ObjectId): Boolean!
     choiceDream(dream: Int!): Boolean!
-    createChoicesCard(createChoicesCard: ChoicesCardInput!): Card!
+    createChoicesCard(createChoicesCard: CreateChoicesCardInput!): Card!
     createGame(createGameInput: CreateGameInput!): GameSession!
-    createIncidentCard(createIncidentCard: IncidentCardInput!): Card!
+    createIncidentCard(createIncidentCard: CreateIncidentCardInput!): Card!
     leaveGame: Boolean!
     move(moveCount: Int!): Boolean!
     removeCard(cardId: ObjectId!): Card!
     sendMessage(message: String!, topic: String!): Boolean!
     startGame(gameId: ObjectId!): Boolean!
+    updateChoicesCard(cardId: ObjectId!, updateChoicesCard: UpdateChoicesCardInput!): Card!
+    updateIncidentCard(cardId: ObjectId!, updateIncidentCard: UpdateIncidentCardInput!): Card!
     updateNickname(nickname: String!): User!
+}
+
+type Opportunity implements Card {
+    _id: ObjectId!
+    description: String!
+    type: FieldType!
+    typeName: String!
 }
 
 type Option {
@@ -208,7 +217,7 @@ input ActionInput {
     result: ResultInput
 }
 
-input ChoicesCardInput {
+input CreateChoicesCardInput {
     choices: [OptionInput!]!
     description: String!
     type: FieldType!
@@ -219,7 +228,7 @@ input CreateGameInput {
     observerMode: Boolean = false
 }
 
-input IncidentCardInput {
+input CreateIncidentCardInput {
     action: ActionInput!
     description: String!
 }
@@ -241,6 +250,17 @@ input ResultInput {
     hold: Int
     move: FieldType
     resources: ResourcesInput
+}
+
+input UpdateChoicesCardInput {
+    choices: [OptionInput!]
+    description: String
+    type: FieldType
+}
+
+input UpdateIncidentCardInput {
+    action: ActionInput
+    description: String
 }
 
 

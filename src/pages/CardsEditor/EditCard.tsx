@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useMutation } from '@apollo/client';
 import { Button, Card, Form, InputNumber, message, Select, Space, Typography } from 'antd';
 import { MinusCircleOutlined } from '@ant-design/icons';
@@ -7,13 +7,23 @@ import { useForm } from 'antd/es/form/Form';
 import { FieldType } from '../../types';
 
 import s from './CardsEditor.module.sass';
-import { CREATE_CHOICE, CreateChoice, CreateChoiceVariables } from '../../apollo';
+import {
+  CREATE_CHOICE,
+  CreateChoice,
+  CreateChoiceVariables,
+  GET_CARDS,
+  GetCards,
+  NewCard,
+} from '../../apollo';
 import { FIELD_DICTIONARY } from './CardsEditor';
-import { GET_CARDS, GetCards } from '../../apollo/queries/GetCards';
 
 const CHOICES_CARD = [FieldType.Dream, FieldType.Situation, FieldType.Reaction, FieldType.Offer];
 
-const AddCard = () => {
+type EditCardProps = {
+  card?: NewCard;
+};
+
+const EditCard: FC<EditCardProps> = ({ card }) => {
   const [createChoice, { data }] = useMutation<CreateChoice, CreateChoiceVariables>(CREATE_CHOICE, {
     update: (cache, { data: createChoiceData }) => {
       if (!createChoiceData?.createChoicesCard) return;
@@ -48,7 +58,7 @@ const AddCard = () => {
   };
 
   return (
-    <Form form={form} onFinish={onFinish}>
+    <Form form={form} onFinish={onFinish} initialValues={card}>
       <Card
         className={s.card}
         title="Создание новой карточки"
@@ -140,4 +150,4 @@ const AddCard = () => {
   );
 };
 
-export default AddCard;
+export default EditCard;

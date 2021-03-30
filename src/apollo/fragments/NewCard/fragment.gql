@@ -1,0 +1,17 @@
+fragment NewCard on Card {
+    _id,
+    type,
+    typeName,
+    description,
+    ... on ChoiceCard {
+        choices {
+            description,
+            resources {
+                dark,
+                white,
+                lives,
+                money
+            }
+        }
+    }
+}

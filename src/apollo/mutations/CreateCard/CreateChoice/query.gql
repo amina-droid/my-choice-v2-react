@@ -1,7 +1,7 @@
-mutation CreateChoice ($input: ChoicesCardInput!) {
+#import "./../../../fragments/NewCard/fragment.gql"
+
+mutation CreateChoice ($input: CreateChoicesCardInput!) {
     createChoicesCard(createChoicesCard: $input) {
-        typeName,
-        description,
-        _id,
+        ...NewCard
     }
 }
