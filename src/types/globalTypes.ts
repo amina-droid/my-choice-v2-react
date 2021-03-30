@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @generated
 // This file was automatically generated and should not be edited.
 
 //==============================================================
@@ -54,6 +55,12 @@ export interface ResourcesInput {
   lives?: number | null;
   money?: number | null;
   white?: number | null;
+}
+
+export interface UpdateChoicesCardInput {
+  choices?: OptionInput[] | null;
+  description?: string | null;
+  type?: FieldType | null;
 }
 
 //==============================================================

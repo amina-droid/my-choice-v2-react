@@ -9,3 +9,4 @@ export * from './SendMessage';
 export * from './StartGame';
 export * from './UpdateNickname';
 export * from './Choice';
+export * from './UpdateChoicesCard';
