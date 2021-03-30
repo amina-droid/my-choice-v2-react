@@ -13,8 +13,10 @@ import {
 } from '../../apollo';
 import CardFields, { normalizeChoices } from './CardFields';
 
-const AddCard = () => {
-  const [createChoice, { data }] = useMutation<CreateChoice, CreateChoiceVariables>(CREATE_CHOICE, {
+const AddCard: FC = () => {
+  const [createChoice, {
+    data, loading,
+  }] = useMutation<CreateChoice, CreateChoiceVariables>(CREATE_CHOICE, {
     update: (cache, { data: createChoiceData }) => {
       if (!createChoiceData?.createChoicesCard) return;
       const options = {
@@ -61,7 +63,7 @@ const AddCard = () => {
         title="Создание новой карточки"
         actions={[
           <Form.Item key="submit">
-            <Button type="primary" htmlType="submit">
+            <Button type="primary" htmlType="submit" loading={loading}>
               Сохранить
             </Button>
           </Form.Item>,
