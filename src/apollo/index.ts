@@ -59,7 +59,11 @@ const link = authLink.concat(splitLink);
 export const client = new ApolloClient({
   link,
   credentials: 'same-origin', // Additional fetch() options like `credentials` or `headers`
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({
+    possibleTypes: {
+      Card: ['ChoiceCard', 'Incident', 'Opportunity'],
+    },
+  }),
   connectToDevTools: process.env.NODE_ENV !== 'production',
   defaultOptions: {
     watchQuery: {

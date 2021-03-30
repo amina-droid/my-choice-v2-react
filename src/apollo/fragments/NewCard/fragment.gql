@@ -1,15 +1,15 @@
 fragment NewCard on Card {
-    _id,
-    type,
-    typeName,
-    description,
+    _id
+    type
+    typeName
+    description
     ... on ChoiceCard {
         choices {
-            description,
+            description
             resources {
-                dark,
-                white,
-                lives,
+                dark
+                white
+                lives
                 money
             }
         }

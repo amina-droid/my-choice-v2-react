@@ -3,15 +3,17 @@ import { Button, Card, List, message, Modal, Popconfirm, Typography } from 'antd
 import { EditOutlined, MinusCircleOutlined } from '@ant-design/icons';
 import { useMutation, useQuery } from '@apollo/client';
 import CustomScroll from 'react-custom-scroll';
-import { GET_CARDS, GetCards } from '../../apollo/queries/GetCards';
-import { DELETE_CARD, DeleteCard, DeleteCardVariables } from '../../apollo/mutations/DeleteCard';
+import {
+  GET_CARDS, GetCards,
+  DELETE_CARD, DeleteCard, DeleteCardVariables,
+} from '../../apollo';
 
 import s from './CardsEditor.module.sass';
 import EditCard from './EditCard';
 
 const CardList = () => {
   const [editableCardId, setEditableCardId] = useState<string | undefined>();
-  const { data, loading } = useQuery<GetCards>(GET_CARDS);
+  const { data, loading, error } = useQuery<GetCards>(GET_CARDS);
   const [deleteCard] = useMutation<DeleteCard, DeleteCardVariables>(DELETE_CARD, {
     update: (cache, { data: removeCardData }) => {
       if (!removeCardData?.removeCard) return;
@@ -27,7 +29,7 @@ const CardList = () => {
     },
   });
 
-  console.log(data);
+  console.log(data, error);
   const remove = async (id: string) => {
     try {
       await deleteCard({ variables: { id } });
@@ -51,36 +53,36 @@ const CardList = () => {
             className={s.cardsList}
             size="large"
             dataSource={data?.cards}
-            renderItem={item => (
+            renderItem={card => (
               <List.Item>
                 <List.Item.Meta
                   description={
                     <Typography.Text
                       copyable={{
-                        text: item._id,
+                        text: card._id,
                         tooltips: ['Скопировать ID', 'Скопировано!'],
                       }}
                     >
-                      ID: {item._id}
+                      ID: {card._id}
                     </Typography.Text>
                   }
                   title={
                     <>
-                      {item.typeName}
-                      {item.__typename === 'ChoiceCard' && (
+                      {card.typeName}
+                      {card.__typename === 'ChoiceCard' && (
                         <>
                           <Button
                             icon={<EditOutlined />}
                             className={s.editBtn}
                             type="text"
                             shape="circle"
-                            onClick={() => editCard(item._id)}
+                            onClick={() => editCard(card._id)}
                           />
 
                           <Popconfirm
                             placement="right"
                             title="Вы уверены что хотите удалить эту карточку?"
-                            onConfirm={() => remove(item._id)}
+                            onConfirm={() => remove(card._id)}
                             okText="Да"
                             cancelText="Нет"
                           >
@@ -91,7 +93,7 @@ const CardList = () => {
                     </>
                   }
                 />
-                {item.description}
+                {card.description}
               </List.Item>
             )}
           />
