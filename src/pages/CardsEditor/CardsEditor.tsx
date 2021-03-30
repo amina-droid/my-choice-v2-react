@@ -3,7 +3,7 @@ import { withPageAccess } from '../../shared/PageAccessHOC/PageAccessHOC';
 import { FieldType, UserRole } from '../../types';
 
 import s from './CardsEditor.module.sass';
-import EditCard from './EditCard';
+import AddCard from './AddCard';
 import CardList from './CardList';
 
 export const FIELD_DICTIONARY = {
@@ -28,7 +28,7 @@ type Resources = {
 const CardsEditor = () => {
   return (
     <div className={s.container}>
-      <EditCard />
+      <AddCard />
       <CardList />
     </div>
   );

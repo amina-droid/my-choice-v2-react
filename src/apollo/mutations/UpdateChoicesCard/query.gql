@@ -1,0 +1,7 @@
+#import "./../../fragments/NewCard/fragment.gql"
+
+mutation UpdateChoicesCard ($cardId: ObjectId!, $updateChoicesCard: UpdateChoicesCardInput!) {
+    updateChoicesCard(cardId: $cardId, updateChoicesCard: $updateChoicesCard) {
+        ...NewCard
+    }
+}
