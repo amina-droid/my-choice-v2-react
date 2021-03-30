@@ -14,25 +14,30 @@ import s from './Main.module.sass';
 
 const Main = () => {
   const { user, logout } = useContext(AuthContext);
+  const [form] = Form.useForm();
   const [mutation] = useMutation<UpdateNickname, UpdateNicknameVariables>(UPDATE_NICKNAME, {
     update: (cache, mutationResult) => {
       if (!mutationResult.data?.updateNickname.nickname) return;
       cache.modify({
-        id: `User:${user?._id}`,
+        id: cache.identify({
+          __typename: 'User',
+          _id: user?._id,
+        }),
         fields: {
-          nickname: () => mutationResult.data?.updateNickname.nickname,
+          nickname: () => {
+            return mutationResult.data?.updateNickname.nickname;
+            },
         },
       });
     },
   });
   const history = useHistory();
   const [isChange, setIsChange] = useState<boolean>(false);
-  const [form] = Form.useForm();
 
   const onFinish = () => {
-    const newNickname = form.getFieldValue('nickname');
+    const newNickname: string = form.getFieldValue('nickname');
     setIsChange(false);
-    mutation({ variables: { nickname: newNickname } });
+    mutation({ variables: { nickname: newNickname.trim() } });
   };
 
   const goToLobby = () => {

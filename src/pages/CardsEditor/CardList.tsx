@@ -10,7 +10,7 @@ import EditCard from './EditCard';
 
 const CardList = () => {
   const [editableCardId, setEditableCardId] = useState<string | undefined>();
-  const { data, loading, error } = useQuery<GetCards>(GET_CARDS);
+  const { data, loading } = useQuery<GetCards>(GET_CARDS);
   const [deleteCard] = useMutation<DeleteCard, DeleteCardVariables>(DELETE_CARD, {
     update: (cache, { data: removeCardData }) => {
       if (!removeCardData?.removeCard) return;
@@ -26,7 +26,6 @@ const CardList = () => {
     },
   });
 
-  console.log(data, error);
   const remove = async (id: string) => {
     try {
       await deleteCard({ variables: { id } });
