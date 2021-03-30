@@ -30,9 +30,9 @@ const Main = () => {
   const [form] = Form.useForm();
 
   const onFinish = () => {
-    console.log(form.getFieldValue('nickname'));
+    const newNickname = form.getFieldValue('nickname');
     setIsChange(false);
-    // mutation({ variables: { nickname: value.nickname } });
+    mutation({ variables: { nickname: newNickname } });
   };
 
   const goToLobby = () => {
@@ -63,7 +63,9 @@ const Main = () => {
               <Input
                 maxLength={50}
                 bordered={false}
-                suffix={isChange ? <CheckOutlined onClick={onFinish} /> : <EditOutlined />}
+                suffix={isChange
+                  ? <CheckOutlined className={s.icon} onClick={onFinish} />
+                  : <EditOutlined className={s.icon} />}
               />
             </Form.Item>
           </Form>
