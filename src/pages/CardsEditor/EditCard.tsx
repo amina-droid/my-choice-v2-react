@@ -10,13 +10,17 @@ import {
 } from '../../apollo';
 import CardFields, { normalizeChoices } from './CardFields';
 
+import s from './CardsEditor.module.sass';
+
 type EditCardProps = {
   card?: NewCard;
   onComplete?: () => void;
 };
 
 const EditCard: FC<EditCardProps> = ({ card, onComplete }) => {
-  const [updateChoicesCard, { data }] = useMutation<UpdateChoicesCard, UpdateChoicesCardVariables>(
+  const [updateChoicesCard, {
+    loading,
+  }] = useMutation<UpdateChoicesCard, UpdateChoicesCardVariables>(
     UPDATE_CHOICES_CARD,
   );
   const [form] = useForm();
@@ -45,7 +49,7 @@ const EditCard: FC<EditCardProps> = ({ card, onComplete }) => {
     <Form form={form} initialValues={card} onFinish={onFinish}>
       <CardFields />
       <Form.Item key="submit">
-        <Button type="primary" htmlType="submit">
+        <Button type="primary" htmlType="submit" loading={loading} className={s.submitButton}>
           Сохранить
         </Button>
       </Form.Item>

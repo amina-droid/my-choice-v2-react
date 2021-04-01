@@ -4,13 +4,15 @@ import { EditOutlined, MinusCircleOutlined } from '@ant-design/icons';
 import { useMutation, useQuery } from '@apollo/client';
 import CustomScroll from 'react-custom-scroll';
 import { GET_CARDS, GetCards, DELETE_CARD, DeleteCard, DeleteCardVariables } from '../../apollo';
-
-import s from './CardsEditor.module.sass';
 import EditCard from './EditCard';
 
+import s from './CardsEditor.module.sass';
+
+type TCard = GetCards['cards'][0];
+
 const CardList = () => {
-  const [editableCardId, setEditableCardId] = useState<string | undefined>();
-  const { data, loading, error } = useQuery<GetCards>(GET_CARDS);
+  const [editableCard, setEditableCard] = useState<TCard | undefined>();
+  const { data, loading } = useQuery<GetCards>(GET_CARDS);
   const [deleteCard] = useMutation<DeleteCard, DeleteCardVariables>(DELETE_CARD, {
     update: (cache, { data: removeCardData }) => {
       if (!removeCardData?.removeCard) return;
@@ -26,7 +28,6 @@ const CardList = () => {
     },
   });
 
-  console.log(data, error);
   const remove = async (id: string) => {
     try {
       await deleteCard({ variables: { id } });
@@ -37,12 +38,12 @@ const CardList = () => {
     }
   };
 
-  const editCard = (id: string) => {
-    setEditableCardId(id);
+  const editCard = (card: TCard) => {
+    setEditableCard(card);
   };
 
   const closeModal = () => {
-    setEditableCardId(undefined);
+    setEditableCard(undefined);
   };
 
   return (
@@ -77,7 +78,7 @@ const CardList = () => {
                             className={s.editBtn}
                             type="text"
                             shape="circle"
-                            onClick={() => editCard(card._id)}
+                            onClick={() => editCard(card)}
                           />
 
                           <Popconfirm
@@ -101,15 +102,15 @@ const CardList = () => {
         </CustomScroll>
       </Card>
       <Modal
-        visible={Boolean(editableCardId)}
+        visible={Boolean(editableCard)}
         onCancel={closeModal}
         destroyOnClose
         width={1000}
-        title={`Редактирование карточки № ${editableCardId}`}
+        title={`Редактирование карточки № ${editableCard?._id}`}
         footer={null}
       >
         <EditCard
-          card={data?.cards.find(card => card._id === editableCardId)}
+          card={editableCard}
           onComplete={closeModal}
         />
       </Modal>

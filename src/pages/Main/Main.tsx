@@ -2,6 +2,8 @@ import React, { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Button, Form, Input, Card } from 'antd';
 import { useMutation } from '@apollo/client';
+import { CheckOutlined, EditOutlined } from '@ant-design/icons/lib';
+
 import Chat from '../../components/Chat/Chat';
 import { UserRole } from '../../types';
 
@@ -11,15 +13,31 @@ import { UPDATE_NICKNAME, UpdateNickname, UpdateNicknameVariables } from '../../
 import s from './Main.module.sass';
 
 const Main = () => {
-  const [mutation] = useMutation<UpdateNickname, UpdateNicknameVariables>(UPDATE_NICKNAME);
   const { user, logout } = useContext(AuthContext);
+  const [form] = Form.useForm();
+  const [mutation] = useMutation<UpdateNickname, UpdateNicknameVariables>(UPDATE_NICKNAME, {
+    update: (cache, mutationResult) => {
+      if (!mutationResult.data?.updateNickname.nickname) return;
+      cache.modify({
+        id: cache.identify({
+          __typename: 'User',
+          _id: user?._id,
+        }),
+        fields: {
+          nickname: () => {
+            return mutationResult.data?.updateNickname.nickname;
+            },
+        },
+      });
+    },
+  });
   const history = useHistory();
   const [isChange, setIsChange] = useState<boolean>(false);
-  const [form] = Form.useForm();
 
-  const onFinish = (value: { nickname: string }) => {
+  const onFinish = () => {
+    const newNickname: string = form.getFieldValue('nickname');
     setIsChange(false);
-    mutation({ variables: { nickname: value.nickname } });
+    mutation({ variables: { nickname: newNickname.trim() } });
   };
 
   const goToLobby = () => {
@@ -39,33 +57,35 @@ const Main = () => {
       {user && (
         <Card className={s.containCard}>
           <Form
-            form={form}
-            onFinish={onFinish}
             onChange={() => setIsChange(true)}
             className={s.form}
+            form={form}
             initialValues={{
               nickname: user.nickname,
             }}
           >
-            <Form.Item style={{ marginRight: 10 }} name="nickname" required>
-              <Input allowClear />
+            <Form.Item name="nickname" required>
+              <Input
+                maxLength={50}
+                bordered={false}
+                suffix={isChange
+                  ? <CheckOutlined className={s.icon} onClick={onFinish} />
+                  : <EditOutlined className={s.icon} />}
+              />
             </Form.Item>
-            <Button hidden={!isChange} type="default" htmlType="submit">
-              Сохранить
-            </Button>
           </Form>
-          <Button onClick={goToLobby} type="primary">
+          <Button onClick={goToLobby} type="primary" block>
             Лобби
           </Button>
-          <Button onClick={goToStatistic} type="primary">
+          <Button onClick={goToStatistic} type="primary" block>
             Статистика
           </Button>
           {(user.role === UserRole.Admin || user.role === UserRole.Moderator) && (
-            <Button onClick={goToAddCard} type="primary">
+            <Button onClick={goToAddCard} type="primary" block>
               Добавить карточки
             </Button>
           )}
-          <Button onClick={logout} type="primary" danger>
+          <Button onClick={logout} type="primary" danger block>
             Выйти
           </Button>
         </Card>
