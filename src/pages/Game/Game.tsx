@@ -1,25 +1,25 @@
-import React, { FC, useContext, useEffect, useState } from 'react';
-import { Button, message, Popconfirm, Spin, Modal } from 'antd';
+import React, { FC, useContext, useEffect, useRef, useState } from 'react';
+import { Button, message, Modal, notification, Popconfirm, Spin } from 'antd';
 import { RouteComponentProps, useHistory } from 'react-router-dom';
 import { useLazyQuery, useMutation } from '@apollo/client';
 import {
+  CHOICE_DREAM,
+  ChoiceDream,
+  ChoiceDreamVariables,
+  GAME_MOVE,
+  GameMove,
+  GameMoveVariables,
   JOIN_GAME,
   JoinGame,
   JoinGameVariables,
   LEAVE_GAME,
   LeaveGame as TLeaveGame,
-  UPDATE_ACTIVE_GAME,
-  UpdateActiveGame,
-  UpdateActiveGameVariables,
   START_GAME,
   StartGame,
   StartGameVariables,
-  CHOICE_DREAM,
-  ChoiceDream,
-  ChoiceDreamVariables,
-  GameMove,
-  GameMoveVariables,
-  GAME_MOVE,
+  UPDATE_ACTIVE_GAME,
+  UpdateActiveGame,
+  UpdateActiveGameVariables,
 } from '../../apollo';
 
 import LeaveGame from './LeaveGame/LeaveGame';
@@ -33,6 +33,7 @@ import Dice from './Dice/Dice';
 import { AuthContext } from '../../context/auth';
 import { GameStatus } from '../../types';
 import GameField from './GameField/GameField';
+import useNotificationTimeout from '../../utils/useNotificationTimeout';
 
 export const COLORS = [
   '--game-green',
@@ -89,6 +90,21 @@ function changePage(onOk: () => void) {
 const Game: FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
   const history = useHistory();
   const { user } = useContext(AuthContext);
+  const [callDiceAlert, clearDiceAlert] = useNotificationTimeout(
+    'dice',
+    'Ваш ход!',
+    'Кидайте кубик',
+  );
+  const [callDreamAlert, clearDreamAlert] = useNotificationTimeout(
+    'dream',
+    'Игра началась!',
+    'Выберите мечту',
+  );
+  const [callStartGameAlert, clearStartGameAlert] = useNotificationTimeout(
+    'startGame',
+    'Вы можете начать игру.',
+    'Если все игроки собрались, нажмите на кнопку "Начать игру"',
+  );
   const [leaveGameReq] = useMutation<TLeaveGame>(LEAVE_GAME);
   const [choiceDream] = useMutation<ChoiceDream, ChoiceDreamVariables>(CHOICE_DREAM);
   const [startGameReq] = useMutation<StartGame, StartGameVariables>(START_GAME);
@@ -147,6 +163,24 @@ const Game: FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
     }
   }, [error, history]);
 
+  useEffect(() => {
+    if (data?.joinGame.mover) {
+      callDiceAlert();
+    }
+  }, [data?.joinGame.mover]);
+
+  useEffect(() => {
+    if (data?.joinGame.status === GameStatus.ChoiceDream) {
+      callDreamAlert();
+    }
+  }, [data?.joinGame.status]);
+
+  useEffect(() => {
+    if (data?.joinGame.status === GameStatus.Awaiting) {
+      callStartGameAlert();
+    }
+  }, [data?.joinGame.status]);
+
   const leaveGame = async () => {
     history.push('/lobby');
     await leaveGameReq();
@@ -157,6 +191,7 @@ const Game: FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
   };
 
   const gameMove = (move: number) => {
+    clearDiceAlert();
     moveReq({
       variables: {
         move,
@@ -165,6 +200,7 @@ const Game: FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
   };
 
   const handleChoiceDream = (id: number) => {
+    clearDreamAlert();
     choiceDream({ variables: { dream: id } });
   };
 
@@ -173,6 +209,11 @@ const Game: FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
 
   const handleDiceRollComplete = () => {
     setVisible(true);
+  };
+
+  const handleStartGame = (id: string) => {
+    clearStartGameAlert();
+    startGame(id);
   };
 
   const closeModal = () => {
@@ -184,7 +225,7 @@ const Game: FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
       <CardModal gameId={match.params.id} visible={visible} closeModal={closeModal} />
       <div className={s.header}>
         {status === GameStatus.Awaiting && creator === user?._id && (
-          <Button type="primary" onClick={() => startGame(gameId)}>
+          <Button type="primary" onClick={() => handleStartGame(gameId)}>
             Начать игру
           </Button>
         )}

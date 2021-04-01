@@ -76,9 +76,9 @@ const Lobby = () => {
         Лобби
       </Title>
       <div className={s.containCards}>
-        <Button className={s.cardAdd} type="default" onClick={showModal}>
+        <Card onClick={showModal} className={s.cardAdd}>
           <PlusOutlined />
-        </Button>
+        </Card>
         {data?.getActiveGames.map(game => {
           return (
             <Card
