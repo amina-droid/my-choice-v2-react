@@ -1,0 +1,16 @@
+fragment ActivePlayer on Player {
+    _id,
+    nickname,
+    position,
+    cell,
+    dream,
+    resources{
+        lives,
+        white,
+        dark,
+        money
+    },
+    hold,
+    gameover,
+    avatar,
+}

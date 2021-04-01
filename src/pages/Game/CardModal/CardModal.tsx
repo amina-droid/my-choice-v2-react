@@ -1,6 +1,6 @@
 import React, { FC, useContext } from 'react';
 import { Button, Modal, Typography } from 'antd';
-import { useMutation, useSubscription } from '@apollo/client';
+import { useApolloClient, useMutation, useSubscription } from '@apollo/client';
 
 import {
   OnDroppedCard,
@@ -8,7 +8,7 @@ import {
   ON_DROPPED_CARD,
   Choice,
   CHOICE,
-  ChoiceVariables,
+  ChoiceVariables, SendOpportunityResult, SEND_OPPORTUNITY_RESULT, ActivePlayer, ACTIVE_PLAYER,
 } from '../../../apollo';
 import { AuthContext } from '../../../context/auth';
 
@@ -22,7 +22,16 @@ type CardModalProps = {
 const CardModal: FC<CardModalProps> = React.memo(
   ({ gameId, visible, closeModal }) => {
     const { user } = useContext(AuthContext);
+    const apolloClient = useApolloClient();
+    const player = apolloClient.readFragment<ActivePlayer>({
+      id: `Player:${user?._id}`,
+      fragment: ACTIVE_PLAYER,
+    });
     const [choiceReq] = useMutation<Choice, ChoiceVariables>(CHOICE);
+    const [opportunityReq] = useMutation<
+      SendOpportunityResult,
+      SendOpportunityResult
+      >(SEND_OPPORTUNITY_RESULT);
     const { data, error } = useSubscription<
       OnDroppedCard, OnDroppedCardVariables
       >(ON_DROPPED_CARD, {
@@ -32,7 +41,7 @@ const CardModal: FC<CardModalProps> = React.memo(
       fetchPolicy: 'network-only',
     });
 
-    console.log(error);
+    console.log(player);
 
     const onClick = (cardId: string, choiceId?: string) => {
       choiceReq({ variables: { cardId, choiceId } });
@@ -61,7 +70,7 @@ const CardModal: FC<CardModalProps> = React.memo(
                   {choice.description}
                 </Button>
               ))}
-            {data?.cardDropped.card.__typename !== 'ChoiceCard' && (
+            {data?.cardDropped.card.__typename === 'Incident' && (
               <Button
                 type="primary"
                 key={data?.cardDropped.card._id}

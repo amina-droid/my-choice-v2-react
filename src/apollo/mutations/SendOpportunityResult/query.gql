@@ -1,0 +1,3 @@
+mutation SendOpportunityResult($success: Boolean!, $resources: ResourcesInput) {
+    opportunityResult(opportunityInput: {resources: $resources, success: $success})
+}

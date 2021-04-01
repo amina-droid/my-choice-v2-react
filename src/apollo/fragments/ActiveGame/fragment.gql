@@ -1,3 +1,5 @@
+#import "./../ActivePlayer/fragment.gql"
+
 fragment ActiveGame on GameSession {
     _id,
     name,
@@ -6,19 +8,6 @@ fragment ActiveGame on GameSession {
     status,
     mover,
     players {
-        _id,
-        nickname,
-        position,
-        cell,
-        dream,
-        resources{
-            lives,
-            white,
-            dark,
-            money
-        },
-        hold,
-        gameover,
-        avatar,
+        ...ActivePlayer
     }
 }

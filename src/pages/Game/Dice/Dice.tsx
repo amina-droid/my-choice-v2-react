@@ -57,6 +57,8 @@ const Dice: FC<DiceProps> = ({ ready, onRoll, onRollComplete }) => {
 
     await timeout(500);
     onRollComplete();
+    await timeout(1500);
+    setCurrentDice(0);
   };
 
   const className = s[`${diceStatus}Dice`];
