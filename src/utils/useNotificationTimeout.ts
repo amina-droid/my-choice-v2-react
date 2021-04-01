@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useMemo, useRef } from 'react';
 import { notification } from 'antd';
 
 const addTimeout = (key: string, timeoutMessage: string, description: string) => {
@@ -21,7 +21,7 @@ function useNotificationTimeout(
 ): UseNotificationTimeoutHandlers {
   const ref = useRef<NodeJS.Timeout>();
 
-  return [
+  return useMemo(() => ([
     () => {
       ref.current = addTimeout(key, timeoutMessage, description);
     },
@@ -32,7 +32,7 @@ function useNotificationTimeout(
         notification.close(key);
       }
     },
-  ];
+  ]), [key, timeoutMessage, description]);
 }
 
 export default useNotificationTimeout;
