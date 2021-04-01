@@ -87,6 +87,7 @@ type Mutation {
     createIncidentCard(createIncidentCard: CreateIncidentCardInput!): Card!
     leaveGame: Boolean!
     move(moveCount: Int!): Boolean!
+    opportunityResult(opportunityInput: OpportunityInput!): Boolean!
     removeCard(cardId: ObjectId!): Card!
     sendMessage(message: String!, topic: String!): Boolean!
     startGame(gameId: ObjectId!): Boolean!
@@ -231,6 +232,11 @@ input CreateGameInput {
 input CreateIncidentCardInput {
     action: ActionInput!
     description: String!
+}
+
+input OpportunityInput {
+    resources: ResourcesInput
+    success: Boolean!
 }
 
 input OptionInput {
