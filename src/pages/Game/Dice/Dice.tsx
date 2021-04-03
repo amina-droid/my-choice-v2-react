@@ -68,7 +68,7 @@ const Dice: FC<DiceProps> = ({ ready, onRoll, onRollComplete }) => {
         type="button"
         className={cn(s.diceBtn, className)}
         onClick={clickDice}
-        disabled={diceStatus === 'disabled'}
+        disabled={diceStatus !== 'ready'}
       >
         {diceEdges[currentDice]}
       </button>

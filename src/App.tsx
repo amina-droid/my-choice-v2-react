@@ -1,10 +1,10 @@
-import React, { FC, useContext } from 'react';
+import React, { FC } from 'react';
 import { BrowserRouter, Redirect, Route, RouteProps, Switch } from 'react-router-dom';
 import { ApolloProvider } from '@apollo/client';
 import 'antd/dist/antd.css';
 import './App.css';
 import { client } from './apollo';
-import { AuthContext, AuthContextProvider } from './context/auth';
+import { useAuth, AuthContextProvider } from './context/auth';
 import Login from './pages/Login/Login';
 import Main from './pages/Main/Main';
 import Lobby from './pages/Lobby/Lobby';
@@ -12,10 +12,9 @@ import Statistic from './pages/Statistic/Statistic';
 import Game from './pages/Game/Game';
 import NotFound from './pages/NotFound/NotFound';
 import AddCard from './pages/CardsEditor/CardsEditor';
-import { UserRole } from './types';
 
 const ProtectedRoute: FC<RouteProps> = ({ component: Component, ...rest }) => {
-  const { token } = useContext(AuthContext);
+  const { token } = useAuth();
 
   return (
     <Route

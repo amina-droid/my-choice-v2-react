@@ -1,6 +1,6 @@
-import React, { FC, useContext } from 'react';
+import React, { FC } from 'react';
 import { Button, Modal, Typography } from 'antd';
-import { useApolloClient, useMutation, useSubscription } from '@apollo/client';
+import { useMutation, useSubscription } from '@apollo/client';
 
 import {
   OnDroppedCard,
@@ -8,9 +8,12 @@ import {
   ON_DROPPED_CARD,
   Choice,
   CHOICE,
-  ChoiceVariables, SendOpportunityResult, SEND_OPPORTUNITY_RESULT, ActivePlayer, ACTIVE_PLAYER,
+  ChoiceVariables,
+  SendOpportunityResult,
+  SEND_OPPORTUNITY_RESULT,
+  SendOpportunityResultVariables,
 } from '../../../apollo';
-import { AuthContext } from '../../../context/auth';
+import Dice from '../Dice/Dice';
 
 import s from './CardModal.module.sass';
 
@@ -21,16 +24,10 @@ type CardModalProps = {
 };
 const CardModal: FC<CardModalProps> = React.memo(
   ({ gameId, visible, closeModal }) => {
-    const { user } = useContext(AuthContext);
-    const apolloClient = useApolloClient();
-    const player = apolloClient.readFragment<ActivePlayer>({
-      id: `Player:${user?._id}`,
-      fragment: ACTIVE_PLAYER,
-    });
     const [choiceReq] = useMutation<Choice, ChoiceVariables>(CHOICE);
     const [opportunityReq] = useMutation<
       SendOpportunityResult,
-      SendOpportunityResult
+      SendOpportunityResultVariables
       >(SEND_OPPORTUNITY_RESULT);
     const { data, error } = useSubscription<
       OnDroppedCard, OnDroppedCardVariables
@@ -38,12 +35,23 @@ const CardModal: FC<CardModalProps> = React.memo(
       variables: {
         gameId,
       },
-      fetchPolicy: 'network-only',
+      fetchPolicy: 'no-cache',
     });
 
-    console.log(player);
+    const onOpportunityClick = () => {
+      opportunityReq();
+      closeModal();
+    };
 
-    const onClick = (cardId: string, choiceId?: string) => {
+    const onOpportunityDiceClick = (diceCount?: number) => {
+      opportunityReq({
+        variables: {
+          diceCount,
+        },
+      });
+    };
+
+    const onIncidentOrChoicesClick = (cardId: string, choiceId?: string) => {
       choiceReq({ variables: { cardId, choiceId } });
       closeModal();
     };
@@ -57,14 +65,19 @@ const CardModal: FC<CardModalProps> = React.memo(
           closable={false}
           destroyOnClose
         >
-          <Typography.Text>{data?.cardDropped.card.description}</Typography.Text>
+          <Typography.Text
+            className={s.choiceDescription}
+          >
+            {data?.cardDropped.card.description}
+          </Typography.Text>
           <div className={s.choiceContainer}>
             {data?.cardDropped.card.__typename === 'ChoiceCard' &&
               data.cardDropped.card.choices.map(choice => (
                 <Button
                   type="default"
                   key={choice._id}
-                  onClick={() => onClick(data?.cardDropped.card._id, choice._id)}
+                  className={s.choiceButton}
+                  onClick={() => onIncidentOrChoicesClick(data?.cardDropped.card._id, choice._id)}
                   block
                 >
                   {choice.description}
@@ -74,12 +87,26 @@ const CardModal: FC<CardModalProps> = React.memo(
               <Button
                 type="primary"
                 key={data?.cardDropped.card._id}
-                onClick={() => onClick(data?.cardDropped.card._id)}
+                onClick={() => onIncidentOrChoicesClick(data?.cardDropped.card._id)}
                 block
               >
                 Ок
               </Button>
             )}
+            {data?.cardDropped.card.__typename === 'Opportunity'
+            && (data.cardDropped.card.canTryLuck
+              ? (
+              <Dice ready onRoll={onOpportunityDiceClick} onRollComplete={closeModal} />
+            ) : (
+                <Button
+                  type="primary"
+                  key={data?.cardDropped.card._id}
+                  onClick={onOpportunityClick}
+                  block
+                >
+                  Ок
+                </Button>
+              ))}
           </div>
         </Modal>
       </>

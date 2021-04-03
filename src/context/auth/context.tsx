@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import jwtDecode from 'jwt-decode';
 import { useLazyQuery } from '@apollo/client';
 import { GET_USER, GetUser, GetUserVariables } from '../../apollo';
@@ -15,7 +15,7 @@ export interface Login {
   (token: string): void;
 }
 
-export const AuthContext = React.createContext<State>({
+const AuthContext = React.createContext<State>({
   token: null,
   user: null,
 
@@ -26,6 +26,8 @@ export const AuthContext = React.createContext<State>({
     /* do nothing. */
   },
 });
+
+export const useAuth = () => useContext(AuthContext);
 
 const INITIAL_TOKEN = localStorage.getItem('token');
 export const AuthContextProvider: React.FC = ({ children }) => {

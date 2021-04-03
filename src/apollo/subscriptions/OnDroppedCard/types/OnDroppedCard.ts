@@ -7,7 +7,7 @@
 // ====================================================
 
 export interface OnDroppedCard_cardDropped_card_Incident {
-  __typename: "Incident" | "Opportunity";
+  __typename: "Incident";
   _id: any;
   description: string;
   typeName: string;
@@ -27,7 +27,15 @@ export interface OnDroppedCard_cardDropped_card_ChoiceCard {
   choices: OnDroppedCard_cardDropped_card_ChoiceCard_choices[];
 }
 
-export type OnDroppedCard_cardDropped_card = OnDroppedCard_cardDropped_card_Incident | OnDroppedCard_cardDropped_card_ChoiceCard;
+export interface OnDroppedCard_cardDropped_card_Opportunity {
+  __typename: "Opportunity";
+  _id: any;
+  description: string;
+  typeName: string;
+  canTryLuck: boolean;
+}
+
+export type OnDroppedCard_cardDropped_card = OnDroppedCard_cardDropped_card_Incident | OnDroppedCard_cardDropped_card_ChoiceCard | OnDroppedCard_cardDropped_card_Opportunity;
 
 export interface OnDroppedCard_cardDropped {
   __typename: "DroppedCard";

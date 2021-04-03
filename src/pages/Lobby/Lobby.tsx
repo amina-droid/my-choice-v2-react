@@ -85,7 +85,7 @@ const Lobby = () => {
               className={s.card}
               key={game._id}
               title={game.name}
-              playersCount={game.players.length}
+              playersCount={game.playersCount}
               onClick={() => redirectToGame(game._id)}
             />
           );

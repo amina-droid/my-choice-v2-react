@@ -1,0 +1,5 @@
+fragment GameInLobby on GameSession {
+    _id
+    name
+    playersCount
+}

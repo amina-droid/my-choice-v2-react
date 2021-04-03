@@ -1,9 +1,9 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Spin } from 'antd';
 
 import { UserRole } from '../../types';
 
-import { AuthContext } from '../../context/auth';
+import { useAuth } from '../../context/auth';
 import NotFound from '../../pages/NotFound/NotFound';
 
 export const access = (currentRole: UserRole | undefined, accessedRoles: UserRole[]) => {
@@ -22,7 +22,7 @@ export const access = (currentRole: UserRole | undefined, accessedRoles: UserRol
 export const withPageAccess = <T extends {}>(userRoles: UserRole[] = [UserRole.User]) => {
   return (WrappedComponent: React.ComponentType<T>) => {
     return (props: T) => {
-      const { user, userLoad } = useContext(AuthContext);
+      const { user, userLoad } = useAuth();
       if (userLoad) return <Spin size="large" />;
       return access(user?.role, userRoles) ? <WrappedComponent {...props} /> : <NotFound />;
     };

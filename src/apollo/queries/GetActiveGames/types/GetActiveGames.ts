@@ -6,16 +6,11 @@
 // GraphQL query operation: GetActiveGames
 // ====================================================
 
-export interface GetActiveGames_getActiveGames_players {
-  __typename: "Player";
-  _id: any;
-}
-
 export interface GetActiveGames_getActiveGames {
   __typename: "GameSession";
   _id: any;
   name: string;
-  players: GetActiveGames_getActiveGames_players[];
+  playersCount: number;
 }
 
 export interface GetActiveGames {

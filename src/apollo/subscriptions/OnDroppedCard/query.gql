@@ -13,6 +13,9 @@ subscription OnDroppedCard($gameId: ObjectId!) {
                     description
                 }
             }
+            ... on Opportunity {
+                canTryLuck
+            }
         }
     }
 }

@@ -3,8 +3,7 @@ import { Animate } from 'react-move';
 import { easeExpOut } from 'd3-ease';
 import { useSVGContext } from './GameFieldSVG';
 import { FieldType, PlayerPosition } from '../../../types';
-import { Coords, getPlayerURLAvatarSVG, getSelector, PlayerControlProps } from './utils';
-import { COLORS } from '../Game';
+import { Coords, getPlayerURLAvatarSVG, getSelector, PlayerControlProps, usePlayerIndex } from './utils';
 
 enum MarkerSize {
   Width = 49.5,
@@ -50,7 +49,7 @@ function getInnerCoords(cell: number, playerIndex: number, svg: SVGSVGElement): 
   const cy = (innerFieldBBox?.height ?? 0) / 2 + innerFieldBBox.y;
   const isRightCirclePart = cell >= 8 && cell < 18;
 
-  const circleSegment = Math.abs(cell + 8);
+  const circleSegment = Math.abs(cell + (isRightCirclePart ? 7 : 8));
 
   const radius = (innerFieldBBox.width / 2)
     - InnerValues.RADIUS_PADDING
@@ -81,9 +80,14 @@ const TIMING = {
   ease: easeExpOut,
 };
 
-const PlayerMarker: FC<PlayerControlProps> = ({ player, index, players }) => {
+const PlayerMarker: FC<PlayerControlProps> = ({ player, color, players }) => {
   const [markerCoords, setMarkerCoords] = useState<Coords>();
   const svg = useSVGContext();
+  const playerIndex = usePlayerIndex({
+    players,
+    player,
+    keys: ['cell', 'position'],
+  });
 
   useEffect(() => {
     switch (player.position) {
@@ -92,20 +96,18 @@ const PlayerMarker: FC<PlayerControlProps> = ({ player, index, players }) => {
           getSelector({ field: FieldType.Start }),
         ) as SVGGElement | null;
 
-        setMarkerCoords(getStartCoords(startBox, index));
+        setMarkerCoords(getStartCoords(startBox, playerIndex));
         break;
       }
       case PlayerPosition.Inner: {
-        setMarkerCoords(getInnerCoords(player?.cell ?? 0, index, svg?.current!));
+        setMarkerCoords(getInnerCoords(player?.cell ?? 0, playerIndex, svg?.current!));
         break;
       }
       default: {
         setMarkerCoords({});
       }
     }
-  }, [player.cell, player.position]);
-
-  const color = `var(${COLORS[index]})`;
+  }, [player.cell, player.position, playerIndex]);
 
   return (markerCoords ? (
     <Animate

@@ -60,6 +60,7 @@ type GameSession {
     name: String!
     observers: Int!
     players: [Player!]!
+    playersCount: Int!
     status: GameStatus!
 }
 
@@ -87,7 +88,7 @@ type Mutation {
     createIncidentCard(createIncidentCard: CreateIncidentCardInput!): Card!
     leaveGame: Boolean!
     move(moveCount: Int!): Boolean!
-    opportunityResult(opportunityInput: OpportunityInput!): Boolean!
+    opportunityResult(diceResult: Int): Boolean!
     removeCard(cardId: ObjectId!): Card!
     sendMessage(message: String!, topic: String!): Boolean!
     startGame(gameId: ObjectId!): Boolean!
@@ -98,6 +99,7 @@ type Mutation {
 
 type Opportunity implements Card {
     _id: ObjectId!
+    canTryLuck: Boolean!
     description: String!
     type: FieldType!
     typeName: String!
@@ -232,11 +234,6 @@ input CreateGameInput {
 input CreateIncidentCardInput {
     action: ActionInput!
     description: String!
-}
-
-input OpportunityInput {
-    resources: ResourcesInput
-    success: Boolean!
 }
 
 input OptionInput {

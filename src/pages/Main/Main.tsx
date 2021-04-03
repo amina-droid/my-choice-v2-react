@@ -1,5 +1,5 @@
-import React, { useContext, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Button, Form, Input, Card } from 'antd';
 import { useMutation } from '@apollo/client';
 import { CheckOutlined, EditOutlined } from '@ant-design/icons/lib';
@@ -7,13 +7,13 @@ import { CheckOutlined, EditOutlined } from '@ant-design/icons/lib';
 import Chat from '../../components/Chat/Chat';
 import { UserRole } from '../../types';
 
-import { AuthContext } from '../../context/auth';
+import { useAuth } from '../../context/auth';
 import { UPDATE_NICKNAME, UpdateNickname, UpdateNicknameVariables } from '../../apollo';
 
 import s from './Main.module.sass';
 
 const Main = () => {
-  const { user, logout } = useContext(AuthContext);
+  const { user, logout } = useAuth();
   const [form] = Form.useForm();
   const [mutation] = useMutation<UpdateNickname, UpdateNicknameVariables>(UPDATE_NICKNAME, {
     update: (cache, mutationResult) => {
@@ -31,25 +31,12 @@ const Main = () => {
       });
     },
   });
-  const history = useHistory();
   const [isChange, setIsChange] = useState<boolean>(false);
 
   const onFinish = () => {
     const newNickname: string = form.getFieldValue('nickname');
     setIsChange(false);
     mutation({ variables: { nickname: newNickname.trim() } });
-  };
-
-  const goToLobby = () => {
-    history.push('/lobby');
-  };
-
-  const goToStatistic = () => {
-    history.push('/statistic');
-  };
-
-  const goToAddCard = () => {
-    history.push('/add-card');
   };
 
   return (
@@ -74,16 +61,22 @@ const Main = () => {
               />
             </Form.Item>
           </Form>
-          <Button onClick={goToLobby} type="primary" block>
-            Лобби
-          </Button>
-          <Button onClick={goToStatistic} type="primary" block>
-            Статистика
-          </Button>
-          {(user.role === UserRole.Admin || user.role === UserRole.Moderator) && (
-            <Button onClick={goToAddCard} type="primary" block>
-              Добавить карточки
+          <Link to="/lobby">
+            <Button type="primary" block>
+              Лобби
             </Button>
+          </Link>
+          <Link to="/statistic">
+            <Button type="primary" block>
+              Статистика
+            </Button>
+          </Link>
+          {(user.role === UserRole.Admin || user.role === UserRole.Moderator) && (
+            <Link to="/add-card">
+              <Button type="primary" block>
+                Добавить карточки
+              </Button>
+            </Link>
           )}
           <Button onClick={logout} type="primary" danger block>
             Выйти

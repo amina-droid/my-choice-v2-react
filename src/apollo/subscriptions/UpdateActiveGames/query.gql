@@ -1,9 +1,7 @@
+#import "./../../fragments/GameInLobby/fragment.gql"
+
 subscription UpdateActiveGames {
     updateActiveGames {
-        _id,
-        name,
-        players {
-            _id
-        }
+        ...GameInLobby
     }
 }

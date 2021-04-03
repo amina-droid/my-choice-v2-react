@@ -1,11 +1,11 @@
-import React, { FC, Fragment, useContext, useEffect, useRef } from 'react';
+import React, { FC, useEffect, useRef } from 'react';
 import { ActiveGame } from '../../../apollo';
 import { FieldType, GameStatus } from '../../../types';
-import { AuthContext } from '../../../context/auth';
-import { getSelector, getPlayerAvatarSVG } from './utils';
+import { getSelector, getPlayerAvatarSVG, useCurrentPlayer } from './utils';
 import { GameFieldSVG } from './GameFieldSVG';
 import PlayerDream from './PlayerDream';
 import PlayerMarker from './PlayerMarker';
+import { COLORS } from '../Game';
 
 import s from './GameField.module.sass';
 
@@ -26,11 +26,57 @@ const addActiveToDream = (cb: any) => (el: Element, i: number, parent: Element[]
   };
 };
 
-const GameField: FC<GameFieldProps> = ({ game, onChoiceDream }) => {
-  const { user } = useContext(AuthContext);
-  const svgRef = useRef<SVGSVGElement>(null);
+const Avatars: FC<Pick<ActiveGame, 'players'>> = React.memo(({ players }) => (
+  <>
+    {players.map(({ _id, avatar }) => (
+      <defs key={`Avatar:${_id}`}>
+        <pattern
+          id={getPlayerAvatarSVG(_id)}
+          height="100%"
+          width="100%"
+          patternContentUnits="objectBoundingBox"
+        >
+          <image
+            xlinkHref={avatar ?? undefined}
+            preserveAspectRatio="xMidYMid slice"
+            width="1"
+            height="1"
+          />
+        </pattern>
+      </defs>
+    ))}
+  </>),
+  (
+    prev,
+    next,
+    ) => prev.players.length === next.players.length);
 
-  const myPlayer = game.players.find(player => player._id === user?._id);
+type DreamsProps = Pick<ActiveGame, 'players' | 'status'>
+const Dreams: FC<DreamsProps> = ({ players }) => {
+  return (
+    <>
+      {players.map((player, i) => {
+        const color = `var(${COLORS[i]}`;
+
+        return (<PlayerDream
+          key={`Dream:${player._id}`}
+          color={color}
+          player={player}
+          players={players}
+        />);
+      })}
+    </>
+  );
+}; // , (
+//   prev,
+//   next,
+// ) => prev.status !== GameStatus.ChoiceDream
+//   && prev.players.length === next.players.length
+//   && prev.players.every((player) => !isNil(player.dream)));
+
+const GameField: FC<GameFieldProps> = ({ game, onChoiceDream }) => {
+  const svgRef = useRef<SVGSVGElement>(null);
+  const myPlayer = useCurrentPlayer();
 
   useEffect(() => {
     const playerDreamNotExist = game.status === GameStatus.ChoiceDream && !myPlayer?.dream;
@@ -73,18 +119,20 @@ const GameField: FC<GameFieldProps> = ({ game, onChoiceDream }) => {
             <feBlend mode="normal" in="SourceGraphic" in2="effect3_dropShadow" result="shape" />
           </filter>
         </defs>
+        <Avatars players={game.players} />
+        <Dreams status={game.status} players={game.players} />
         {
-          game.players.map((player, i) => (
-            <Fragment key={player._id}>
-              <defs>
-                <pattern id={getPlayerAvatarSVG(player._id)} height="100%" width="100%" patternContentUnits="objectBoundingBox">
-                  <image xlinkHref={player.avatar ?? undefined} preserveAspectRatio="xMidYMid slice" width="1" height="1" />
-                </pattern>
-              </defs>
-              <PlayerDream index={i} player={player} players={game.players} />
-              <PlayerMarker player={player} players={game.players} index={i} />
-            </Fragment>
-          ))
+          game.players.map((player, i) => {
+            const color = `var(${COLORS[i]}`;
+            return (
+              <PlayerMarker
+                key={`Player:${player._id}`}
+                color={color}
+                player={player}
+                players={game.players}
+              />
+            );
+          })
         }
       </GameFieldSVG>
     </>

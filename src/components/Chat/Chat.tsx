@@ -1,6 +1,6 @@
-import React, { useContext, useState } from 'react';
-import { Button, Tabs } from 'antd';
-import { AuthContext } from '../../context/auth';
+import React, { useState } from 'react';
+import { Tabs } from 'antd';
+import { useAuth } from '../../context/auth';
 
 import Topic from './Topic';
 import CloseButton from '../../shared/CloseButton/CloseButton';
@@ -20,7 +20,7 @@ type Props = {
 
 export const Chat: React.FC<Props> = ({ game }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const { user } = useContext(AuthContext);
+  const { user } = useAuth();
 
   if (!user) return null;
 

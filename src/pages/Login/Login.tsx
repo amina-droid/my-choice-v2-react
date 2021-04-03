@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useApolloClient } from '@apollo/client';
 import { Button, Card } from 'antd';
@@ -9,14 +9,14 @@ import {
   GET_VK_OATH_REDIRECT_URL,
   GetVKOAuthRedirect,
 } from '../../apollo';
-import { AuthContext } from '../../context/auth';
+import { useAuth } from '../../context/auth';
 import useOAuthSignIn from './useOAuthSignIn';
 
 import s from './Login.module.sass';
 
 const Login = () => {
   const history = useHistory();
-  const { token, login } = useContext(AuthContext);
+  const { token, login } = useAuth();
   const apolloClient = useApolloClient();
 
   const [handlerLogin, loading] = useOAuthSignIn({

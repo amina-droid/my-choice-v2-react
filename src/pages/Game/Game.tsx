@@ -1,5 +1,5 @@
-import React, { FC, useContext, useEffect, useRef, useState } from 'react';
-import { Button, message, Modal, notification, Popconfirm, Spin } from 'antd';
+import React, { FC, useEffect, useState } from 'react';
+import { Button, message, Popconfirm, Spin } from 'antd';
 import { RouteComponentProps, useHistory } from 'react-router-dom';
 import { useLazyQuery, useMutation } from '@apollo/client';
 import {
@@ -23,17 +23,18 @@ import {
 } from '../../apollo';
 
 import LeaveGame from './LeaveGame/LeaveGame';
-
-import s from './Game.module.sass';
 import Chat from '../../components/Chat/Chat';
 import PlayersTable from './PlayersTable/PlayersTable';
 import ChangeResources from './ChangeResources/ChangeResources';
 import CardModal from './CardModal/CardModal';
 import Dice from './Dice/Dice';
-import { AuthContext } from '../../context/auth';
+import { useAuth } from '../../context/auth';
 import { GameStatus } from '../../types';
 import GameField from './GameField/GameField';
 import useNotificationTimeout from '../../utils/useNotificationTimeout';
+import useClosePage from '../../utils/useClosePage';
+
+import s from './Game.module.sass';
 
 export const COLORS = [
   '--game-green',
@@ -46,66 +47,51 @@ export const COLORS = [
   '--game-black',
 ];
 
-function closePage(onOk: () => void) {
-  return (e: BeforeUnloadEvent) => {
-    Modal.confirm({
-      title: 'Выход',
-      cancelText: 'Нет',
-      okText: 'Да',
-      closable: true,
-      content: (
-        <div>
-          <p>Вы уверены что хотите выйти из игры?</p>
-        </div>
-      ),
-      onOk,
-    });
-    e.preventDefault();
-    e.returnValue = 'Are you sure you want to close?';
-  };
-}
-
-function changePage(onOk: () => void) {
-  return (e: PopStateEvent) => {
-    e.preventDefault();
-    // eslint-disable-next-line no-restricted-globals
-    window.history.pushState(null, 'Мой выбор: игровая сессия', location.href);
-    // eslint-disable-next-line no-restricted-globals
-    window.history.go(1);
-    Modal.confirm({
-      title: 'Выход',
-      cancelText: 'Нет',
-      okText: 'Да',
-      closable: true,
-      content: (
-        <div>
-          <p>Вы уверены что хотите выйти из игры?</p>
-        </div>
-      ),
-      onOk,
-    });
-  };
-}
+const DICE_NOTIFICATION_OPTIONS = {
+  key: 'dice',
+  timeoutMessage: 'Ваш ход!',
+  description: 'Кидайте кубик',
+};
+const DREAM_NOTIFICATION_OPTIONS = {
+  key: 'dream',
+  timeoutMessage: 'Игра началась!',
+  description: 'Выберите мечту',
+};
+const START_GAME_NOTIFICATION_OPTIONS = {
+  key: 'startGame',
+  timeoutMessage: 'Вы можете начать игру.',
+  description: 'Если все игроки собрались, нажмите на кнопку "Начать игру"',
+};
+const LEAVE_PAGE_MODAL_PROPS = {
+  title: 'Выход',
+  cancelText: 'Нет',
+  okText: 'Да',
+  closable: true,
+  content: (
+    <div>
+      <p>Вы уверены что хотите выйти из игры?</p>
+    </div>
+  ),
+};
 
 const Game: FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
   const history = useHistory();
-  const { user } = useContext(AuthContext);
-  const [callDiceAlert, clearDiceAlert] = useNotificationTimeout(
-    'dice',
-    'Ваш ход!',
-    'Кидайте кубик',
-  );
-  const [callDreamAlert, clearDreamAlert] = useNotificationTimeout(
-    'dream',
-    'Игра началась!',
-    'Выберите мечту',
-  );
-  const [callStartGameAlert, clearStartGameAlert] = useNotificationTimeout(
-    'startGame',
-    'Вы можете начать игру.',
-    'Если все игроки собрались, нажмите на кнопку "Начать игру"',
-  );
-  const [leaveGameReq] = useMutation<TLeaveGame>(LEAVE_GAME);
+  const { user } = useAuth();
+  const [callDiceAlert, clearDiceAlert] = useNotificationTimeout(DICE_NOTIFICATION_OPTIONS);
+  const [callDreamAlert, clearDreamAlert] = useNotificationTimeout(DREAM_NOTIFICATION_OPTIONS);
+  const [
+    callStartGameAlert, clearStartGameAlert,
+  ] = useNotificationTimeout(START_GAME_NOTIFICATION_OPTIONS);
+  const [leaveGameReq] = useMutation<TLeaveGame>(LEAVE_GAME, {
+    update: ((cache) => {
+      cache.modify({
+        id: `GameSession:${match.params.id}`,
+        fields: {
+          players: (_, { DELETE }) => DELETE,
+        },
+      });
+    }),
+  });
   const [choiceDream] = useMutation<ChoiceDream, ChoiceDreamVariables>(CHOICE_DREAM);
   const [startGameReq] = useMutation<StartGame, StartGameVariables>(START_GAME);
   const [visible, setVisible] = useState<boolean>(false);
@@ -119,20 +105,7 @@ const Game: FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
     },
   );
   const [moveReq] = useMutation<GameMove, GameMoveVariables>(GAME_MOVE);
-
-  useEffect(() => {
-    const listener = closePage(leaveGameReq);
-    window.addEventListener('beforeunload', listener);
-
-    return () => window.removeEventListener('beforeunload', listener);
-  }, []);
-
-  useEffect(() => {
-    const listener = changePage(leaveGameReq);
-    window.addEventListener('popstate', listener);
-
-    return () => window.removeEventListener('popstate', listener);
-  }, []);
+  useClosePage(leaveGameReq, LEAVE_PAGE_MODAL_PROPS);
 
   useEffect(() => {
     joinGameReq();
@@ -164,10 +137,10 @@ const Game: FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
   }, [error, history]);
 
   useEffect(() => {
-    if (data?.joinGame.mover) {
+    if (data?.joinGame.mover === user?._id) {
       callDiceAlert();
     }
-  }, [data?.joinGame.mover]);
+  }, [data?.joinGame.mover, user?._id]);
 
   useEffect(() => {
     if (data?.joinGame.status === GameStatus.ChoiceDream) {
@@ -176,10 +149,13 @@ const Game: FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
   }, [data?.joinGame.status]);
 
   useEffect(() => {
-    if (data?.joinGame.status === GameStatus.Awaiting) {
+    if (
+      data?.joinGame.status === GameStatus.Awaiting
+      && data?.joinGame.creator === user?._id
+    ) {
       callStartGameAlert();
     }
-  }, [data?.joinGame.status]);
+  }, [data?.joinGame.status, user?._id]);
 
   const leaveGame = async () => {
     history.push('/lobby');

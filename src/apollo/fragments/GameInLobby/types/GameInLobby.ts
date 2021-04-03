@@ -3,13 +3,12 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: SendOpportunityResult
+// GraphQL fragment: GameInLobby
 // ====================================================
 
-export interface SendOpportunityResult {
-  opportunityResult: boolean;
-}
-
-export interface SendOpportunityResultVariables {
-  diceCount?: number | null;
+export interface GameInLobby {
+  __typename: "GameSession";
+  _id: any;
+  name: string;
+  playersCount: number;
 }

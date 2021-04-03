@@ -8,15 +8,12 @@ export * from './mutations';
 export * from './subscriptions';
 export * from './fragments';
 
-const GRAPHQL_URL =
-  process.env.NODE_ENV === 'production'
-    ? 'https://xn--72-9kcd8arods1i.xn--p1ai/graphql'
-    : 'https://my-choice.loca.lt/graphql';
+const BASE_URL = process.env.NODE_ENV === 'production'
+  ? 'xn--72-9kcd8arods1i.xn--p1ai'
+  : 'lovely-zebra-49.loca.lt';
 
-const WS_GRAPHQL_URL =
-  process.env.NODE_ENV === 'production'
-    ? 'wss://xn--72-9kcd8arods1i.xn--p1ai/graphql'
-    : 'wss://my-choice.loca.lt/graphql';
+const GRAPHQL_URL = `https://${BASE_URL}/graphql`;
+const WS_GRAPHQL_URL = `wss://${BASE_URL}/graphql`;
 
 const wsLink = new WebSocketLink({
   uri: WS_GRAPHQL_URL,

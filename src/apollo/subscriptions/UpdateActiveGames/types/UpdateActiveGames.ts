@@ -6,16 +6,11 @@
 // GraphQL subscription operation: UpdateActiveGames
 // ====================================================
 
-export interface UpdateActiveGames_updateActiveGames_players {
-  __typename: "Player";
-  _id: any;
-}
-
 export interface UpdateActiveGames_updateActiveGames {
   __typename: "GameSession";
   _id: any;
   name: string;
-  players: UpdateActiveGames_updateActiveGames_players[];
+  playersCount: number;
 }
 
 export interface UpdateActiveGames {
