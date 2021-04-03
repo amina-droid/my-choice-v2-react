@@ -80,7 +80,7 @@ const TIMING = {
   ease: easeExpOut,
 };
 
-const PlayerMarker: FC<PlayerControlProps> = ({ player, color, players }) => {
+const PlayerMarker: FC<PlayerControlProps> = ({ player, players }) => {
   const [markerCoords, setMarkerCoords] = useState<Coords>();
   const svg = useSVGContext();
   const playerIndex = usePlayerIndex({
@@ -127,7 +127,7 @@ const PlayerMarker: FC<PlayerControlProps> = ({ player, color, players }) => {
           width="109"
           height="122"
         >
-          <MemoMarker playerId={player._id} color={color} />
+          <MemoMarker playerId={player._id} color={player.color} />
         </svg>
         </g>
       )}

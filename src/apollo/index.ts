@@ -2,6 +2,7 @@ import { ApolloClient, HttpLink, InMemoryCache, split } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { WebSocketLink } from '@apollo/client/link/ws';
 import { getMainDefinition } from '@apollo/client/utilities';
+import { PlayerPolicy } from './fragments';
 
 export * from './queries';
 export * from './mutations';
@@ -10,7 +11,8 @@ export * from './fragments';
 
 const BASE_URL = process.env.NODE_ENV === 'production'
   ? 'xn--72-9kcd8arods1i.xn--p1ai'
-  : 'lovely-zebra-49.loca.lt';
+  : 'tidy-mule-46.loca.lt';
+//  : 'my-choice.loca.lt';
 
 const GRAPHQL_URL = `https://${BASE_URL}/graphql`;
 const WS_GRAPHQL_URL = `wss://${BASE_URL}/graphql`;
@@ -59,6 +61,9 @@ export const client = new ApolloClient({
   cache: new InMemoryCache({
     possibleTypes: {
       Card: ['ChoiceCard', 'Incident', 'Opportunity'],
+    },
+    typePolicies: {
+      Player: PlayerPolicy,
     },
   }),
   connectToDevTools: process.env.NODE_ENV !== 'production',

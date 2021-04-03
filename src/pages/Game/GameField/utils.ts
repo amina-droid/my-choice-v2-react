@@ -46,7 +46,6 @@ export function getSelector(config: Selector) {
 export type PlayerControlProps = {
   player: ActiveGame['players'][0];
   players: ActiveGame['players'];
-  color: string;
 }
 
 export type Coords = {

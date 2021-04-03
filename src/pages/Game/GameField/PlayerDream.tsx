@@ -34,7 +34,7 @@ function getDreamPosition(dreamSvg: SVGGElement | null, index: number) {
   };
 }
 
-const PlayerDream: FC<PlayerControlProps> = ({ player, color, players }) => {
+const PlayerDream: FC<PlayerControlProps> = ({ player, players }) => {
   const dreamCoords = useRef<Coords>();
   const svg = useSVGContext();
   const playerIndex = usePlayerIndex({
@@ -57,7 +57,13 @@ const PlayerDream: FC<PlayerControlProps> = ({ player, color, players }) => {
   return (
     <>
       {dreamCoords.current && (
-        <circle cx={dreamCoords.current?.x} cy={dreamCoords.current?.y} r="8.5" fill={avatarUrlSvg} stroke={color} />
+        <circle
+          cx={dreamCoords.current?.x}
+          cy={dreamCoords.current?.y}
+          r="8.5"
+          fill={avatarUrlSvg}
+          stroke={player.color}
+        />
       )}
     </>
   );

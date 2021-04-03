@@ -2,15 +2,17 @@ fragment ActivePlayer on Player {
     _id,
     nickname,
     position,
+    disconnected,
     cell,
     dream,
+    hold,
+    gameover,
+    avatar,
     resources{
         lives,
         white,
         dark,
         money
     },
-    hold,
-    gameover,
-    avatar,
+    color @client
 }

@@ -3,14 +3,18 @@
     align-items: center
     margin-bottom: 15px
 
+.playerGameOver
+    filter: grayscale(1)
+
+.playerHold
+    & :global
+        .ant-badge-count
+            color: #999
+            background-color: #fff
+            box-shadow: 0 0 0 1px #d9d9d9 inset
+
 .avatar
-    width: 120px
-    height: 120px
-    min-width: 85px
-    min-height: 85px
     border: 5px solid
-
-
 
 .resources
     display: flex

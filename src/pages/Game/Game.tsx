@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from 'react';
 import { Button, message, Popconfirm, Spin } from 'antd';
 import { RouteComponentProps, useHistory } from 'react-router-dom';
-import { useLazyQuery, useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import {
   CHOICE_DREAM,
   ChoiceDream,
@@ -35,17 +35,6 @@ import useNotificationTimeout from '../../utils/useNotificationTimeout';
 import useClosePage from '../../utils/useClosePage';
 
 import s from './Game.module.sass';
-
-export const COLORS = [
-  '--game-green',
-  '--game-blue',
-  '--game-yellow',
-  '--game-pink',
-  '--game-violet',
-  '--game-orange',
-  '--game-grey',
-  '--game-black',
-];
 
 const DICE_NOTIFICATION_OPTIONS = {
   key: 'dice',
@@ -84,18 +73,17 @@ const Game: FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
   ] = useNotificationTimeout(START_GAME_NOTIFICATION_OPTIONS);
   const [leaveGameReq] = useMutation<TLeaveGame>(LEAVE_GAME, {
     update: ((cache) => {
-      cache.modify({
+      cache.evict({
         id: `GameSession:${match.params.id}`,
-        fields: {
-          players: (_, { DELETE }) => DELETE,
-        },
+        fieldName: 'players',
       });
+      cache.gc();
     }),
   });
   const [choiceDream] = useMutation<ChoiceDream, ChoiceDreamVariables>(CHOICE_DREAM);
   const [startGameReq] = useMutation<StartGame, StartGameVariables>(START_GAME);
   const [visible, setVisible] = useState<boolean>(false);
-  const [joinGameReq, { data, error, subscribeToMore }] = useLazyQuery<JoinGame, JoinGameVariables>(
+  const { data, error, subscribeToMore } = useQuery<JoinGame, JoinGameVariables>(
     JOIN_GAME,
     {
       fetchPolicy: 'cache-first',
@@ -106,10 +94,6 @@ const Game: FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
   );
   const [moveReq] = useMutation<GameMove, GameMoveVariables>(GAME_MOVE);
   useClosePage(leaveGameReq, LEAVE_PAGE_MODAL_PROPS);
-
-  useEffect(() => {
-    joinGameReq();
-  }, [match.params.id]);
 
   useEffect(() => {
     if (!subscribeToMore) return () => {};

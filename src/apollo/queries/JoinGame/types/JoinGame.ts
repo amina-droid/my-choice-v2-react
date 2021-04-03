@@ -21,12 +21,14 @@ export interface JoinGame_joinGame_players {
   _id: any;
   nickname: string;
   position: PlayerPosition | null;
+  disconnected: boolean | null;
   cell: number | null;
   dream: number | null;
-  resources: JoinGame_joinGame_players_resources | null;
   hold: number | null;
   gameover: boolean | null;
   avatar: string | null;
+  resources: JoinGame_joinGame_players_resources | null;
+  color: string;
 }
 
 export interface JoinGame_joinGame {

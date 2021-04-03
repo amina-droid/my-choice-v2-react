@@ -5,7 +5,6 @@ import { getSelector, getPlayerAvatarSVG, useCurrentPlayer } from './utils';
 import { GameFieldSVG } from './GameFieldSVG';
 import PlayerDream from './PlayerDream';
 import PlayerMarker from './PlayerMarker';
-import { COLORS } from '../Game';
 
 import s from './GameField.module.sass';
 
@@ -55,16 +54,13 @@ type DreamsProps = Pick<ActiveGame, 'players' | 'status'>
 const Dreams: FC<DreamsProps> = ({ players }) => {
   return (
     <>
-      {players.map((player, i) => {
-        const color = `var(${COLORS[i]}`;
-
-        return (<PlayerDream
+      {players.map((player) => (
+        <PlayerDream
           key={`Dream:${player._id}`}
-          color={color}
           player={player}
           players={players}
-        />);
-      })}
+        />
+        ))}
     </>
   );
 }; // , (
@@ -121,19 +117,12 @@ const GameField: FC<GameFieldProps> = ({ game, onChoiceDream }) => {
         </defs>
         <Avatars players={game.players} />
         <Dreams status={game.status} players={game.players} />
-        {
-          game.players.map((player, i) => {
-            const color = `var(${COLORS[i]}`;
-            return (
-              <PlayerMarker
-                key={`Player:${player._id}`}
-                color={color}
-                player={player}
-                players={game.players}
-              />
-            );
-          })
-        }
+        {game.players.map((player) => (
+          <PlayerMarker
+            key={`Player:${player._id}`}
+            player={player}
+            players={game.players}
+          />))}
       </GameFieldSVG>
     </>
   );
