@@ -75,6 +75,32 @@ function getInnerCoords(cell: number, playerIndex: number, svg: SVGSVGElement): 
   };
 }
 
+const MAX_COUNT_IN_SIDE = 4;
+enum OuterPadding {
+  X = 30,
+  Y = 20,
+}
+function getOuterCoords(cell: number, playerIndex: number, svg: SVGSVGElement): Coords {
+  const selector = getSelector({
+    position: cell,
+  });
+  const {
+    width = 0,
+    height = 0,
+    x = 0,
+    y = 0,
+  } = (svg?.getElementById('OuterField')?.querySelector(selector) as SVGGElement)?.getBBox();
+  const markerWidth = (width - (OuterPadding.X * 2)) / MAX_COUNT_IN_SIDE;
+  const availableHeight = (height - OuterPadding.Y * 2);
+  const goToBottom = playerIndex > MAX_COUNT_IN_SIDE;
+  const markerIndex = playerIndex % MAX_COUNT_IN_SIDE;
+
+  return {
+    x: OuterPadding.X + x + (markerWidth * (markerIndex - 1)),
+    y: OuterPadding.Y + y + (goToBottom ? availableHeight : 0),
+  };
+}
+
 const TIMING = {
   duration: 800,
   ease: easeExpOut,
@@ -101,6 +127,10 @@ const PlayerMarker: FC<PlayerControlProps> = ({ player, players }) => {
       }
       case PlayerPosition.Inner: {
         setMarkerCoords(getInnerCoords(player?.cell ?? 0, playerIndex, svg?.current!));
+        break;
+      }
+      case PlayerPosition.Outer: {
+        setMarkerCoords(getOuterCoords(player?.cell ?? 0, playerIndex, svg?.current!));
         break;
       }
       default: {

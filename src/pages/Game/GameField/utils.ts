@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { isNil } from 'lodash';
 import { useApolloClient } from '@apollo/client';
 import { FieldType } from '../../../types';
 import { ACTIVE_PLAYER, ActiveGame, ActivePlayer } from '../../../apollo';
@@ -39,7 +40,7 @@ export function usePlayerIndex({
 
 export function getSelector(config: Selector) {
   return Object.entries(config).reduce((selector, [attr, value]) => {
-    return value ? `${selector}[data-${attr}="${value}"]` : selector;
+    return isNil(value) ? selector : `${selector}[data-${attr}="${value}"]`;
   }, '');
 }
 

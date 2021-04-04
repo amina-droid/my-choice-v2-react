@@ -182,7 +182,7 @@ const Game: FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
 
   return (
     <div className={s.gameContainer}>
-      <CardModal gameId={match.params.id} visible={visible} closeModal={closeModal} />
+      <CardModal gameId={match.params.id} canBeVisible={visible} closeModal={closeModal} />
       <div className={s.header}>
         {status === GameStatus.Awaiting && creator === user?._id && (
           <Button type="primary" onClick={() => handleStartGame(gameId)}>

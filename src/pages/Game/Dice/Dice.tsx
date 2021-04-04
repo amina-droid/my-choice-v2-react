@@ -39,7 +39,12 @@ const Dice: FC<DiceProps> = ({ ready, onRoll, onRollComplete }) => {
 
   useEffect(() => {
     if (ready) {
-      setDiceStatus('ready');
+      setDiceStatus(prev => {
+        if (prev === 'disabled') {
+          return 'ready';
+        }
+        return prev;
+      });
     } else {
       setCurrentDice(0);
     }
@@ -58,6 +63,9 @@ const Dice: FC<DiceProps> = ({ ready, onRoll, onRollComplete }) => {
     await timeout(500);
     onRollComplete();
     await timeout(1500);
+    if (ready) {
+      setDiceStatus('ready');
+    }
     setCurrentDice(0);
   };
 

@@ -20,7 +20,6 @@ export const PlayerPolicy: TypePolicy = {
   fields: {
     color: {
       read: (previousColor, { variables, cache, readField }) => {
-        // debugger // eslint-disable-line
         if (previousColor) return previousColor;
         const playerId = readField('_id');
 

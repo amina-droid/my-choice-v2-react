@@ -11,7 +11,7 @@ export * from './fragments';
 
 const BASE_URL = process.env.NODE_ENV === 'production'
   ? 'xn--72-9kcd8arods1i.xn--p1ai'
-  : 'tidy-mule-46.loca.lt';
+  : 'breezy-bullfrog-20.loca.lt';
 //  : 'my-choice.loca.lt';
 
 const GRAPHQL_URL = `https://${BASE_URL}/graphql`;
