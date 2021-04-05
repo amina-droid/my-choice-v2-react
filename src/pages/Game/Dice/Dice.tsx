@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
 import cn from 'classnames';
 import { ReactComponent as Dice0 } from './Dice0.svg';
 import { ReactComponent as Dice1 } from './Dice1.svg';
@@ -35,9 +35,11 @@ type DiceStatus = 'ready' | 'roll' | 'disabled';
 
 const Dice: FC<DiceProps> = ({ ready, onRoll, onRollComplete }) => {
   const [diceStatus, setDiceStatus] = useState<DiceStatus>('disabled');
+  const readyRef = useRef<boolean>();
   const [currentDice, setCurrentDice] = useState<number>(0);
 
   useEffect(() => {
+    readyRef.current = ready;
     if (ready) {
       setDiceStatus(prev => {
         if (prev === 'disabled') {
@@ -63,7 +65,7 @@ const Dice: FC<DiceProps> = ({ ready, onRoll, onRollComplete }) => {
     await timeout(500);
     onRollComplete();
     await timeout(1500);
-    if (ready) {
+    if (readyRef.current) {
       setDiceStatus('ready');
     }
     setCurrentDice(0);
