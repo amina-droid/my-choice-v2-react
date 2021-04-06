@@ -45,7 +45,7 @@ const Login = () => {
 
   useEffect(() => {
     if (token && history.location.pathname === '/') {
-      history.push('/main');
+      history.push('/lobby');
     }
   }, [token, history.location.pathname]);
 

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Tabs } from 'antd';
 import { useAuth } from '../../context/auth';
+import { useChatContext } from '../../context/chat';
 
 import Topic from './Topic';
 import CloseButton from '../../shared/CloseButton/CloseButton';
@@ -18,7 +19,8 @@ type Props = {
   };
 };
 
-export const Chat: React.FC<Props> = ({ game }) => {
+export const Chat: React.FC<Props> = () => {
+  const { game } = useChatContext();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const { user } = useAuth();
 

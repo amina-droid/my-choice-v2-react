@@ -23,12 +23,12 @@ import {
 } from '../../apollo';
 
 import LeaveGame from './LeaveGame/LeaveGame';
-import Chat from '../../components/Chat/Chat';
 import PlayersTable from './PlayersTable/PlayersTable';
 import ChangeResources from './ChangeResources/ChangeResources';
 import CardModal from './CardModal/CardModal';
 import Dice from './Dice/Dice';
 import { useAuth } from '../../context/auth';
+import { useChatContext } from '../../context/chat';
 import { GameStatus } from '../../types';
 import GameField from './GameField/GameField';
 import useNotificationTimeout from '../../utils/useNotificationTimeout';
@@ -63,8 +63,9 @@ const LEAVE_PAGE_MODAL_PROPS = {
   ),
 };
 
-const Game: FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
+const Game: FC<RouteComponentProps<{ gameId: string }>> = ({ match }) => {
   const history = useHistory();
+  const { setGame, resetGame } = useChatContext();
   const { user } = useAuth();
   const [callDiceAlert, clearDiceAlert] = useNotificationTimeout(DICE_NOTIFICATION_OPTIONS);
   const [callDreamAlert, clearDreamAlert] = useNotificationTimeout(DREAM_NOTIFICATION_OPTIONS);
@@ -74,7 +75,7 @@ const Game: FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
   const [leaveGameReq] = useMutation<TLeaveGame>(LEAVE_GAME, {
     update: ((cache) => {
       cache.evict({
-        id: `GameSession:${match.params.id}`,
+        id: `GameSession:${match.params.gameId}`,
         fieldName: 'players',
       });
       cache.gc();
@@ -88,12 +89,22 @@ const Game: FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
     {
       fetchPolicy: 'cache-first',
       variables: {
-        gameId: match.params.id,
+        gameId: match.params.gameId,
       },
     },
   );
   const [moveReq] = useMutation<GameMove, GameMoveVariables>(GAME_MOVE);
   useClosePage(leaveGameReq, LEAVE_PAGE_MODAL_PROPS);
+
+  useEffect(() => {
+    if (data?.joinGame?._id) {
+      setGame({
+        topic: data.joinGame._id,
+        name: data.joinGame.name,
+      });
+    }
+    return resetGame;
+  }, [data?.joinGame?._id]);
 
   useEffect(() => {
     if (!subscribeToMore) return () => {};
@@ -106,12 +117,12 @@ const Game: FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
           joinGame: newData,
         };
       },
-      variables: { gameId: match.params.id },
+      variables: { gameId: match.params.gameId },
       document: UPDATE_ACTIVE_GAME,
     });
 
     return () => unsubscribe();
-  }, [subscribeToMore, match.params.id]);
+  }, [subscribeToMore, match.params.gameId]);
 
   useEffect(() => {
     if (error) {
@@ -182,7 +193,7 @@ const Game: FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
 
   return (
     <div className={s.gameContainer}>
-      <CardModal gameId={match.params.id} canBeVisible={visible} closeModal={closeModal} />
+      <CardModal gameId={match.params.gameId} canBeVisible={visible} closeModal={closeModal} />
       <div className={s.header}>
         {status === GameStatus.Awaiting && creator === user?._id && (
           <Button type="primary" onClick={() => handleStartGame(gameId)}>
@@ -213,7 +224,6 @@ const Game: FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
             <LeaveGame className={s.action} />
           </div>
         </Popconfirm>
-        <Chat game={{ name: gameName, topic: gameId }} />
       </div>
       <div className={s.playingField}>
         <GameField game={data.joinGame} onChoiceDream={handleChoiceDream} />

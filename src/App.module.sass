@@ -1,0 +1,29 @@
+.App
+    min-height: 100vh
+    height: 100%
+
+.Header
+    display: flex
+    background: none
+    justify-content: space-between
+    align-items: center
+    margin: 30px 10px
+
+.Nav
+    background: none
+    border: none
+
+    &Item
+        & > a
+            font-family: Neucha, serif
+            font-weight: 600
+            font-size: 20px
+            @media all and (min-width: 700px)
+                font-size: 24px
+
+    &Collapsed
+        width: 100%
+        margin-left: auto
+
+        & > span
+            margin-left: 10px

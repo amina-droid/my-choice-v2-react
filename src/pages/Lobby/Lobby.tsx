@@ -7,7 +7,6 @@ import { useHistory } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import s from './Lobby.module.sass';
 import Card from '../../shared/Card/Card';
-import Chat from '../../components/Chat/Chat';
 import {
   CREATE_GAME,
   CreateGame,
@@ -70,9 +69,6 @@ const Lobby = () => {
 
   return (
     <div>
-      <Title className={s.title} level={1}>
-        Лобби
-      </Title>
       <div className={s.containCards}>
         <Card onClick={showModal} className={s.cardAdd}>
           <PlusOutlined />
@@ -116,7 +112,6 @@ const Lobby = () => {
           </Form>
         </Modal>
       </div>
-      <Chat />
     </div>
   );
 };
