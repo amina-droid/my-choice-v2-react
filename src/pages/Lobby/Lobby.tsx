@@ -17,8 +17,6 @@ import {
   UpdateActiveGames,
 } from '../../apollo';
 
-const { Title } = Typography;
-
 type CreateGameValues = {
   gameName: string;
 };
@@ -26,7 +24,7 @@ type CreateGameValues = {
 const Lobby = () => {
   const [visible, setVisible] = useState<boolean>(false);
   const [form] = useForm();
-  const { data, loading, subscribeToMore } = useQuery<GetActiveGames>(GET_ACTIVE_GAMES);
+  const { data, subscribeToMore } = useQuery<GetActiveGames>(GET_ACTIVE_GAMES);
   const [createGame] = useMutation<CreateGame, CreateGameVariables>(CREATE_GAME);
   const history = useHistory();
 
@@ -68,50 +66,48 @@ const Lobby = () => {
   };
 
   return (
-    <div>
-      <div className={s.containCards}>
-        <Card onClick={showModal} className={s.cardAdd}>
-          <PlusOutlined />
-        </Card>
-        {data?.getActiveGames.map(game => {
-          return (
-            <Card
-              className={s.card}
-              key={game._id}
-              title={game.name}
-              playersCount={game.playersCount}
-              onClick={() => redirectToGame(game._id)}
-            />
-          );
-        })}
-        <Modal
-          visible={visible}
-          onCancel={cancelModal}
-          destroyOnClose
-          title="Создать игру"
-          className={s.modalCreateGame}
-          centered
-          footer={
-            <Button
-              type="primary"
-              onClick={() => {
-                form.validateFields().then(handleCreateGame);
-              }}
-            >
-              Создать
-            </Button>
-          }
-        >
-          <Form form={form}>
-            <Form.Item
-              name="gameName"
-              rules={[{ required: true, message: 'Введите название игры' }]}
-            >
-              <Input placeholder="Введите название игры" />
-            </Form.Item>
-          </Form>
-        </Modal>
-      </div>
+    <div className={s.containCards}>
+      <Card onClick={showModal} className={s.cardAdd}>
+        <PlusOutlined />
+      </Card>
+      {data?.getActiveGames.map(game => {
+        return (
+          <Card
+            className={s.card}
+            key={game._id}
+            title={game.name}
+            playersCount={game.playersCount}
+            onClick={() => redirectToGame(game._id)}
+          />
+        );
+      })}
+      <Modal
+        visible={visible}
+        onCancel={cancelModal}
+        destroyOnClose
+        title="Создать игру"
+        className={s.modalCreateGame}
+        centered
+        footer={
+          <Button
+            type="primary"
+            onClick={() => {
+              form.validateFields().then(handleCreateGame);
+            }}
+          >
+            Создать
+          </Button>
+        }
+      >
+        <Form form={form}>
+          <Form.Item
+            name="gameName"
+            rules={[{ required: true, message: 'Введите название игры' }]}
+          >
+            <Input placeholder="Введите название игры" />
+          </Form.Item>
+        </Form>
+      </Modal>
     </div>
   );
 };

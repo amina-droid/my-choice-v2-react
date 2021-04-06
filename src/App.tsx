@@ -80,6 +80,7 @@ const ActivePages = () => {
     </ChatContextProvider>
   );
 };
+const link = 'https://vk.com/mazurov.official';
 
 function App() {
   return (
@@ -93,6 +94,9 @@ function App() {
               <Route component={NotFound} exact />
             </Switch>
           </div>
+          <Layout.Footer className={s.Footer}>
+            Backend - <a style={{ color: 'black' }} href={link} target="_blank" rel="noreferrer">Евгений Мазуров</a>. Frontend - Амина Мазурова. Мой выбор ©2020
+          </Layout.Footer>
         </BrowserRouter>
       </AuthContextProvider>
     </ApolloProvider>
