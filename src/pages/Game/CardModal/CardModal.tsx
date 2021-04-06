@@ -33,14 +33,14 @@ const CardModal: FC<CardModalProps> = React.memo(
     const { error } = useSubscription<
       OnDroppedCard, OnDroppedCardVariables
       >(ON_DROPPED_CARD, {
-      variables: {
-        gameId,
-      },
-      onSubscriptionData: (data) => {
-        setDroppedCard(data?.subscriptionData?.data?.cardDropped);
-      },
-      fetchPolicy: 'no-cache',
-    });
+        variables: {
+          gameId,
+        },
+        onSubscriptionData: (data) => {
+          setDroppedCard(data?.subscriptionData?.data?.cardDropped);
+        },
+        fetchPolicy: 'no-cache',
+      });
 
     const onOpportunityClick = () => {
       opportunityReq();
@@ -102,8 +102,8 @@ const CardModal: FC<CardModalProps> = React.memo(
             {droppedCard?.card.__typename === 'Opportunity'
             && (droppedCard?.card.canTryLuck
               ? (
-              <Dice ready onRoll={onOpportunityDiceClick} onRollComplete={closeModal} />
-            ) : (
+                <Dice ready onRoll={onOpportunityDiceClick} onRollComplete={closeModal} />
+              ) : (
                 <Button
                   type="primary"
                   key={droppedCard?.card._id}

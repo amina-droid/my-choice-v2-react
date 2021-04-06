@@ -45,6 +45,12 @@ module.exports = {
       1,
       {
         html: 'ignore',
+        exceptions: [
+          "WrappedComponent",
+          "Component",
+          "Form.Item",
+          "Item",
+        ],
       },
     ],
     'react/display-name': [0],

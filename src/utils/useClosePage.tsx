@@ -33,7 +33,7 @@ function changePage(onOk: () => void, props?: ModalFuncProps) {
 function useClosePage(
   onClose: () => void,
   modalProps?: ModalFuncProps,
-  ) {
+) {
   useEffect(() => {
     const listener = closePage(onClose, modalProps);
     window.addEventListener('beforeunload', listener);

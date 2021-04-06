@@ -26,7 +26,7 @@ const Main = () => {
         fields: {
           nickname: () => {
             return mutationResult.data?.updateNickname.nickname;
-            },
+          },
         },
       });
     },

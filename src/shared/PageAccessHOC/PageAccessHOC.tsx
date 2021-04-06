@@ -8,14 +8,14 @@ import NotFound from '../../pages/NotFound/NotFound';
 
 export const access = (currentRole: UserRole | undefined, accessedRoles: UserRole[]) => {
   switch (currentRole) {
-    case UserRole.Admin:
-      return true;
-    case UserRole.Moderator:
-      return accessedRoles.some(role => role === UserRole.Moderator || role === UserRole.User);
-    case UserRole.User:
-      return accessedRoles.some(role => role === UserRole.User);
-    default:
-      return false;
+  case UserRole.Admin:
+    return true;
+  case UserRole.Moderator:
+    return accessedRoles.some(role => role === UserRole.Moderator || role === UserRole.User);
+  case UserRole.User:
+    return accessedRoles.some(role => role === UserRole.User);
+  default:
+    return false;
   }
 };
 

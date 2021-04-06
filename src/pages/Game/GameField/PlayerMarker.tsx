@@ -60,8 +60,8 @@ function getInnerCoords(cell: number, playerIndex: number, svg: SVGSVGElement): 
 
   const angle = circleSegment * InnerValues.SEGMENT_ANGLE + (
     (isRightCirclePart
-        ? 1
-        : -1
+      ? 1
+      : -1
     ) * (odd
       ? InnerValues.SEGMENT_PADDING + InnerValues.MARKER_MARGIN
       : InnerValues.SEGMENT_PADDING
@@ -117,25 +117,25 @@ const PlayerMarker: FC<PlayerControlProps> = ({ player, players }) => {
 
   useEffect(() => {
     switch (player.position) {
-      case PlayerPosition.Start: {
-        const startBox = svg?.current?.querySelector(
+    case PlayerPosition.Start: {
+      const startBox = svg?.current?.querySelector(
           getSelector({ field: FieldType.Start }),
         ) as SVGGElement | null;
 
-        setMarkerCoords(getStartCoords(startBox, playerIndex));
-        break;
-      }
-      case PlayerPosition.Inner: {
-        setMarkerCoords(getInnerCoords(player?.cell ?? 0, playerIndex, svg?.current!));
-        break;
-      }
-      case PlayerPosition.Outer: {
-        setMarkerCoords(getOuterCoords(player?.cell ?? 0, playerIndex, svg?.current!));
-        break;
-      }
-      default: {
-        setMarkerCoords({});
-      }
+      setMarkerCoords(getStartCoords(startBox, playerIndex));
+      break;
+    }
+    case PlayerPosition.Inner: {
+      setMarkerCoords(getInnerCoords(player?.cell ?? 0, playerIndex, svg?.current!));
+      break;
+    }
+    case PlayerPosition.Outer: {
+      setMarkerCoords(getOuterCoords(player?.cell ?? 0, playerIndex, svg?.current!));
+      break;
+    }
+    default: {
+      setMarkerCoords({});
+    }
     }
   }, [player.cell, player.position, playerIndex]);
 
@@ -149,16 +149,16 @@ const PlayerMarker: FC<PlayerControlProps> = ({ player, players }) => {
         <g
           transform={MARKER_POSITION_TRANSFORM}
         >
-        <svg
-          fill="none"
-          viewBox="0 0 109 122"
-          x={state?.x}
-          y={state?.y}
-          width="109"
-          height="122"
-        >
-          <MemoMarker playerId={player._id} color={player.color} />
-        </svg>
+          <svg
+            fill="none"
+            viewBox="0 0 109 122"
+            x={state?.x}
+            y={state?.y}
+            width="109"
+            height="122"
+          >
+            <MemoMarker playerId={player._id} color={player.color} />
+          </svg>
         </g>
       )}
     </Animate>

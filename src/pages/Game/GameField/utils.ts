@@ -35,7 +35,7 @@ export function usePlayerIndex({
   return useMemo(() => players
     .filter(filteredPlayer => keys.every(key => filteredPlayer[key] === player[key]))
     .findIndex(({ _id }) => _id === player._id),
-    [players, player]);
+  [players, player]);
 }
 
 export function getSelector(config: Selector) {

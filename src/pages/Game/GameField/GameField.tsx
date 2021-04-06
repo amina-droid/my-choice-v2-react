@@ -45,10 +45,10 @@ const Avatars: FC<Pick<ActiveGame, 'players'>> = React.memo(({ players }) => (
       </defs>
     ))}
   </>),
-  (
-    prev,
-    next,
-    ) => prev.players.length === next.players.length);
+(
+  prev,
+  next,
+) => prev.players.length === next.players.length);
 
 type DreamsProps = Pick<ActiveGame, 'players' | 'status'>
 const Dreams: FC<DreamsProps> = ({ players }) => {
@@ -60,7 +60,7 @@ const Dreams: FC<DreamsProps> = ({ players }) => {
           player={player}
           players={players}
         />
-        ))}
+      ))}
     </>
   );
 }; // , (
