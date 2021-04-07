@@ -81,7 +81,7 @@ const ActivePages = () => {
   );
 };
 const backender = 'https://vk.com/deivoff';
-const frontender ='https://vk.com/ami_mazurova';
+const frontender = 'https://vk.com/ami_mazurova';
 
 function App() {
   return (
