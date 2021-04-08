@@ -9,6 +9,24 @@
     line-height: normal
     background: none
 
+.Logo
+    font-family: Neucha, serif
+    font-weight: 600
+    cursor: pointer
+    display: flex
+    justify-content: center
+    align-items: center
+    gap: 10px
+
+    &Img
+        height: 35px
+        width: 35px
+        transition: 0.1s
+
+    &:hover
+        .LogoImg
+            transform: scale(1.1)
+
 .Header
     display: flex
     background: none
@@ -22,6 +40,11 @@
     border: none
 
     &Item
+        font-family: Neucha, serif
+        font-weight: 600
+        font-size: 20px
+        @media all and (min-width: 700px)
+            font-size: 24px
         & > a
             font-family: Neucha, serif
             font-weight: 600
