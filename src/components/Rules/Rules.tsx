@@ -1,34 +1,14 @@
-import React, { FC, useContext, useMemo, useState } from 'react';
-import { Button, Modal, Typography } from 'antd';
+import React, { FC } from 'react';
+import { Modal, Typography } from 'antd';
+import { NavButton } from './utils';
+import { useRulesContext } from './context';
 
 import s from './Rules.module.sass';
 
-type RulesProps = {
+export type RulesProps = {
   closeModal: () => void;
   visible: boolean;
 }
-
-type RulesState = {
-  block?: BlockTypes;
-  setBlock: (block?: BlockTypes) => void
-}
-const RulesContext = React.createContext<RulesState>({
-  setBlock: () => {},
-});
-
-const useRulesContext = () => useContext(RulesContext);
-
-type BlockTypes = 'inner' | 'outer' | 'circles' | 'resources' | 'process'
-
-const NavButton: FC<{ to?: BlockTypes }> = ({
-  children,
-  to,
-}) => {
-  const { setBlock } = useRulesContext();
-  return (
-    <Button type="link" className={s.navButton} onClick={() => setBlock(to)}>{children}</Button>
-  );
-};
 
 const MainNavigation: FC = () => (
   <Paragraph>
@@ -145,20 +125,6 @@ const Blocks: FC = () => {
       );
     }
   }
-};
-
-export const RulesContextProvider: FC = ({ children }) => {
-  const [visibleBlock, setVisibleBlock] = useState<BlockTypes>();
-  const context = useMemo<RulesState>(() => ({
-    block: visibleBlock,
-    setBlock: setVisibleBlock,
-  }), [visibleBlock]);
-
-  return (
-    <RulesContext.Provider value={context}>
-      {children}
-    </RulesContext.Provider>
-  );
 };
 
 const { Title, Paragraph } = Typography;
