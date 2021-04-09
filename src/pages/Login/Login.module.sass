@@ -2,7 +2,10 @@
     width: 100%
     height: calc(100vh - 50px)
     display: flex
+    flex-wrap: wrap
+    gap: 30px
     flex-grow: 1
+    padding: 0 15px
     justify-content: center
     align-items: center
 
@@ -10,7 +13,51 @@
     .card
         margin-top: auto
         margin-bottom: auto
-        display: flex
-        flex-direction: column
-        align-items: center
-        justify-content: center
+        text-align: center
+        line-height: normal
+
+.logo
+    padding: 24px 24px 0
+    max-width: 300px
+
+    @media all and (max-width: 650px)
+        max-width: 250px
+
+.meta
+    margin-bottom: 15px
+    & :global
+        & .ant-card-meta-description,
+        & .ant-card-meta-title
+            font-family: Neucha, serif
+
+        & .ant-card-meta-description
+            font-size: 16px
+        & .ant-card-meta-title
+            font-size: 18px
+            font-weight: 600
+
+.partners
+    display: grid
+    justify-content: center
+    align-items: center
+    gap: 10px
+    grid-template-areas: 'title title' 'partner1 partner2'
+    @media all and (min-width: 650px)
+        grid-template-areas: 'title' 'partner1' 'partner2'
+
+    &Text
+        font-family: Neucha, serif
+        font-size: 18px
+        grid-area: title
+        justify-self: center
+
+
+.partner
+    max-height: 120px
+    justify-self: center
+
+    &[alt="Альянс СО НКО"]
+        grid-area: partner1
+    &[alt="Правительство Тюменской области"]
+        grid-area: partner2
+

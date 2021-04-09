@@ -20,7 +20,7 @@ import { UserRole } from './types';
 import Profile from './components/Profile/Profile';
 import Chat from './components/Chat/Chat';
 import Rules, { RulesContextProvider } from './components/Rules';
-import logo from './img/logo.png';
+import logo from './assets/logo.png';
 
 import s from './App.module.sass';
 
