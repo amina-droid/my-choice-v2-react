@@ -2,17 +2,16 @@ import React, { FC } from 'react';
 import { ActivePlayer } from '../../../apollo';
 import PlayerRow from './PlayerRow';
 
-import s from './PlayersTable.module.sass';
-
 type PlayersTableProps = {
   players: ActivePlayer[];
+  mover?: string;
 };
 
-const PlayersTable: FC<PlayersTableProps> = ({ players }) => {
+const PlayersTable: FC<PlayersTableProps> = ({ players, mover }) => {
   return (
     <div>
-      {players.map((player) => (
-        <PlayerRow player={player} key={player._id} />
+      {players.map(player => (
+        <PlayerRow player={player} key={player._id} mover={mover} />
       ))}
     </div>
   );
