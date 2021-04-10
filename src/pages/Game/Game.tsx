@@ -69,17 +69,17 @@ const Game: FC<RouteComponentProps<{ gameId: string }>> = ({ match }) => {
   const { user } = useAuth();
   const [callDiceAlert, clearDiceAlert] = useNotificationTimeout(DICE_NOTIFICATION_OPTIONS);
   const [callDreamAlert, clearDreamAlert] = useNotificationTimeout(DREAM_NOTIFICATION_OPTIONS);
-  const [
-    callStartGameAlert, clearStartGameAlert,
-  ] = useNotificationTimeout(START_GAME_NOTIFICATION_OPTIONS);
+  const [callStartGameAlert, clearStartGameAlert] = useNotificationTimeout(
+    START_GAME_NOTIFICATION_OPTIONS,
+  );
   const [leaveGameReq] = useMutation<TLeaveGame>(LEAVE_GAME, {
-    update: ((cache) => {
+    update: cache => {
       cache.evict({
         id: `GameSession:${match.params.gameId}`,
         fieldName: 'players',
       });
       cache.gc();
-    }),
+    },
   });
   const [choiceDream] = useMutation<ChoiceDream, ChoiceDreamVariables>(CHOICE_DREAM);
   const [startGameReq] = useMutation<StartGame, StartGameVariables>(START_GAME);
@@ -216,7 +216,7 @@ const Game: FC<RouteComponentProps<{ gameId: string }>> = ({ match }) => {
         )}
       </div>
       <div className={s.playersTableContainer}>
-        <PlayersTable players={data.joinGame.players} />
+        <PlayersTable players={data.joinGame.players} mover={data.joinGame.mover} />
       </div>
       <div className={s.actionsContainer}>
         <ChangeResources className={s.action} />

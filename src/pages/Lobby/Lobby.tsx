@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Form, Input, message, Modal, Typography } from 'antd';
+import { Button, Form, Input, message, Modal } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { useForm } from 'antd/es/form/Form';
 import { useHistory } from 'react-router-dom';
@@ -16,6 +16,14 @@ import {
   UPDATE_ACTIVE_GAMES,
   UpdateActiveGames,
 } from '../../apollo';
+import useNotificationTimeout from '../../utils/useNotificationTimeout';
+
+const LOBBY_NOTIFICATION_OPTIONS = {
+  key: 'lobby',
+  timeoutMessage: 'Добро пожаловать в игру!',
+  description:
+    'Здесь вы можете создать новую игровую комнату, нажав на "+", или присоединиться к уже существующей.',
+};
 
 type CreateGameValues = {
   gameName: string;
@@ -26,6 +34,7 @@ const Lobby = () => {
   const [form] = useForm();
   const { data, subscribeToMore } = useQuery<GetActiveGames>(GET_ACTIVE_GAMES);
   const [createGame] = useMutation<CreateGame, CreateGameVariables>(CREATE_GAME);
+  const [callLobbyAlert, clearLobbyAlert] = useNotificationTimeout(LOBBY_NOTIFICATION_OPTIONS);
   const history = useHistory();
 
   useEffect(() => {
@@ -41,7 +50,12 @@ const Lobby = () => {
     });
   }, [subscribeToMore]);
 
+  useEffect(() => {
+    callLobbyAlert();
+  }, []);
+
   const showModal = () => {
+    clearLobbyAlert();
     setVisible(true);
   };
 
@@ -52,6 +66,7 @@ const Lobby = () => {
 
   const redirectToGame = (id: string) => {
     history.push(`/game/${id}`);
+    clearLobbyAlert();
   };
 
   const handleCreateGame = async (values: CreateGameValues) => {
@@ -100,10 +115,7 @@ const Lobby = () => {
         }
       >
         <Form form={form}>
-          <Form.Item
-            name="gameName"
-            rules={[{ required: true, message: 'Введите название игры' }]}
-          >
+          <Form.Item name="gameName" rules={[{ required: true, message: 'Введите название игры' }]}>
             <Input placeholder="Введите название игры" />
           </Form.Item>
         </Form>

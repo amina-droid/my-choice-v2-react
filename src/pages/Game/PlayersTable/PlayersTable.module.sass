@@ -2,6 +2,7 @@
     display: flex
     align-items: center
     margin-bottom: 15px
+    transition: 0.3s
 
 .playerGameOver
     filter: grayscale(1)
@@ -12,6 +13,9 @@
             color: #999
             background-color: #fff
             box-shadow: 0 0 0 1px #d9d9d9 inset
+
+.playerMover
+    transform: scale(1.1)
 
 .avatar
     border: 5px solid
@@ -25,6 +29,46 @@
     display: flex
     justify-content: space-around
     align-items: center
-    width: 80px
     font-size: 20px
     font-family: Neucha, sans-serif
+
+    @media all and (max-width: 1200px)
+        height: 25px
+        font-size: 20px
+
+    @media all and (max-width: 992px)
+        height: 23px
+        font-size: 20px
+
+    @media all and (max-width: 768px)
+        height: 18px
+        font-size: 18px
+
+    @media all and (max-width: 576px)
+        height: 13px
+        font-size: 13px
+
+.iconContainer
+    width: 30px
+    height: 30px
+    margin-right: 5px
+    @media all and (max-width: 1200px)
+        width: 25px
+        height: 25px
+
+    @media all and (max-width: 992px)
+        width: 23px
+        height: 23px
+
+    @media all and (max-width: 768px)
+        width: 18px
+        height: 18px
+
+    @media all and (max-width: 576px)
+        width: 13px
+        height: 13px
+
+
+    & > svg
+        width: 100%
+        height: 100%

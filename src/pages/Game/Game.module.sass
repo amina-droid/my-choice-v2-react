@@ -1,7 +1,7 @@
 .gameContainer
     display: grid
     grid-template-areas: "playersTableContainer header actionsContainer" "playersTableContainer playingField actionsContainer"
-    grid-template-rows: 60px auto
+    grid-template-rows: 60px 90%
     grid-template-columns: minmax(250px, 15%) 1fr 5%
     grid-gap: 10px
     padding: 3%
@@ -12,7 +12,7 @@
 
 .playingField
     grid-area: playingField
-    margin: -30px 0 0 -98px
+    margin: -30px 0 10px -98px
     max-width: 1200px
     width: 100%
     justify-self: center
