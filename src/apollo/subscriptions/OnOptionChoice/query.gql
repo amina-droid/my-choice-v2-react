@@ -1,0 +1,6 @@
+subscription OnOptionChoice($gameId: ObjectId!) {
+    playerChoice(gameId: $gameId) {
+        cardId,
+        choiceId,
+    }
+}

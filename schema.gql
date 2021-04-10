@@ -41,6 +41,11 @@ type ChoiceCard implements Card {
     typeName: String!
 }
 
+type ChoiceOption {
+    cardId: ObjectId!
+    choiceId: ObjectId
+}
+
 type DroppedCard {
     card: Card!
     forPlayer: ObjectId!
@@ -91,6 +96,7 @@ type Mutation {
     opportunityResult(diceResult: Int): Boolean!
     removeCard(cardId: ObjectId!): Card!
     sendMessage(message: String!, topic: String!): Boolean!
+    shareResources(shareResourcesInput: ShareResourcesInput!): Boolean!
     startGame(gameId: ObjectId!): Boolean!
     updateChoicesCard(cardId: ObjectId!, updateChoicesCard: UpdateChoicesCardInput!): Card!
     updateIncidentCard(cardId: ObjectId!, updateIncidentCard: UpdateIncidentCardInput!): Card!
@@ -155,6 +161,7 @@ type Result {
 type Subscription {
     cardDropped(gameId: ObjectId!): DroppedCard!
     onMessage(topic: String!): Message!
+    playerChoice(gameId: ObjectId!): ChoiceOption!
     updateActiveGame(gameId: ObjectId!): GameSession!
     updateActiveGames: [GameSession!]!
 }
@@ -210,6 +217,13 @@ enum PlayerPosition {
     Start
 }
 
+enum ResourceType {
+    dark
+    lives
+    money
+    white
+}
+
 enum UserRole {
     Admin
     Moderator
@@ -261,6 +275,11 @@ input ResultInput {
     hold: Int
     move: FieldType
     resources: ResourcesInput
+}
+
+input ShareResourcesInput {
+    exchange: ResourceType!
+    for: ResourceType!
 }
 
 input UpdateChoicesCardInput {

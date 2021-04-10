@@ -28,7 +28,7 @@ const getRandom = () => {
 type DiceProps = {
   ready?: boolean;
   onRoll?: (value: number) => void;
-  onRollComplete: () => void;
+  onRollComplete?: () => void;
 };
 
 type DiceStatus = 'ready' | 'roll' | 'disabled';
@@ -55,15 +55,13 @@ const Dice: FC<DiceProps> = ({ ready, onRoll, onRollComplete }) => {
   const clickDice = async () => {
     setDiceStatus('roll');
     const randomNumber = getRandom();
-    if (onRoll) {
-      onRoll(randomNumber);
-    }
+    onRoll?.(randomNumber);
     await timeout(1500);
     setCurrentDice(randomNumber);
     setDiceStatus('disabled');
 
     await timeout(500);
-    onRollComplete();
+    onRollComplete?.();
     await timeout(1500);
     if (readyRef.current) {
       setDiceStatus('ready');

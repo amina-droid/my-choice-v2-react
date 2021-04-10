@@ -43,12 +43,18 @@ const useResourcesNotify = (
   useEffect(() => {
     if (isNil(resource)) return;
     if (resourceType && prevRes) {
-      message.info(
-        <>
-          {playerName ? playerName : 'Вы'} получил {prevRes - resource}
-          {RESOURCES_DICT_OBJ[resourceType]}
-        </>,
-      );
+      const diff = resource - prevRes;
+      const isYou = !playerName;
+      const subject = isYou ? 'Вы' : `Игрок ${playerName}`;
+      const action = diff < 0 ? (isYou ? 'потеряли' : 'потерял') : isYou ? 'получили' : 'получил';
+      message.info({
+        content: (
+          <div>
+            {subject} {action} {diff}
+          </div>
+        ),
+        icon: RESOURCES_DICT_OBJ[resourceType],
+      });
     }
   }, [resource]);
 };
@@ -62,7 +68,6 @@ const RESOURCES_DICT: ResourcesDict[] = [
 
 const PlayerRow: FC<Props> = ({ player, className: outerClassName, mover }) => {
   const { user: currentPlayer } = useAuth();
-  console.log(player._id !== currentPlayer?._id);
   useResourcesNotify(
     player.resources?.white,
     'white',
