@@ -8,7 +8,8 @@ fragment ActivePlayer on Player {
     hold,
     gameover,
     avatar,
-    resources{
+    sex,
+    resources {
         lives,
         white,
         dark,

@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { GameStatus, PlayerPosition } from "./../../../../types/globalTypes";
+import { GameStatus, PlayerPosition, UserSex } from "./../../../../types/globalTypes";
 
 // ====================================================
 // GraphQL query operation: JoinGame
@@ -27,6 +27,7 @@ export interface JoinGame_joinGame_players {
   hold: number | null;
   gameover: boolean | null;
   avatar: string | null;
+  sex: UserSex;
   resources: JoinGame_joinGame_players_resources | null;
   color: string;
 }

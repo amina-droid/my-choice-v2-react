@@ -38,6 +38,12 @@ export enum UserRole {
   User = "User",
 }
 
+export enum UserSex {
+  Female = "Female",
+  Male = "Male",
+  Undefined = "Undefined",
+}
+
 export interface CreateChoicesCardInput {
   choices: OptionInput[];
   description: string;

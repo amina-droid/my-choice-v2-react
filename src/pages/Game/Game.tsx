@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from 'react';
 import { Button, message, Popconfirm, Spin } from 'antd';
 import { RouteComponentProps, useHistory } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
+import { useMutation, useLazyQuery } from '@apollo/client';
 import {
   CHOICE_DREAM,
   ChoiceDream,
@@ -84,17 +84,24 @@ const Game: FC<RouteComponentProps<{ gameId: string }>> = ({ match }) => {
   const [choiceDream] = useMutation<ChoiceDream, ChoiceDreamVariables>(CHOICE_DREAM);
   const [startGameReq] = useMutation<StartGame, StartGameVariables>(START_GAME);
   const [visible, setVisible] = useState<boolean>(false);
-  const { data, error, subscribeToMore } = useQuery<JoinGame, JoinGameVariables>(
+  const [joinGameReq, { data, error, subscribeToMore }] = useLazyQuery<JoinGame, JoinGameVariables>(
     JOIN_GAME,
     {
       fetchPolicy: 'cache-first',
-      variables: {
-        gameId: match.params.gameId,
-      },
     },
   );
   const [moveReq] = useMutation<GameMove, GameMoveVariables>(GAME_MOVE);
   useClosePage(leaveGameReq, LEAVE_PAGE_MODAL_PROPS);
+
+  useEffect(() => {
+    if (match.params.gameId) {
+      joinGameReq({
+        variables: {
+          gameId: match.params.gameId,
+        },
+      });
+    }
+  }, [match.params.gameId]);
 
   useEffect(() => {
     if (data?.joinGame?._id) {

@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { GameStatus, PlayerPosition } from "./../../../../types/globalTypes";
+import { GameStatus, PlayerPosition, UserSex } from "./../../../../types/globalTypes";
 
 // ====================================================
 // GraphQL subscription operation: UpdateActiveGame
@@ -27,6 +27,7 @@ export interface UpdateActiveGame_updateActiveGame_players {
   hold: number | null;
   gameover: boolean | null;
   avatar: string | null;
+  sex: UserSex;
   resources: UpdateActiveGame_updateActiveGame_players_resources | null;
   color: string;
 }

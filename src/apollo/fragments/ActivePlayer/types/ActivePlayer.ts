@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { PlayerPosition } from "./../../../../types/globalTypes";
+import { PlayerPosition, UserSex } from "./../../../../types/globalTypes";
 
 // ====================================================
 // GraphQL fragment: ActivePlayer
@@ -27,6 +27,7 @@ export interface ActivePlayer {
   hold: number | null;
   gameover: boolean | null;
   avatar: string | null;
+  sex: UserSex;
   resources: ActivePlayer_resources | null;
   color: string;
 }
