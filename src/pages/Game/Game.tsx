@@ -31,6 +31,7 @@ import { useAuth } from '../../context/auth';
 import { useChatContext } from '../../context/chat';
 import { GameStatus } from '../../types';
 import GameField from './GameField/GameField';
+import Winner from './Winner/Winner';
 import useNotificationTimeout from '../../utils/useNotificationTimeout';
 import useClosePage from '../../utils/useClosePage';
 
@@ -187,7 +188,14 @@ const Game: FC<RouteComponentProps<{ gameId: string }>> = ({ match }) => {
   };
 
   if (!data?.joinGame) return <Spin size="large" />;
-  const { creator, status, mover, name: gameName, _id: gameId } = data.joinGame;
+  const {
+    creator,
+    status,
+    mover,
+    name: gameName,
+    _id: gameId,
+    winner,
+  } = data.joinGame;
 
   const handleDiceRollComplete = () => {
     setVisible(true);
@@ -208,7 +216,9 @@ const Game: FC<RouteComponentProps<{ gameId: string }>> = ({ match }) => {
         gameId={match.params.gameId}
         canBeVisible={visible}
         closeModal={closeModal}
+        onError={onGameError}
       />
+      <Winner gameId={gameId} winnerId={winner} onOk={leaveGame} />
       <div className={s.header}>
         {status === GameStatus.Awaiting && creator === user?._id && (
           <Button type="primary" onClick={() => handleStartGame(gameId)}>

@@ -39,6 +39,7 @@ export interface ActiveGame {
   observers: number;
   creator: any;
   status: GameStatus;
+  winner: any | null;
   mover: any | null;
   players: ActiveGame_players[];
 }

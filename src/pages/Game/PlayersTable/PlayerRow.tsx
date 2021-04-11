@@ -42,7 +42,7 @@ const useResourcesNotify = (
 
   useEffect(() => {
     if (isNil(resource)) return;
-    if (resourceType && prevRes) {
+    if (!isNil(resourceType) && !isNil(prevRes)) {
       const diff = resource - prevRes;
       const isYou = !playerName;
       const subject = isYou ? 'Вы' : `Игрок ${playerName}`;

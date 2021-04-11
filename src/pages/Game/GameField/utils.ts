@@ -13,11 +13,11 @@ type Selector = {
 
 type Player = ActiveGame['players'][0]
 
-export function useCurrentPlayer() {
+export function usePlayer(_id?: string) {
   const { user } = useAuth();
   const apolloClient = useApolloClient();
   return apolloClient.readFragment<ActivePlayer>({
-    id: `Player:${user?._id}`,
+    id: `Player:${_id ? _id : user?._id}`,
     fragment: ACTIVE_PLAYER,
   });
 }

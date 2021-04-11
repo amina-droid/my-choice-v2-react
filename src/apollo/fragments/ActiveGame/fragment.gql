@@ -6,6 +6,7 @@ fragment ActiveGame on GameSession {
     observers,
     creator,
     status,
+    winner,
     mover,
     players {
         ...ActivePlayer

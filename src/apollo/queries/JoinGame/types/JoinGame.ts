@@ -39,6 +39,7 @@ export interface JoinGame_joinGame {
   observers: number;
   creator: any;
   status: GameStatus;
+  winner: any | null;
   mover: any | null;
   players: JoinGame_joinGame_players[];
 }

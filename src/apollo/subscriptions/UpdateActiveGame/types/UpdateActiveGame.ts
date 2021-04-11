@@ -39,6 +39,7 @@ export interface UpdateActiveGame_updateActiveGame {
   observers: number;
   creator: any;
   status: GameStatus;
+  winner: any | null;
   mover: any | null;
   players: UpdateActiveGame_updateActiveGame_players[];
 }

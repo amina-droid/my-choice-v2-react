@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useRef } from 'react';
 import { ActiveGame } from '../../../apollo';
 import { FieldType, GameStatus } from '../../../types';
-import { getSelector, getPlayerAvatarSVG, useCurrentPlayer } from './utils';
+import { getSelector, getPlayerAvatarSVG, usePlayer } from './utils';
 import { GameFieldSVG } from './GameFieldSVG';
 import PlayerDream from './PlayerDream';
 import PlayerMarker from './PlayerMarker';
@@ -72,7 +72,7 @@ const Dreams: FC<DreamsProps> = ({ players }) => {
 
 const GameField: FC<GameFieldProps> = ({ game, onChoiceDream }) => {
   const svgRef = useRef<SVGSVGElement>(null);
-  const myPlayer = useCurrentPlayer();
+  const myPlayer = usePlayer();
 
   useEffect(() => {
     const playerDreamNotExist = game.status === GameStatus.ChoiceDream && !myPlayer?.dream;
