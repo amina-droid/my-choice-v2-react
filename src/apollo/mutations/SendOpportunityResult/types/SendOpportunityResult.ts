@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @generated
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -13,4 +12,5 @@ export interface SendOpportunityResult {
 
 export interface SendOpportunityResultVariables {
   diceCount?: number | null;
+  opportunityId: any;
 }

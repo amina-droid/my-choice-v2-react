@@ -59,6 +59,7 @@ const CardModal: FC<CardModalProps> = React.memo(
         setPlayerChoiceId(selectedChoiceId);
         await timeout(500);
         setPlayerChoiceId(undefined);
+        console.log({ cardId, selectedChoiceId });
         setDroppedCards(prevState => remove(prevState, ({ card }) => card._id === cardId));
       },
       fetchPolicy: 'no-cache',
@@ -69,15 +70,22 @@ const CardModal: FC<CardModalProps> = React.memo(
       setDroppedCard(newDroppedCard);
     }, [droppedCards.length]);
 
-    const onOpportunityClick = () => {
-      opportunityReq();
+    const onOpportunityClick = (opportunityId: string) => () => {
+      opportunityReq({
+        variables: {
+          opportunityId,
+        },
+      });
       setDroppedCard(undefined);
     };
 
-    const onOpportunityDiceClick = (diceCount?: number) => {
+    const onOpportunityDiceClick = (
+      opportunityId: string,
+    ) => (diceCount?: number) => {
       opportunityReq({
         variables: {
           diceCount,
+          opportunityId,
         },
       });
     };
@@ -87,6 +95,10 @@ const CardModal: FC<CardModalProps> = React.memo(
       setDroppedCard(undefined);
     };
 
+    console.log({
+      droppedCard,
+      droppedCards,
+    });
     return (
       <>
         <Modal
@@ -128,7 +140,7 @@ const CardModal: FC<CardModalProps> = React.memo(
               (droppedCard?.card.canTryLuck ? (
                 <Dice
                   ready={droppedCard.forPlayer === user?._id}
-                  onRoll={onOpportunityDiceClick}
+                  onRoll={onOpportunityDiceClick(droppedCard?.card._id)}
                   onRollComplete={() => setDroppedCard(undefined)}
                 />
               ) : (
@@ -136,7 +148,7 @@ const CardModal: FC<CardModalProps> = React.memo(
                   type="primary"
                   key={droppedCard?.card._id}
                   disabled={droppedCard.forPlayer !== user?._id}
-                  onClick={onOpportunityClick}
+                  onClick={onOpportunityClick(droppedCard?.card._id)}
                   block
                 >
                   Ок

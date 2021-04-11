@@ -56,7 +56,7 @@ const Dice: FC<DiceProps> = ({ ready, onRoll, onRollComplete }) => {
     setDiceStatus('roll');
     const randomNumber = getRandom();
     onRoll?.(randomNumber);
-    await timeout(1500);
+    await timeout(1000);
     setCurrentDice(randomNumber);
     setDiceStatus('disabled');
 

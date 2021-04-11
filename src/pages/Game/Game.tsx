@@ -1,7 +1,7 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useCallback, useEffect, useState } from 'react';
 import { Button, message, Popconfirm, Spin } from 'antd';
 import { RouteComponentProps, useHistory } from 'react-router-dom';
-import { useMutation, useLazyQuery } from '@apollo/client';
+import { useMutation, useLazyQuery, ApolloError } from '@apollo/client';
 import {
   CHOICE_DREAM,
   ChoiceDream,
@@ -67,11 +67,7 @@ const Game: FC<RouteComponentProps<{ gameId: string }>> = ({ match }) => {
   const history = useHistory();
   const { setGame, resetGame } = useChatContext();
   const { user } = useAuth();
-  const [callDiceAlert, clearDiceAlert] = useNotificationTimeout(DICE_NOTIFICATION_OPTIONS);
-  const [callDreamAlert, clearDreamAlert] = useNotificationTimeout(DREAM_NOTIFICATION_OPTIONS);
-  const [callStartGameAlert, clearStartGameAlert] = useNotificationTimeout(
-    START_GAME_NOTIFICATION_OPTIONS,
-  );
+  const [visible, setVisible] = useState<boolean>(false);
   const [leaveGameReq] = useMutation<TLeaveGame>(LEAVE_GAME, {
     update: cache => {
       cache.evict({
@@ -81,16 +77,35 @@ const Game: FC<RouteComponentProps<{ gameId: string }>> = ({ match }) => {
       cache.gc();
     },
   });
-  const [choiceDream] = useMutation<ChoiceDream, ChoiceDreamVariables>(CHOICE_DREAM);
-  const [startGameReq] = useMutation<StartGame, StartGameVariables>(START_GAME);
-  const [visible, setVisible] = useState<boolean>(false);
-  const [joinGameReq, { data, error, subscribeToMore }] = useLazyQuery<JoinGame, JoinGameVariables>(
+  const leaveGame = useCallback(async () => {
+    history.push('/lobby');
+    await leaveGameReq();
+  }, [history, leaveGameReq]);
+  const onGameError = useCallback((error: ApolloError | Error) => {
+    message.error(error.message);
+    leaveGame();
+  }, [leaveGame]);
+  const [choiceDream] = useMutation<ChoiceDream, ChoiceDreamVariables>(CHOICE_DREAM, {
+    onError: onGameError,
+  });
+  const [startGameReq] = useMutation<StartGame, StartGameVariables>(START_GAME, {
+    onError: onGameError,
+  });
+  const [joinGameReq, { data, subscribeToMore }] = useLazyQuery<JoinGame, JoinGameVariables>(
     JOIN_GAME,
     {
       fetchPolicy: 'cache-first',
+      onError: onGameError,
     },
   );
-  const [moveReq] = useMutation<GameMove, GameMoveVariables>(GAME_MOVE);
+  const [moveReq] = useMutation<GameMove, GameMoveVariables>(GAME_MOVE, {
+    onError: onGameError,
+  });
+  const [callDiceAlert, clearDiceAlert] = useNotificationTimeout(DICE_NOTIFICATION_OPTIONS);
+  const [callDreamAlert, clearDreamAlert] = useNotificationTimeout(DREAM_NOTIFICATION_OPTIONS);
+  const [callStartGameAlert, clearStartGameAlert] = useNotificationTimeout(
+    START_GAME_NOTIFICATION_OPTIONS,
+  );
   useClosePage(leaveGameReq, LEAVE_PAGE_MODAL_PROPS);
 
   useEffect(() => {
@@ -124,19 +139,13 @@ const Game: FC<RouteComponentProps<{ gameId: string }>> = ({ match }) => {
           joinGame: newData,
         };
       },
+      onError: onGameError,
       variables: { gameId: match.params.gameId },
       document: UPDATE_ACTIVE_GAME,
     });
 
     return () => unsubscribe();
   }, [subscribeToMore, match.params.gameId]);
-
-  useEffect(() => {
-    if (error) {
-      message.error(error.message);
-      history.push('/lobby');
-    }
-  }, [error, history]);
 
   useEffect(() => {
     if (data?.joinGame.mover === user?._id) {
@@ -158,11 +167,6 @@ const Game: FC<RouteComponentProps<{ gameId: string }>> = ({ match }) => {
       callStartGameAlert();
     }
   }, [data?.joinGame.status, user?._id]);
-
-  const leaveGame = async () => {
-    history.push('/lobby');
-    await leaveGameReq();
-  };
 
   const startGame = (id: string) => {
     startGameReq({ variables: { gameId: id } });
@@ -200,7 +204,11 @@ const Game: FC<RouteComponentProps<{ gameId: string }>> = ({ match }) => {
 
   return (
     <div className={s.gameContainer}>
-      <CardModal gameId={match.params.gameId} canBeVisible={visible} closeModal={closeModal} />
+      <CardModal
+        gameId={match.params.gameId}
+        canBeVisible={visible}
+        closeModal={closeModal}
+      />
       <div className={s.header}>
         {status === GameStatus.Awaiting && creator === user?._id && (
           <Button type="primary" onClick={() => handleStartGame(gameId)}>
@@ -216,7 +224,7 @@ const Game: FC<RouteComponentProps<{ gameId: string }>> = ({ match }) => {
         )}
       </div>
       <div className={s.playersTableContainer}>
-        <PlayersTable players={data.joinGame.players} mover={data.joinGame.mover} />
+        <PlayersTable players={data.joinGame.players} mover={mover} />
       </div>
       <div className={s.actionsContainer}>
         <ChangeResources className={s.action} />

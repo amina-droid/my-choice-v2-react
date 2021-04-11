@@ -93,7 +93,7 @@ type Mutation {
     createIncidentCard(createIncidentCard: CreateIncidentCardInput!): Card!
     leaveGame: Boolean!
     move(moveCount: Int!): Boolean!
-    opportunityResult(diceResult: Int): Boolean!
+    opportunityResult(diceResult: Int, opportunityId: ObjectId!): Boolean!
     removeCard(cardId: ObjectId!): Card!
     sendMessage(message: String!, topic: String!): Boolean!
     shareResources(shareResourcesInput: ShareResourcesInput!): Boolean!
