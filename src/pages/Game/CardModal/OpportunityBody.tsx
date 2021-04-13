@@ -26,7 +26,7 @@ const OpportunityBody: FC<ModalBodyProps<'Opportunity'>> = ({
         opportunityId,
       },
     });
-    onAction();
+    onAction(opportunityId);
   };
 
   const onOpportunityDiceClick = (
@@ -45,7 +45,7 @@ const OpportunityBody: FC<ModalBodyProps<'Opportunity'>> = ({
       <Dice
         ready={isCurrentPlayer}
         onRoll={onOpportunityDiceClick(card._id)}
-        onRollComplete={onAction}
+        onRollComplete={() => onAction(card._id)}
       />
     ) : (
       <Button

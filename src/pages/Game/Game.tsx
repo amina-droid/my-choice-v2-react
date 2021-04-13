@@ -25,13 +25,15 @@ import {
 import LeaveGame from './LeaveGame/LeaveGame';
 import PlayersTable from './PlayersTable/PlayersTable';
 import ChangeResources from './ChangeResources/ChangeResources';
+import CheckRules from './CheckRules/CheckRules';
 import CardModal from './CardModal/CardModal';
 import Dice from './Dice/Dice';
 import { useAuth } from '../../context/auth';
 import { useChatContext } from '../../context/chat';
 import { GameStatus } from '../../types';
 import GameField from './GameField/GameField';
-import Winner from './Winner/Winner';
+import Rules from '../../components/Rules';
+import useWinner from './Winner/useWinner';
 import useNotificationTimeout from '../../utils/useNotificationTimeout';
 import useClosePage from '../../utils/useClosePage';
 
@@ -66,9 +68,16 @@ const LEAVE_PAGE_MODAL_PROPS = {
 
 const Game: FC<RouteComponentProps<{ gameId: string }>> = ({ match }) => {
   const history = useHistory();
+  const [visibleRules, setVisibleRules] = useState(false);
   const { setGame, resetGame } = useChatContext();
   const { user } = useAuth();
-  const [visible, setVisible] = useState<boolean>(false);
+  const openRulesModal = useCallback(() => {
+    setVisibleRules(true);
+  }, [setVisibleRules]);
+  const closeRulesModal = useCallback(() => {
+    setVisibleRules(false);
+  }, [setVisibleRules]);
+
   const [leaveGameReq] = useMutation<TLeaveGame>(LEAVE_GAME, {
     update: cache => {
       cache.evict({
@@ -107,6 +116,11 @@ const Game: FC<RouteComponentProps<{ gameId: string }>> = ({ match }) => {
   const [callStartGameAlert, clearStartGameAlert] = useNotificationTimeout(
     START_GAME_NOTIFICATION_OPTIONS,
   );
+  useWinner({
+    winnerId: data?.joinGame.winner,
+    onOk: leaveGame,
+    gameId: data?.joinGame._id,
+  });
   useClosePage(leaveGameReq, LEAVE_PAGE_MODAL_PROPS);
 
   useEffect(() => {
@@ -194,31 +208,20 @@ const Game: FC<RouteComponentProps<{ gameId: string }>> = ({ match }) => {
     mover,
     name: gameName,
     _id: gameId,
-    winner,
   } = data.joinGame;
-
-  const handleDiceRollComplete = () => {
-    setVisible(true);
-  };
 
   const handleStartGame = (id: string) => {
     clearStartGameAlert();
     startGame(id);
   };
 
-  const closeModal = () => {
-    setVisible(false);
-  };
-
   return (
     <div className={s.gameContainer}>
+      <Rules visible={visibleRules} closeModal={closeRulesModal} />
       <CardModal
         gameId={match.params.gameId}
-        canBeVisible={visible}
-        closeModal={closeModal}
         onError={onGameError}
       />
-      <Winner gameId={gameId} winnerId={winner} onOk={leaveGame} />
       <div className={s.header}>
         {status === GameStatus.Awaiting && creator === user?._id && (
           <Button type="primary" onClick={() => handleStartGame(gameId)}>
@@ -229,7 +232,6 @@ const Game: FC<RouteComponentProps<{ gameId: string }>> = ({ match }) => {
           <Dice
             ready={mover === user?._id}
             onRoll={gameMove}
-            onRollComplete={handleDiceRollComplete}
           />
         )}
       </div>
@@ -238,6 +240,7 @@ const Game: FC<RouteComponentProps<{ gameId: string }>> = ({ match }) => {
       </div>
       <div className={s.actionsContainer}>
         <ChangeResources className={s.action} />
+        <CheckRules className={s.action} onClick={openRulesModal} />
         <Popconfirm
           placement="right"
           title="Вы уверены что хотите выйти из игры?"

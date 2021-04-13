@@ -2,3 +2,4 @@
 /builder
 /*.*
 /src/@types/graphql.types.ts
+/src/*/types/*.ts

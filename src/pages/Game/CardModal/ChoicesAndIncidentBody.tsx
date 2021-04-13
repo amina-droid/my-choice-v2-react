@@ -17,7 +17,7 @@ const ChoicesAndIncidentBody: FC<ModalBodyProps<'Incident' | 'ChoiceCard'>> = ({
 
   const onIncidentOrChoicesClick = (cardId: string, choiceId?: string) => {
     choiceReq({ variables: { cardId, choiceId } });
-    onAction();
+    onAction(cardId);
   };
 
   if (card.__typename === 'Incident') {

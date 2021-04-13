@@ -1,8 +1,8 @@
 import React, { FC } from 'react';
-import { ReactComponent as ChangerBtn } from '../changer.svg';
+import { Tooltip } from 'antd';
+import { ReactComponent as ChangerBtn } from './changer.svg';
 
 import s from './ChangeResources.module.sass';
-import LeaveGame from '../LeaveGame/LeaveGame';
 
 type ChangeResourcesProps = {
   className: string;
@@ -10,9 +10,11 @@ type ChangeResourcesProps = {
 
 const ChangeResources: FC<ChangeResourcesProps> = ({ className }) => {
   return (
-    <button type="button" className={s.btn}>
-      <ChangerBtn className={className} />
-    </button>
+    <Tooltip title="Обменять ресурсы">
+      <button type="button" className={s.btn}>
+        <ChangerBtn className={className} />
+      </button>
+    </Tooltip>
   );
 };
 

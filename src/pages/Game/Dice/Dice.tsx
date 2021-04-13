@@ -22,7 +22,7 @@ const diceEdges = [
 ];
 
 const getRandom = () => {
-  return Math.floor(Math.random() * (6 - 1 + 1)) + 1;
+  return 4; // Math.floor(Math.random() * (6 - 1 + 1)) + 1;
 };
 
 type DiceProps = {

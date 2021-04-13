@@ -131,7 +131,6 @@ const { Title, Paragraph } = Typography;
 const Rules: FC<RulesProps> = ({ closeModal, visible }) => (
   <Modal
     title="Правила игры"
-    closable={false}
     onCancel={closeModal}
     footer={null}
     width={800}

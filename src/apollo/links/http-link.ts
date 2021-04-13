@@ -16,4 +16,5 @@ const operationNameLink = new ApolloLink((operation, forward) => {
   return forward(operation);
 });
 
-export default ApolloLink.from([operationNameLink, httpLink]);
+const apolloLink = ApolloLink.from([operationNameLink, httpLink]);
+export default apolloLink;

@@ -72,7 +72,7 @@ const Dreams: FC<DreamsProps> = ({ players }) => {
 
 const GameField: FC<GameFieldProps> = ({ game, onChoiceDream }) => {
   const svgRef = useRef<SVGSVGElement>(null);
-  const myPlayer = usePlayer();
+  const myPlayer = usePlayer(game._id);
 
   useEffect(() => {
     const playerDreamNotExist = game.status === GameStatus.ChoiceDream && !myPlayer?.dream;

@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useApolloClient } from '@apollo/client';
 import { Modal } from 'antd';
 import { ACTIVE_PLAYER, ActivePlayer } from '../../../apollo';
@@ -11,7 +11,7 @@ type WinnerProps = {
   onOk: () => void
 }
 
-const Winner: FC<WinnerProps> = ({ winnerId, gameId, onOk }) => {
+const useWinner = ({ winnerId, gameId, onOk }: WinnerProps) => {
   const { user } = useAuth();
   const [winner, setWinner] = useState<ActivePlayer | null>();
   const apolloClient = useApolloClient();
@@ -21,11 +21,15 @@ const Winner: FC<WinnerProps> = ({ winnerId, gameId, onOk }) => {
       const winnerPlayer = apolloClient.readFragment<ActivePlayer>({
         id: `Player:${winnerId}`,
         fragment: ACTIVE_PLAYER,
+        fragmentName: 'ActivePlayer',
+        variables: {
+          gameId,
+        },
       });
 
       setWinner(winnerPlayer);
     }
-  }, [winnerId]);
+  }, [winnerId, gameId]);
 
   useEffect(() => {
     if (winner) {
@@ -43,8 +47,6 @@ const Winner: FC<WinnerProps> = ({ winnerId, gameId, onOk }) => {
       });
     }
   }, [winner]);
-
-  return null;
 };
 
-export default Winner;
+export default useWinner;

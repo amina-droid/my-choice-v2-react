@@ -1,18 +1,12 @@
-import React, { FC, useEffect, useReducer, useState } from 'react';
-import { remove, takeRight } from 'lodash';
-import { Button, Modal, Spin, Typography } from 'antd';
-import { ApolloError, useMutation, useSubscription } from '@apollo/client';
+import React, { FC, useReducer } from 'react';
+import { remove } from 'lodash';
+import { Modal, Spin, Typography } from 'antd';
+import { ApolloError, useSubscription } from '@apollo/client';
 
 import {
   OnDroppedCard,
   OnDroppedCardVariables,
   ON_DROPPED_CARD,
-  Choice,
-  CHOICE,
-  ChoiceVariables,
-  SendOpportunityResult,
-  SEND_OPPORTUNITY_RESULT,
-  SendOpportunityResultVariables,
   OnOptionChoice,
   OnOptionChoiceVariables,
   ON_OPTION_CHOICE,
@@ -29,8 +23,6 @@ import s from './CardModal.module.sass';
 
 type CardModalProps = {
   gameId: string;
-  canBeVisible: boolean;
-  closeModal: () => void;
   onError?: (error: Error | ApolloError) => void
 };
 type DroppedCard = OnDroppedCard['cardDropped'];
@@ -63,18 +55,14 @@ const initialCardState: CardState = {
   activeCard: undefined,
 };
 
+type ID = string;
 type CardActions = Actions<{
   pushCard: DroppedCard;
-  removeCardFromServer: {
-    cardId: string;
-    currentUserId?: string;
-  };
-  addChoiceId: string;
-  removeCardFromClient: never;
+  removeCard: ID;
+  addChoiceId: ID;
 }>
 
 const cardReducer = (prevState: CardState, action: CardActions): CardState => {
-  console.log(action.type, prevState);
   switch (action.type) {
     case 'pushCard': {
       return {
@@ -83,26 +71,20 @@ const cardReducer = (prevState: CardState, action: CardActions): CardState => {
         activeCard: action.payload,
       };
     }
-    case 'removeCardFromClient': {
-      return {
-        ...prevState,
-        activeCard: undefined,
-      };
-    }
     case 'addChoiceId': {
       return {
         ...prevState,
         selectedChoiceId: action.payload,
       };
     }
-    case 'removeCardFromServer': {
+    case 'removeCard': {
       return {
         ...prevState,
         droppedCards: remove(
           prevState.droppedCards,
-          ({ card }) => card._id === action.payload.cardId,
+          ({ card }) => card._id === action.payload,
         ),
-        activeCard: prevState.activeCard?.forPlayer === action.payload.currentUserId
+        activeCard: prevState.activeCard?.card._id !== action.payload
           ? prevState.activeCard
           : undefined,
         selectedChoiceId: undefined,
@@ -115,10 +97,9 @@ const cardReducer = (prevState: CardState, action: CardActions): CardState => {
 };
 
 const CardModal: FC<CardModalProps> = React.memo(
-  ({ gameId, canBeVisible, closeModal, onError }) => {
+  ({ gameId, onError }) => {
     const { user } = useAuth();
     const [{
-      droppedCards,
       activeCard,
       selectedChoiceId,
     }, dispatch] = useReducer(cardReducer, initialCardState);
@@ -147,7 +128,7 @@ const CardModal: FC<CardModalProps> = React.memo(
           subscriptionData.data?.playerChoice || {};
         dispatch({ type: 'addChoiceId', payload: choiceId });
         await timeout(500);
-        dispatch({ type: 'removeCardFromServer', payload: { cardId, currentUserId: user?._id } });
+        dispatch({ type: 'removeCard', payload: cardId });
       },
       fetchPolicy: 'no-cache',
     });
@@ -155,7 +136,7 @@ const CardModal: FC<CardModalProps> = React.memo(
     return (
       <>
         <Modal
-          visible={activeCard && canBeVisible}
+          visible={Boolean(activeCard)}
           title={activeCard?.card.typeName}
           footer={false}
           closable={false}
@@ -168,7 +149,7 @@ const CardModal: FC<CardModalProps> = React.memo(
             <CardBody
               choiceId={selectedChoiceId}
               card={activeCard?.card}
-              onAction={() => dispatch({ type: 'removeCardFromClient' })}
+              onAction={(cardId) => dispatch({ type: 'removeCard', payload: cardId })}
               isCurrentPlayer={isCurrentPlayer}
             />
           </div>
@@ -178,7 +159,7 @@ const CardModal: FC<CardModalProps> = React.memo(
   },
   (prevProps, nextProps) => {
     return (
-      prevProps.gameId === nextProps.gameId && prevProps.canBeVisible === nextProps.canBeVisible
+      prevProps.gameId === nextProps.gameId
     );
   },
 );
