@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @generated
 // This file was automatically generated and should not be edited.
 
 //==============================================================
@@ -30,6 +31,13 @@ export enum PlayerPosition {
   Inner = "Inner",
   Outer = "Outer",
   Start = "Start",
+}
+
+export enum ResourceType {
+  dark = "dark",
+  lives = "lives",
+  money = "money",
+  white = "white",
 }
 
 export enum UserRole {

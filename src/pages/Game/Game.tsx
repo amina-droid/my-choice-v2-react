@@ -91,10 +91,13 @@ const Game: FC<RouteComponentProps<{ gameId: string }>> = ({ match }) => {
     history.push('/lobby');
     await leaveGameReq();
   }, [history, leaveGameReq]);
-  const onGameError = useCallback((error: ApolloError | Error) => {
-    message.error(error.message);
-    leaveGame();
-  }, [leaveGame]);
+  const onGameError = useCallback(
+    (error: ApolloError | Error) => {
+      message.error(error.message);
+      leaveGame();
+    },
+    [leaveGame],
+  );
   const [choiceDream] = useMutation<ChoiceDream, ChoiceDreamVariables>(CHOICE_DREAM, {
     onError: onGameError,
   });
@@ -175,10 +178,7 @@ const Game: FC<RouteComponentProps<{ gameId: string }>> = ({ match }) => {
   }, [data?.joinGame.status]);
 
   useEffect(() => {
-    if (
-      data?.joinGame.status === GameStatus.Awaiting
-      && data?.joinGame.creator === user?._id
-    ) {
+    if (data?.joinGame.status === GameStatus.Awaiting && data?.joinGame.creator === user?._id) {
       callStartGameAlert();
     }
   }, [data?.joinGame.status, user?._id]);
@@ -202,44 +202,32 @@ const Game: FC<RouteComponentProps<{ gameId: string }>> = ({ match }) => {
   };
 
   if (!data?.joinGame) return <Spin size="large" />;
-  const {
-    creator,
-    status,
-    mover,
-    name: gameName,
-    _id: gameId,
-  } = data.joinGame;
+  const { creator, status, mover, name: gameName, _id: gameId } = data.joinGame;
 
   const handleStartGame = (id: string) => {
     clearStartGameAlert();
     startGame(id);
   };
 
+  const myResources = data.joinGame.players.find(player => player._id === user?._id)?.resources;
+
   return (
     <div className={s.gameContainer}>
       <Rules visible={visibleRules} closeModal={closeRulesModal} />
-      <CardModal
-        gameId={match.params.gameId}
-        onError={onGameError}
-      />
+      <CardModal gameId={match.params.gameId} onError={onGameError} />
       <div className={s.header}>
         {status === GameStatus.Awaiting && creator === user?._id && (
           <Button type="primary" onClick={() => handleStartGame(gameId)}>
             Начать игру
           </Button>
         )}
-        {status === GameStatus.InProgress && (
-          <Dice
-            ready={mover === user?._id}
-            onRoll={gameMove}
-          />
-        )}
+        {status === GameStatus.InProgress && <Dice ready={mover === user?._id} onRoll={gameMove} />}
       </div>
       <div className={s.playersTableContainer}>
         <PlayersTable players={data.joinGame.players} mover={mover} />
       </div>
       <div className={s.actionsContainer}>
-        <ChangeResources className={s.action} />
+        <ChangeResources className={s.action} resources={myResources} />
         <CheckRules className={s.action} onClick={openRulesModal} />
         <Popconfirm
           placement="right"

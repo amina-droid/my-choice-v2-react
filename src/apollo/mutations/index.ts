@@ -11,3 +11,4 @@ export * from './SendOpportunityResult';
 export * from './StartGame';
 export * from './UpdateChoicesCard';
 export * from './UpdateNickname';
+export * from './ShareResources';

@@ -2,3 +2,20 @@
     transition: all 0.3s ease
     &:hover
         transform: scale(1.2)
+
+.modalContainer
+  display: flex
+  flex-wrap: wrap
+  justify-content: space-around
+  align-items: center
+  gap: 10px
+  & :global
+    .ant-btn
+      min-width: 200px
+      height: 100%
+      display: flex!important
+      align-items: center
+      justify-content: center
+      padding: 10px
+      > span
+        margin: 10px

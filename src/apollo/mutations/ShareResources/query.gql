@@ -1,0 +1,3 @@
+mutation ShareResources($from: ResourceType!, $to: ResourceType!) {
+    shareResources(shareResourcesInput: {for: $to, exchange: $from})
+}

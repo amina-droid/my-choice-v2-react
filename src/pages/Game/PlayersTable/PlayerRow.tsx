@@ -14,7 +14,7 @@ import { useAuth } from '../../../context/auth';
 
 import s from './PlayersTable.module.sass';
 
-const RESOURCES_DICT_OBJ: Record<string, JSX.Element> = {
+export const RESOURCES_DICT_OBJ: Record<string, JSX.Element> = {
   white: <Like key="Like" />,
   dark: <Dislike key="Dislike" />,
   money: <Money key="Money" />,
