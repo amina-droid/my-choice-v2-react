@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useMemo } from 'react';
 import { useLazyQuery, useMutation } from '@apollo/client';
 import { Comment } from 'antd';
 
+import { useChatContext } from '../../context/chat';
 import CommentList from './CommentList';
 import Editor from './Editor';
 import {
@@ -23,6 +24,7 @@ type Props = {
 };
 
 export const Topic: React.FC<Props> = ({ topic }) => {
+  const { incrementMessage } = useChatContext();
   const variables = useMemo(() => ({ topic }), [topic]);
   const [sendMessage, { loading }] = useMutation<SendMessage, SendMessageVariables>(SEND_MESSAGE);
   const [getMessages, { data, loading: initLoading, subscribeToMore }] = useLazyQuery<
@@ -44,7 +46,7 @@ export const Topic: React.FC<Props> = ({ topic }) => {
         if (!subscriptionData?.data?.onMessage) return previousQueryResult;
 
         const newMessage = subscriptionData.data.onMessage;
-
+        incrementMessage();
         return {
           messages: [newMessage, ...(previousQueryResult.messages || [])],
         };
@@ -54,7 +56,7 @@ export const Topic: React.FC<Props> = ({ topic }) => {
     });
 
     return () => unsubscribe();
-  }, [subscribeToMore, variables]);
+  }, [subscribeToMore, variables, incrementMessage]);
 
   const handleSubmit = useCallback(
     async (message: string) => {

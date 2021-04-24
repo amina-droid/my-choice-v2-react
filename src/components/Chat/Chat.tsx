@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Tabs } from 'antd';
+import React from 'react';
+import { Badge, Tabs } from 'antd';
 import { useAuth } from '../../context/auth';
 import { useChatContext } from '../../context/chat';
 
@@ -20,33 +20,27 @@ type Props = {
 };
 
 export const Chat: React.FC<Props> = () => {
-  const { game } = useChatContext();
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const { chats = {}, isOpen, closeChat, openChat, messagesCounter } = useChatContext();
   const { user } = useAuth();
 
   if (!user) return null;
 
-  const onClose = () => {
-    setIsOpen(false);
-  };
-
   return (
     <>
-      <button type="button" hidden={isOpen} className={s.openBtn} onClick={() => setIsOpen(true)}>
-        <OpenChatBtn />
+      <button type="button" hidden={isOpen} className={s.openBtn} onClick={openChat}>
+        <Badge count={messagesCounter} offset={[-25, 4]}>
+          <OpenChatBtn />
+        </Badge>
       </button>
       <div className={s.tabsContainer} hidden={!isOpen}>
         <Tabs defaultActiveKey="1" type="card" className={s.tabs}>
-          <TabPane tab="Общий" key="1">
-            <Topic topic="Общий" />
-          </TabPane>
-          {game && (
-            <TabPane tab={game.name} key={game.topic}>
-              <Topic topic={game.topic} />
+          {Object.values(chats).map((chat) => (
+            <TabPane tab={chat.title} key={chat.id}>
+              <Topic topic={chat.id} />
             </TabPane>
-          )}
+          ))}
         </Tabs>
-        <CloseButton onClose={onClose} className={s.closeBtn} />
+        <CloseButton onClose={closeChat} className={s.closeBtn} />
       </div>
     </>
   );

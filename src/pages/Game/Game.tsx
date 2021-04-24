@@ -69,7 +69,7 @@ const LEAVE_PAGE_MODAL_PROPS = {
 const Game: FC<RouteComponentProps<{ gameId: string }>> = ({ match }) => {
   const history = useHistory();
   const [visibleRules, setVisibleRules] = useState(false);
-  const { setGame, resetGame } = useChatContext();
+  const { addTopic, removeTopic } = useChatContext();
   const { user } = useAuth();
   const openRulesModal = useCallback(() => {
     setVisibleRules(true);
@@ -137,13 +137,17 @@ const Game: FC<RouteComponentProps<{ gameId: string }>> = ({ match }) => {
   }, [match.params.gameId]);
 
   useEffect(() => {
-    if (data?.joinGame?._id) {
-      setGame({
-        topic: data.joinGame._id,
-        name: data.joinGame.name,
+    const {
+      _id: id,
+      name: title,
+    } = (data?.joinGame || {});
+    if (id && title) {
+      addTopic({
+        id,
+        title,
       });
     }
-    return resetGame;
+    return () => removeTopic(id);
   }, [data?.joinGame?._id]);
 
   useEffect(() => {
