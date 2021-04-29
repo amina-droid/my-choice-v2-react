@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import jwtDecode from 'jwt-decode';
 import { useLazyQuery } from '@apollo/client';
 import { GET_USER, GetUser, GetUserVariables } from '../../apollo';
@@ -7,13 +7,10 @@ interface State {
   token: string | null;
   user?: GetUser['user'] | null;
   userLoad?: boolean;
-  login: Login;
+  login: (token: string) => void;
   logout: () => void;
 }
 
-export interface Login {
-  (token: string): void;
-}
 
 const AuthContext = React.createContext<State>({
   token: null,
@@ -42,7 +39,7 @@ export const AuthContextProvider: React.FC = ({ children }) => {
     }
   }, [token, data, getUser]);
 
-  const login: Login = useCallback((newToken: string) => {
+  const login = useCallback((newToken: string) => {
     setToken(newToken);
     localStorage.setItem('token', newToken);
     window.location.reload();
@@ -54,15 +51,17 @@ export const AuthContextProvider: React.FC = ({ children }) => {
     window.location.reload();
   }, []);
 
+  const contextValue = useMemo(() => ({
+    logout,
+    login,
+    token,
+    user: data?.user,
+    userLoad: loading,
+  }), [loading, token, data]);
+
   return (
     <AuthContext.Provider
-      value={{
-        logout,
-        login,
-        token,
-        user: data?.user,
-        userLoad: loading,
-      }}
+      value={contextValue}
     >
       {children}
     </AuthContext.Provider>

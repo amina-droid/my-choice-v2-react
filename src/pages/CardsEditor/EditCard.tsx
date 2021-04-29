@@ -38,8 +38,7 @@ const EditCard: FC<EditCardProps> = ({ card, onComplete }) => {
         },
       });
       form.resetFields();
-      if (!onComplete) return;
-      onComplete();
+      onComplete?.();
     } catch (e) {
       message.error('Произошла ошибка, попробуйте снова');
     }

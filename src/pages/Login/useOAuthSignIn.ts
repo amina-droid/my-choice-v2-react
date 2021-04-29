@@ -48,9 +48,7 @@ const useOAuthSignIn = ({
             throw error;
           } finally {
             setLoading(false);
-            if (onComplete) {
-              onComplete();
-            }
+            onComplete?.();
           }
         }
       }

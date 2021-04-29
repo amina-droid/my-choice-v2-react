@@ -19,9 +19,7 @@ const ChangeResources: FC<ChangeResourcesProps> = ({ className, resources }) => 
   const [changeResources] = useMutation<ShareResources, ShareResourcesVariables>(SHARE_RESOURCES);
 
   const changeResourceHandler = (from: ResourceType, to: ResourceType) => () => {
-    const vari = { from, to };
-    console.log({ vari });
-    changeResources({ variables: vari });
+    changeResources({ variables: { from, to } });
   };
 
   return (
