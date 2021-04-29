@@ -24,9 +24,12 @@ const Login = () => {
 
   const [handlerLogin, loading] = useOAuthSignIn({
     onCode: async (code) => {
+      const extra = new URLSearchParams(
+        history.location.search,
+      ).get('code');
       const { data, errors } = await apolloClient.mutate<AuthVK, AuthVKVariables>({
         mutation: AUTH_VK,
-        variables: { code },
+        variables: { code, extra },
       });
 
       if (errors) throw errors;

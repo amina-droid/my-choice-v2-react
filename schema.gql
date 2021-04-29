@@ -86,7 +86,7 @@ type Message {
 }
 
 type Mutation {
-    authVK(code: String!): AuthResponse!
+    authVK(code: String!, extra: String): AuthResponse!
     choice(cardId: ObjectId!, choiceId: ObjectId): Boolean!
     choiceDream(dream: Int!): Boolean!
     createChoicesCard(createChoicesCard: CreateChoicesCardInput!): Card!
@@ -170,6 +170,7 @@ type Subscription {
 type User {
     _id: ObjectId!
     email: String
+    isBot: Boolean
     name: UserName!
     nickname: String!
     photos: [UserPhoto!]!
