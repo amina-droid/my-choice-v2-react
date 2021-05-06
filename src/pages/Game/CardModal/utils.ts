@@ -6,3 +6,8 @@ export type ModalBodyProps<T = 'ChoiceCard' | 'Incident' | 'Opportunity'> = {
   choiceId?: string;
   isCurrentPlayer: boolean;
 }
+
+export function getCardImgUrl(path?: string) {
+  if (!path) return undefined;
+  return `https://xn--72-9kcd8arods1i.xn--p1ai/assets/card/${path}.svg`;
+}

@@ -17,7 +17,7 @@ import OpportunityBody from './OpportunityBody';
 import ChoicesAndIncidentBody from './ChoicesAndIncidentBody';
 import { Actions } from '../../../types';
 
-import { ModalBodyProps } from './utils';
+import { getCardImgUrl, ModalBodyProps } from './utils';
 
 import s from './CardModal.module.sass';
 
@@ -132,7 +132,11 @@ const CardModal: FC<CardModalProps> = React.memo(
       },
       fetchPolicy: 'no-cache',
     });
+
     const isCurrentPlayer = activeCard?.forPlayer === user?._id;
+    const img = activeCard?.card.__typename === 'Opportunity'
+      ? getCardImgUrl('opportunity') : getCardImgUrl(activeCard?.card?._id);
+
     return (
       <>
         <Modal
@@ -142,6 +146,15 @@ const CardModal: FC<CardModalProps> = React.memo(
           closable={false}
           destroyOnClose
         >
+          <img
+            src={img}
+            className={s.choiceImg}
+            alt={`Карточка № ${activeCard?.card._id}`}
+            onError={(event) => {
+              // eslint-disable-next-line
+              (event.target as any).style.display = 'none';
+            }}
+          />
           <Typography.Text className={s.choiceDescription}>
             {activeCard?.card.description}
           </Typography.Text>
