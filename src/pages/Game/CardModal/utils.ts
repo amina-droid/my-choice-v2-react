@@ -9,5 +9,5 @@ export type ModalBodyProps<T = 'ChoiceCard' | 'Incident' | 'Opportunity'> = {
 
 export function getCardImgUrl(path?: string) {
   if (!path) return undefined;
-  return `https://xn--72-9kcd8arods1i.xn--p1ai/assets/card/${path}.svg`;
+  return `https://xn--72-9kcd8arods1i.xn--p1ai/assets/cards/${path}.svg`;
 }
