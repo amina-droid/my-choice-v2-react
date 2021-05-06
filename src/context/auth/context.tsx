@@ -11,7 +11,6 @@ interface State {
   logout: () => void;
 }
 
-
 const AuthContext = React.createContext<State>({
   token: null,
   user: null,
