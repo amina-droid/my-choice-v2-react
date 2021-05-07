@@ -11,6 +11,7 @@ export interface OnDroppedCard_cardDropped_card_Incident {
   _id: any;
   description: string;
   typeName: string;
+  img: string | null;
 }
 
 export interface OnDroppedCard_cardDropped_card_ChoiceCard_choices {
@@ -24,6 +25,7 @@ export interface OnDroppedCard_cardDropped_card_ChoiceCard {
   _id: any;
   description: string;
   typeName: string;
+  img: string | null;
   choices: OnDroppedCard_cardDropped_card_ChoiceCard_choices[];
 }
 
@@ -32,6 +34,7 @@ export interface OnDroppedCard_cardDropped_card_Opportunity {
   _id: any;
   description: string;
   typeName: string;
+  img: string | null;
   canTryLuck: boolean;
 }
 

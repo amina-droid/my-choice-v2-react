@@ -134,8 +134,6 @@ const CardModal: FC<CardModalProps> = React.memo(
     });
 
     const isCurrentPlayer = activeCard?.forPlayer === user?._id;
-    const img = activeCard?.card.__typename === 'Opportunity'
-      ? getCardImgUrl('opportunity') : getCardImgUrl(activeCard?.card?._id);
 
     return (
       <>
@@ -147,7 +145,7 @@ const CardModal: FC<CardModalProps> = React.memo(
           destroyOnClose
         >
           <img
-            src={img}
+            src={activeCard?.card.img!}
             className={s.choiceImg}
             alt={`Карточка № ${activeCard?.card._id}`}
             onError={(event) => {

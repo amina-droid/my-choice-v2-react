@@ -9,6 +9,7 @@ schema {
 interface Card {
     _id: ObjectId!
     description: String!
+    img: String
     type: FieldType!
     typeName: String!
 }
@@ -37,6 +38,7 @@ type ChoiceCard implements Card {
     _id: ObjectId!
     choices: [Option!]!
     description: String!
+    img: String
     type: FieldType!
     typeName: String!
 }
@@ -74,6 +76,7 @@ type Incident implements Card {
     _id: ObjectId!
     action: Action!
     description: String!
+    img: String
     type: FieldType!
     typeName: String!
 }
@@ -108,6 +111,7 @@ type Opportunity implements Card {
     _id: ObjectId!
     canTryLuck: Boolean!
     description: String!
+    img: String
     type: FieldType!
     typeName: String!
 }

@@ -5,6 +5,7 @@ subscription OnDroppedCard($gameId: ObjectId!) {
             _id
             description
             typeName
+            img
             ... on ChoiceCard {
                 _id
                 description
