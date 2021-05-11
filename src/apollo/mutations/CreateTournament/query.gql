@@ -1,0 +1,6 @@
+mutation CreateTournament ($name: String!) {
+    createTournament(name: $name) {
+        _id,
+        name
+    }
+}

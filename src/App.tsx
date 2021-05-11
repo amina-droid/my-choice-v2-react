@@ -23,6 +23,7 @@ import Rules, { RulesContextProvider } from './components/Rules';
 import logo from './assets/logo.png';
 
 import s from './App.module.sass';
+import AddTournament from './pages/AddTournament/AddTournament';
 
 const PagesWithNavigation = () => {
   const { user } = useAuth();
@@ -32,10 +33,7 @@ const PagesWithNavigation = () => {
 
   const handleClick = (e: any) => {
     if (e.key === '/rules') {
-      setSelectedKeys(prevState => ([
-        ...prevState,
-        e.key,
-      ]));
+      setSelectedKeys(prevState => [...prevState, e.key]);
       setVisibleRules(true);
       return;
     }
@@ -60,26 +58,29 @@ const PagesWithNavigation = () => {
           mode="horizontal"
           className={s.Nav}
           selectedKeys={selectedKeys}
-          overflowedIndicator={<div className={s.NavCollapsed}><MenuOutlined /></div>}
+          overflowedIndicator={
+            <div className={s.NavCollapsed}>
+              <MenuOutlined />
+            </div>
+          }
         >
           <Menu.Item key="/lobby" className={s.NavItem}>
-            <Link to="/lobby">
-              Играть
-            </Link>
+            <Link to="/lobby">Играть</Link>
           </Menu.Item>
           <Menu.Item key="/statistic" className={s.NavItem} disabled>
-            <Link to="/statistic">
-              Статистика
-            </Link>
+            <Link to="/statistic">Статистика</Link>
           </Menu.Item>
           <Menu.Item key="/rules" className={s.NavItem}>
             Правила
           </Menu.Item>
           {(user?.role === UserRole.Admin || user?.role === UserRole.Moderator) && (
             <Menu.Item className={s.NavItem} key="/edit-cards">
-              <Link to="/edit-cards">
-                Редактировать карточки
-              </Link>
+              <Link to="/edit-cards">Редактировать карточки</Link>
+            </Menu.Item>
+          )}
+          {(user?.role === UserRole.Admin || user?.role === UserRole.Moderator) && (
+            <Menu.Item className={s.NavItem} key="/add-tournament">
+              <Link to="/add-tournament">Создать турнир</Link>
             </Menu.Item>
           )}
         </Menu>
@@ -90,6 +91,7 @@ const PagesWithNavigation = () => {
         <ProtectedRoute exact path="/lobby" component={Lobby} />
         <ProtectedRoute exact path="/statistic" component={Statistic} />
         <ProtectedRoute exact path="/edit-cards" component={CardsEditor} />
+        <ProtectedRoute exact path="/add-tournament" component={AddTournament} />
       </Switch>
     </>
   );
@@ -123,7 +125,15 @@ function App() {
               </Switch>
             </div>
             <Layout.Footer className={s.Footer}>
-              Backend - <a style={{ color: 'black' }} href={backender} target="_blank" rel="noreferrer">Евгений Мазуров</a>. Frontend - <a style={{ color: 'black' }} href={frontender} target="_blank" rel="noreferrer">Амина Мазурова</a>. Мой выбор ©2020
+              Backend -{' '}
+              <a style={{ color: 'black' }} href={backender} target="_blank" rel="noreferrer">
+                Евгений Мазуров
+              </a>
+              . Frontend -{' '}
+              <a style={{ color: 'black' }} href={frontender} target="_blank" rel="noreferrer">
+                Амина Мазурова
+              </a>
+              . Мой выбор ©2020
             </Layout.Footer>
           </BrowserRouter>
         </RulesContextProvider>
