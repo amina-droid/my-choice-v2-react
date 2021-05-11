@@ -107,6 +107,7 @@ const Lobby = () => {
         return (
           <Card
             className={s.card}
+            status={game.status}
             key={game._id}
             title={game.name}
             playersCount={game.playersCount}
