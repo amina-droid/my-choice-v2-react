@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Form, Input, message, Modal } from 'antd';
+import { Button, Form, Input, message, Modal, Switch } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { useForm } from 'antd/es/form/Form';
 import { useHistory } from 'react-router-dom';
@@ -17,6 +17,8 @@ import {
   UpdateActiveGames,
 } from '../../apollo';
 import useNotificationTimeout from '../../utils/useNotificationTimeout';
+import { withPageAccess } from '../../shared/PageAccessHOC/PageAccessHOC';
+import { UserRole } from '../../types';
 
 const LOBBY_NOTIFICATION_OPTIONS = {
   key: 'lobby',
@@ -27,7 +29,20 @@ const LOBBY_NOTIFICATION_OPTIONS = {
 
 type CreateGameValues = {
   gameName: string;
+  observerMode?: boolean;
+  tournament?: string;
 };
+
+const ModeratorFields = withPageAccess([UserRole.Moderator])(() => {
+  const [visibleTournaments, setVisibleTournaments] = useState(false);
+  return (
+    <>
+      <Form.Item name="observerMode" label="Создать в роли наблюдателя">
+        <Switch />
+      </Form.Item>
+    </>
+  );
+});
 
 const Lobby = () => {
   const [visible, setVisible] = useState<boolean>(false);
@@ -72,7 +87,10 @@ const Lobby = () => {
   const handleCreateGame = async (values: CreateGameValues) => {
     form.resetFields();
     const { data: res } = await createGame({
-      variables: { name: values.gameName },
+      variables: {
+        name: values.gameName,
+        observerMode: values.observerMode,
+      },
     });
     if (!res?.createGame._id) return;
     cancelModal();
@@ -118,6 +136,7 @@ const Lobby = () => {
           <Form.Item name="gameName" rules={[{ required: true, message: 'Введите название игры' }]}>
             <Input placeholder="Введите название игры" />
           </Form.Item>
+          <ModeratorFields />
         </Form>
       </Modal>
     </div>
