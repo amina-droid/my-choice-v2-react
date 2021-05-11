@@ -79,6 +79,8 @@ const Game: FC<RouteComponentProps<{ gameId: string }>> = ({ match }) => {
     setVisibleRules(false);
   }, [setVisibleRules]);
 
+  const { gameId } = match.params;
+
   const [leaveGameReq] = useMutation<TLeaveGame, LeaveGameVariables>(LEAVE_GAME, {
     update: cache => {
       cache.evict({
@@ -89,7 +91,6 @@ const Game: FC<RouteComponentProps<{ gameId: string }>> = ({ match }) => {
     },
   });
   const leaveGame = useCallback(async () => {
-    const { gameId } = match.params;
     history.push('/lobby');
     await leaveGameReq({ variables: { gameId } });
   }, [history, leaveGameReq]);
@@ -126,7 +127,7 @@ const Game: FC<RouteComponentProps<{ gameId: string }>> = ({ match }) => {
     onOk: leaveGame,
     gameId: data?.joinGame._id,
   });
-  useClosePage(leaveGameReq, LEAVE_PAGE_MODAL_PROPS);
+  useClosePage(leaveGame, LEAVE_PAGE_MODAL_PROPS);
 
   useEffect(() => {
     if (match.params.gameId) {
@@ -213,7 +214,7 @@ const Game: FC<RouteComponentProps<{ gameId: string }>> = ({ match }) => {
   };
 
   if (!data?.joinGame) return <Spin size="large" />;
-  const { creator, status, mover, name: gameName, _id: gameId } = data.joinGame;
+  const { creator, status, mover, name: gameName } = data.joinGame;
 
   const handleStartGame = (id: string) => {
     clearStartGameAlert();
