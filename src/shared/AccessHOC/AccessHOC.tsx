@@ -19,12 +19,19 @@ export const access = (currentRole: UserRole | undefined, accessedRoles: UserRol
   }
 };
 
-export const withPageAccess = <T extends {}>(userRoles: UserRole[] = [UserRole.User]) => {
+export const withAccess = <T extends {}>(
+  userRoles: UserRole[] = [UserRole.User],
+  seeNotFound = true,
+) => {
   return (WrappedComponent: React.ComponentType<T>) => {
     return (props: T) => {
       const { user, userLoad } = useAuth();
       if (userLoad) return <Spin size="large" />;
-      return access(user?.role, userRoles) ? <WrappedComponent {...props} /> : <NotFound />;
+      return access(user?.role, userRoles)
+        ? <WrappedComponent {...props} />
+        : seeNotFound
+          ? <NotFound />
+          : null;
     };
   };
 };

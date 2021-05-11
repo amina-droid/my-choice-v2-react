@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @generated
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -19,4 +18,5 @@ export interface CreateGame {
 export interface CreateGameVariables {
   name: string;
   observerMode?: boolean | null;
+  tournament?: any | null;
 }

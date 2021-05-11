@@ -3,13 +3,15 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: LeaveGame
+// GraphQL query operation: GetTournaments
 // ====================================================
 
-export interface LeaveGame {
-  leaveGame: boolean;
+export interface GetTournaments_tournaments {
+  __typename: "Tournament";
+  _id: any;
+  name: string;
 }
 
-export interface LeaveGameVariables {
-  gameId: any;
+export interface GetTournaments {
+  tournaments: GetTournaments_tournaments[];
 }

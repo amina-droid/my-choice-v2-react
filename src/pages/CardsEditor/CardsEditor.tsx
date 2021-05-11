@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { withPageAccess } from '../../shared/PageAccessHOC/PageAccessHOC';
+import { withAccess } from '../../shared/AccessHOC/AccessHOC';
 import { FieldType, UserRole } from '../../types';
 
 import s from './CardsEditor.module.sass';
@@ -34,4 +34,4 @@ const CardsEditor = () => {
   );
 };
 
-export default withPageAccess([UserRole.Admin, UserRole.Moderator])(CardsEditor);
+export default withAccess([UserRole.Admin, UserRole.Moderator])(CardsEditor);

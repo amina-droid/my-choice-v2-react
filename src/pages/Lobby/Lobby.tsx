@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Form, Input, message, Modal, Switch } from 'antd';
+import { Button, Form, Input, message, Modal, Switch, Select } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { useForm } from 'antd/es/form/Form';
 import { useHistory } from 'react-router-dom';
 
-import { useMutation, useQuery } from '@apollo/client';
+import { useLazyQuery, useMutation, useQuery } from '@apollo/client';
 import s from './Lobby.module.sass';
 import Card from '../../shared/Card/Card';
 import {
   CREATE_GAME,
   CreateGame,
   CreateGameVariables,
-  GET_ACTIVE_GAMES,
-  GetActiveGames,
+  GET_ACTIVE_GAMES, GET_TOURNAMENTS,
+  GetActiveGames, GetTournaments,
   UPDATE_ACTIVE_GAMES,
   UpdateActiveGames,
 } from '../../apollo';
 import useNotificationTimeout from '../../utils/useNotificationTimeout';
-import { withPageAccess } from '../../shared/PageAccessHOC/PageAccessHOC';
+import { withAccess } from '../../shared/AccessHOC/AccessHOC';
 import { UserRole } from '../../types';
 
 const LOBBY_NOTIFICATION_OPTIONS = {
@@ -33,16 +33,79 @@ type CreateGameValues = {
   tournament?: string;
 };
 
-const ModeratorFields = withPageAccess([UserRole.Moderator])(() => {
+const ModeratorFields = withAccess([UserRole.Moderator], false)(() => {
   const [visibleTournaments, setVisibleTournaments] = useState(false);
+  const [getTournaments, { data, loading }] = useLazyQuery<GetTournaments>(GET_TOURNAMENTS);
+
+  useEffect(() => {
+    if (visibleTournaments) {
+      getTournaments();
+    }
+  }, [visibleTournaments, getTournaments]);
   return (
     <>
       <Form.Item name="observerMode" label="Создать в роли наблюдателя">
         <Switch />
       </Form.Item>
+      <Form.Item name="visibleTournaments" label="Турнирная игра">
+        <Switch onChange={setVisibleTournaments} />
+      </Form.Item>
+      {visibleTournaments && (
+        <Form.Item name="tournament" label="Выберете турнир">
+          <Select loading={loading}>
+            {data?.tournaments.map((tournament) => (
+              <Select.Option
+                value={tournament._id}
+                key={tournament._id}
+              >
+                {tournament.name}
+              </Select.Option>
+            ))}
+          </Select>
+        </Form.Item>
+      )}
     </>
   );
 });
+
+const INCOMING_QUESTIONARY_KEY = 'incoming-questionary';
+const useQuestionary = () => {
+  useEffect(() => {
+    if (!localStorage.getItem(INCOMING_QUESTIONARY_KEY)) {
+      Modal.confirm({
+        title: 'Пройдите наш опросник!',
+        width: 600,
+        content: (
+          <>
+            Дорогие друзья!
+            <br />
+            Мы проводим опрос, нацеленный на выявление значимого отношения к проявлениям
+            и профилактике экстремизма в детско-подростковой и молодёжной среде.
+            Ваши искренние ответы позволят получить и проанализировать социально
+            значимую информацию, повысить эффективность принимаемых управленческих решений
+            в сфере организации профилактики экстремистских проявлений
+            в детско-подростковой и молодёжной среде.
+            <br />
+            Благодарим Вас за терпение и понимание!
+          </>
+        ),
+        okText: 'Я готов пройти',
+        cancelText: 'Нет, спасибо',
+        closable: true,
+        onOk() {
+          window.open(
+            'https://vk.com/away.php?to=https%3A%2F%2Fdocs.google.com%2Fforms%2Fd%2F1VdDf9xS0YSymxBvYT-SBESqcQYXfPGt4m1CqBzxP8io%2Fedit&cc_key=',
+            '_blank',
+          );
+          localStorage.setItem(INCOMING_QUESTIONARY_KEY, 'true');
+        },
+        onCancel() {
+          localStorage.setItem(INCOMING_QUESTIONARY_KEY, 'true');
+        },
+      });
+    }
+  }, []);
+};
 
 const Lobby = () => {
   const [visible, setVisible] = useState<boolean>(false);
@@ -51,6 +114,7 @@ const Lobby = () => {
   const [createGame] = useMutation<CreateGame, CreateGameVariables>(CREATE_GAME);
   const [callLobbyAlert, clearLobbyAlert] = useNotificationTimeout(LOBBY_NOTIFICATION_OPTIONS);
   const history = useHistory();
+  useQuestionary();
 
   useEffect(() => {
     if (!subscribeToMore) return;
@@ -90,6 +154,7 @@ const Lobby = () => {
       variables: {
         name: values.gameName,
         observerMode: values.observerMode,
+        tournament: values.tournament,
       },
     });
     if (!res?.createGame._id) return;
