@@ -1,8 +1,15 @@
-import React from 'react';
-import { Button, Card, Form, Input, message } from 'antd';
+import React, { useEffect } from 'react';
+import { Button, Card, Form, Input, List, message, Popconfirm, Typography } from 'antd';
+import CustomScroll from 'react-custom-scroll';
 import { useForm } from 'antd/es/form/Form';
-import { useMutation } from '@apollo/client';
-import { CREATE_TOURNAMENT, CreateTournament, CreateTournamentVariables } from '../../apollo';
+import { useLazyQuery, useMutation } from '@apollo/client';
+import {
+  CREATE_TOURNAMENT,
+  CreateTournament,
+  CreateTournamentVariables,
+  GET_TOURNAMENTS,
+  GetTournaments,
+} from '../../apollo';
 import s from './AddTournament.module.sass';
 
 const AddTournament = () => {
@@ -10,12 +17,20 @@ const AddTournament = () => {
   const [addTournament] = useMutation<CreateTournament, CreateTournamentVariables>(
     CREATE_TOURNAMENT,
   );
+  const [getTournaments, { data, loading, refetch }] = useLazyQuery<GetTournaments>(
+    GET_TOURNAMENTS,
+  );
+
+  useEffect(() => {
+    getTournaments();
+  }, []);
 
   const onFinish = async (values: CreateTournamentVariables) => {
     try {
       await addTournament({ variables: values });
       message.success('Турнир создан');
       form.resetFields();
+      await refetch?.();
     } catch {
       message.error('Произошла ошибка, попробуйте снова');
     }
@@ -39,6 +54,33 @@ const AddTournament = () => {
           </Form.Item>
         </Card>
       </Form>
+      <Card className={s.card} title="Созданные турниры">
+        <CustomScroll allowOuterScroll keepAtBottom>
+          <List
+            loading={loading}
+            className={s.cardsList}
+            size="large"
+            dataSource={data?.tournaments}
+            renderItem={tournament => (
+              <List.Item>
+                <List.Item.Meta
+                  description={
+                    <Typography.Text
+                      copyable={{
+                        text: tournament._id,
+                        tooltips: ['Скопировать ID', 'Скопировано!'],
+                      }}
+                    >
+                      ID: {tournament._id}
+                    </Typography.Text>
+                  }
+                  title={<>{tournament.name}</>}
+                />
+              </List.Item>
+            )}
+          />
+        </CustomScroll>
+      </Card>
     </div>
   );
 };
