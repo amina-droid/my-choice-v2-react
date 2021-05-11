@@ -25,41 +25,37 @@ const addActiveToDream = (cb: any) => (el: Element, i: number, parent: Element[]
   };
 };
 
-const Avatars: FC<Pick<ActiveGame, 'players'>> = React.memo(({ players }) => (
-  <>
-    {players.map(({ _id, avatar }) => (
-      <defs key={`Avatar:${_id}`}>
-        <pattern
-          id={getPlayerAvatarSVG(_id)}
-          height="100%"
-          width="100%"
-          patternContentUnits="objectBoundingBox"
-        >
-          <image
-            xlinkHref={avatar ?? undefined}
-            preserveAspectRatio="xMidYMid slice"
-            width="1"
-            height="1"
-          />
-        </pattern>
-      </defs>
-    ))}
-  </>),
-(
-  prev,
-  next,
-) => prev.players.length === next.players.length);
+const Avatars: FC<Pick<ActiveGame, 'players'>> = React.memo(
+  ({ players }) => (
+    <>
+      {players.map(({ _id, avatar }) => (
+        <defs key={`Avatar:${_id}`}>
+          <pattern
+            id={getPlayerAvatarSVG(_id)}
+            height="100%"
+            width="100%"
+            patternContentUnits="objectBoundingBox"
+          >
+            <image
+              xlinkHref={avatar ?? undefined}
+              preserveAspectRatio="xMidYMid slice"
+              width="1"
+              height="1"
+            />
+          </pattern>
+        </defs>
+      ))}
+    </>
+  ),
+  (prev, next) => prev.players.length === next.players.length,
+);
 
-type DreamsProps = Pick<ActiveGame, 'players' | 'status'>
+type DreamsProps = Pick<ActiveGame, 'players' | 'status'>;
 const Dreams: FC<DreamsProps> = ({ players }) => {
   return (
     <>
-      {players.map((player) => (
-        <PlayerDream
-          key={`Dream:${player._id}`}
-          player={player}
-          players={players}
-        />
+      {players.map(player => (
+        <PlayerDream key={`Dream:${player._id}`} player={player} players={players} />
       ))}
     </>
   );
@@ -75,11 +71,12 @@ const GameField: FC<GameFieldProps> = ({ game, onChoiceDream }) => {
   const myPlayer = usePlayer(game._id);
 
   useEffect(() => {
+    if (!myPlayer) return () => {};
     const playerDreamNotExist = game.status === GameStatus.ChoiceDream && !myPlayer?.dream;
 
     if (playerDreamNotExist) {
       const dreamFields = svgRef?.current?.querySelectorAll(
-        getSelector({ field: FieldType.Dream })
+        getSelector({ field: FieldType.Dream }),
       );
 
       if (!dreamFields) return () => {};
@@ -95,19 +92,39 @@ const GameField: FC<GameFieldProps> = ({ game, onChoiceDream }) => {
     <>
       <GameFieldSVG ref={svgRef}>
         <defs>
-          <filter id="marker_shadow" x="0.543398" y="0.725572" width="108" height="120.5" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+          <filter
+            id="marker_shadow"
+            x="0.543398"
+            y="0.725572"
+            width="108"
+            height="120.5"
+            filterUnits="userSpaceOnUse"
+            colorInterpolationFilters="sRGB"
+          >
             <feFlood floodOpacity="0" result="BackgroundImageFix" />
-            <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" />
+            <feColorMatrix
+              in="SourceAlpha"
+              type="matrix"
+              values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            />
             <feOffset dx="0.451684" dy="-0.348287" />
             <feGaussianBlur stdDeviation="3.34259" />
             <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.27 0" />
             <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow" />
-            <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" />
+            <feColorMatrix
+              in="SourceAlpha"
+              type="matrix"
+              values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            />
             <feOffset dx="2.13524" dy="-1.64645" />
             <feGaussianBlur stdDeviation="3.62407" />
             <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.164 0" />
             <feBlend mode="normal" in2="effect1_dropShadow" result="effect2_dropShadow" />
-            <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" />
+            <feColorMatrix
+              in="SourceAlpha"
+              type="matrix"
+              values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+            />
             <feOffset dx="5.5434" dy="-4.27443" />
             <feGaussianBlur stdDeviation="19" />
             <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.106 0" />
@@ -117,12 +134,9 @@ const GameField: FC<GameFieldProps> = ({ game, onChoiceDream }) => {
         </defs>
         <Avatars players={game.players} />
         <Dreams status={game.status} players={game.players} />
-        {game.players.map((player) => (
-          <PlayerMarker
-            key={`Player:${player._id}`}
-            player={player}
-            players={game.players}
-          />))}
+        {game.players.map(player => (
+          <PlayerMarker key={`Player:${player._id}`} player={player} players={game.players} />
+        ))}
       </GameFieldSVG>
     </>
   );

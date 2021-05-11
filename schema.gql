@@ -95,7 +95,8 @@ type Mutation {
     createChoicesCard(createChoicesCard: CreateChoicesCardInput!): Card!
     createGame(createGameInput: CreateGameInput!): GameSession!
     createIncidentCard(createIncidentCard: CreateIncidentCardInput!): Card!
-    leaveGame: Boolean!
+    createTournament(name: String!): Tournament!
+    leaveGame(gameId: ObjectId!): Boolean!
     move(moveCount: Int!): Boolean!
     opportunityResult(diceResult: Int, opportunityId: ObjectId!): Boolean!
     removeCard(cardId: ObjectId!): Card!
@@ -146,6 +147,7 @@ type Query {
     getVKOAuthRedirect: AuthRedirect!
     joinGame(gameId: ObjectId!): GameSession!
     messages(topic: String!): [Message!]!
+    tournaments: [Tournament!]!
     user(_id: ObjectId!): User
 }
 
@@ -169,6 +171,11 @@ type Subscription {
     playerChoice(gameId: ObjectId!): ChoiceOption!
     updateActiveGame(gameId: ObjectId!): GameSession!
     updateActiveGames: [GameSession!]!
+}
+
+type Tournament {
+    _id: ObjectId!
+    name: String!
 }
 
 type User {
@@ -257,6 +264,7 @@ input CreateChoicesCardInput {
 input CreateGameInput {
     name: String!
     observerMode: Boolean = false
+    tournament: ObjectId
 }
 
 input CreateIncidentCardInput {

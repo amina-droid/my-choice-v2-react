@@ -1,7 +1,7 @@
 import React, { FC, useCallback, useEffect, useState } from 'react';
 import { Button, message, Popconfirm, Spin } from 'antd';
 import { RouteComponentProps, useHistory } from 'react-router-dom';
-import { useMutation, useLazyQuery, ApolloError } from '@apollo/client';
+import { ApolloError, useLazyQuery, useMutation } from '@apollo/client';
 import {
   CHOICE_DREAM,
   ChoiceDream,
@@ -14,6 +14,7 @@ import {
   JoinGameVariables,
   LEAVE_GAME,
   LeaveGame as TLeaveGame,
+  LeaveGameVariables,
   START_GAME,
   StartGame,
   StartGameVariables,
@@ -78,7 +79,7 @@ const Game: FC<RouteComponentProps<{ gameId: string }>> = ({ match }) => {
     setVisibleRules(false);
   }, [setVisibleRules]);
 
-  const [leaveGameReq] = useMutation<TLeaveGame>(LEAVE_GAME, {
+  const [leaveGameReq] = useMutation<TLeaveGame, LeaveGameVariables>(LEAVE_GAME, {
     update: cache => {
       cache.evict({
         id: `GameSession:${match.params.gameId}`,
@@ -88,8 +89,9 @@ const Game: FC<RouteComponentProps<{ gameId: string }>> = ({ match }) => {
     },
   });
   const leaveGame = useCallback(async () => {
+    const { gameId } = match.params;
     history.push('/lobby');
-    await leaveGameReq();
+    await leaveGameReq({ variables: { gameId } });
   }, [history, leaveGameReq]);
   const onGameError = useCallback(
     (error: ApolloError | Error) => {
@@ -137,10 +139,7 @@ const Game: FC<RouteComponentProps<{ gameId: string }>> = ({ match }) => {
   }, [match.params.gameId]);
 
   useEffect(() => {
-    const {
-      _id: id,
-      name: title,
-    } = (data?.joinGame || {});
+    const { _id: id, name: title } = data?.joinGame || {};
     if (id && title) {
       addTopic({
         id,
@@ -170,22 +169,30 @@ const Game: FC<RouteComponentProps<{ gameId: string }>> = ({ match }) => {
   }, [subscribeToMore, match.params.gameId]);
 
   useEffect(() => {
-    if (data?.joinGame.mover === user?._id) {
+    if (data?.joinGame.mover === user?._id && data?.joinGame.status === GameStatus.InProgress) {
       callDiceAlert();
     }
-  }, [data?.joinGame.mover, user?._id]);
+  }, [data?.joinGame.mover, user?._id, data?.joinGame.status]);
+
+  const isPlayersExist = data?.joinGame.players.length;
 
   useEffect(() => {
-    if (data?.joinGame.status === GameStatus.ChoiceDream) {
+    const isPlayer = data?.joinGame.players.some(player => player._id === user?._id);
+    console.log({ isPlayer });
+    if (data?.joinGame.status === GameStatus.ChoiceDream && isPlayer) {
       callDreamAlert();
     }
   }, [data?.joinGame.status]);
 
   useEffect(() => {
-    if (data?.joinGame.status === GameStatus.Awaiting && data?.joinGame.creator === user?._id) {
+    if (
+      data?.joinGame.status === GameStatus.Awaiting &&
+      data?.joinGame.creator === user?._id &&
+      isPlayersExist
+    ) {
       callStartGameAlert();
     }
-  }, [data?.joinGame.status, user?._id]);
+  }, [data?.joinGame.status, user?._id, isPlayersExist]);
 
   const startGame = (id: string) => {
     startGameReq({ variables: { gameId: id } });
@@ -221,7 +228,11 @@ const Game: FC<RouteComponentProps<{ gameId: string }>> = ({ match }) => {
       <CardModal gameId={match.params.gameId} onError={onGameError} />
       <div className={s.header}>
         {status === GameStatus.Awaiting && creator === user?._id && (
-          <Button type="primary" onClick={() => handleStartGame(gameId)}>
+          <Button
+            type="primary"
+            disabled={Boolean(!isPlayersExist)}
+            onClick={() => handleStartGame(gameId)}
+          >
             Начать игру
           </Button>
         )}
