@@ -29,7 +29,12 @@ const Card: FC<CardProps> = ({ title, status, playersCount, className, onClick, 
     status && status !== GameStatus.Awaiting && s.statusAwaiting,
   );
   return (
-    <button type="button" onClick={onClick} className={classNames}>
+    <button
+      type="button"
+      onClick={onClick}
+      className={classNames}
+      disabled={Boolean(status === GameStatus.Finished)}
+    >
       {title && (
         <>
           {status && (
@@ -37,6 +42,7 @@ const Card: FC<CardProps> = ({ title, status, playersCount, className, onClick, 
               className={cn(
                 s.status,
                 status !== GameStatus.Awaiting && s.statusNotAwaiting,
+                status === GameStatus.Finished && s.statusFinished,
                 status === GameStatus.Awaiting && s.statusAwaiting,
               )}
             >
