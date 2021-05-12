@@ -13,3 +13,4 @@ export * from './UpdateChoicesCard';
 export * from './UpdateNickname';
 export * from './ShareResources';
 export * from './CreateTournament';
+export * from './DeleteGame';

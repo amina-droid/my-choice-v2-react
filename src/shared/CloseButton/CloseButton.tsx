@@ -6,8 +6,8 @@ import cn from 'classnames';
 import s from './CloseButton.module.sass';
 
 type CloseButtonProps = {
-  onClose: () => void;
   className: string;
+  onClose?: () => void;
 };
 
 const CloseButton: FC<CloseButtonProps> = ({ onClose, className }) => {

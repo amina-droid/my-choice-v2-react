@@ -96,6 +96,7 @@ type Mutation {
     createGame(createGameInput: CreateGameInput!): GameSession!
     createIncidentCard(createIncidentCard: CreateIncidentCardInput!): Card!
     createTournament(name: String!): Tournament!
+    deleteGame(gameId: ObjectId!): Boolean!
     leaveGame(gameId: ObjectId!): Boolean!
     move(moveCount: Int!): Boolean!
     opportunityResult(diceResult: Int, opportunityId: ObjectId!): Boolean!

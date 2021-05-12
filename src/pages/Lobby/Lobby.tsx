@@ -11,8 +11,10 @@ import {
   CREATE_GAME,
   CreateGame,
   CreateGameVariables,
-  GET_ACTIVE_GAMES, GET_TOURNAMENTS,
-  GetActiveGames, GetTournaments,
+  GET_ACTIVE_GAMES,
+  GET_TOURNAMENTS,
+  GetActiveGames,
+  GetTournaments,
   UPDATE_ACTIVE_GAMES,
   UpdateActiveGames,
 } from '../../apollo';
@@ -33,7 +35,10 @@ type CreateGameValues = {
   tournament?: string;
 };
 
-const ModeratorFields = withAccess([UserRole.Moderator], false)(() => {
+const ModeratorFields = withAccess(
+  [UserRole.Moderator],
+  false,
+)(() => {
   const [visibleTournaments, setVisibleTournaments] = useState(false);
   const [getTournaments, { data, loading }] = useLazyQuery<GetTournaments>(GET_TOURNAMENTS);
 
@@ -53,11 +58,8 @@ const ModeratorFields = withAccess([UserRole.Moderator], false)(() => {
       {visibleTournaments && (
         <Form.Item name="tournament" label="Выберете турнир">
           <Select loading={loading}>
-            {data?.tournaments.map((tournament) => (
-              <Select.Option
-                value={tournament._id}
-                key={tournament._id}
-              >
+            {data?.tournaments.map(tournament => (
+              <Select.Option value={tournament._id} key={tournament._id}>
                 {tournament.name}
               </Select.Option>
             ))}
@@ -79,12 +81,11 @@ const useQuestionary = () => {
           <>
             Дорогие друзья!
             <br />
-            Мы проводим опрос, нацеленный на выявление значимого отношения к проявлениям
-            и профилактике экстремизма в детско-подростковой и молодёжной среде.
-            Ваши искренние ответы позволят получить и проанализировать социально
-            значимую информацию, повысить эффективность принимаемых управленческих решений
-            в сфере организации профилактики экстремистских проявлений
-            в детско-подростковой и молодёжной среде.
+            Мы проводим опрос, нацеленный на выявление значимого отношения к проявлениям и
+            профилактике экстремизма в детско-подростковой и молодёжной среде. Ваши искренние ответы
+            позволят получить и проанализировать социально значимую информацию, повысить
+            эффективность принимаемых управленческих решений в сфере организации профилактики
+            экстремистских проявлений в детско-подростковой и молодёжной среде.
             <br />
             Благодарим Вас за терпение и понимание!
           </>
@@ -172,10 +173,8 @@ const Lobby = () => {
         return (
           <Card
             className={s.card}
-            status={game.status}
+            game={game}
             key={game._id}
-            title={game.name}
-            playersCount={game.playersCount}
             onClick={() => redirectToGame(game._id)}
           />
         );

@@ -1,24 +1,32 @@
-.contain
+.containMain
     background-color: white
     border: 1px solid #f0f0f0
     border-radius: 2px
 
-    min-width: 200px
-    min-height: 100px
-    padding: 40px
+    transition: 0.2s
+    &:hover:enabled
+        border: 1px solid #f0f0f0
+        color: #1890ff
+        transform: scale(1.05)
+        & .containContentHover
+            display: flex
+        & .containContentUnhover
+            display: none
+.contain
     display: flex
     align-items: center
     flex-direction: column
     position: relative
+    min-width: 200px
+    min-height: 100px
+    padding: 40px
 
     width: 200px
     height: 200px
+
     justify-content: center
-    transition: 0.2s
-    &:hover
-        border: 1px solid #f0f0f0
-        color: #1890ff
-        transform: scale(1.05)
+
+
 
     .playersCount
         font-size: 15px
@@ -42,3 +50,16 @@
 
     .statusFinished
         color: var(--game-pink)
+
+.cardFinished
+    background-color: #f3f5f6
+    cursor: not-allowed
+
+.closeBtn
+    position: absolute
+    top: 0
+    right: 0
+
+.containContentHover
+    display: none
+    font-size: 30px
