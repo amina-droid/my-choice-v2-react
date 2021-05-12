@@ -199,7 +199,7 @@ const Lobby = () => {
       >
         <Form form={form}>
           <Form.Item name="gameName" rules={[{ required: true, message: 'Введите название игры' }]}>
-            <Input placeholder="Введите название игры" />
+            <Input placeholder="Введите название игры" maxLength={25} />
           </Form.Item>
           <ModeratorFields />
         </Form>
