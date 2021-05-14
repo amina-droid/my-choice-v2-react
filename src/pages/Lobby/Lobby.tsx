@@ -24,6 +24,7 @@ import {
 import useNotificationTimeout from '../../utils/useNotificationTimeout';
 import { withAccess } from '../../shared/AccessHOC/AccessHOC';
 import { UserRole } from '../../types';
+import { formicObsceneValidator } from '../../utils/obsceneFilter';
 import CloseButton from '../../shared/CloseButton/CloseButton';
 
 const LOBBY_NOTIFICATION_OPTIONS = {
@@ -220,7 +221,16 @@ const Lobby = () => {
         }
       >
         <Form form={form}>
-          <Form.Item name="gameName" rules={[{ required: true, message: 'Введите название игры' }]}>
+          <Form.Item
+            name="gameName"
+            rules={[
+              {
+                required: true,
+                message: 'Введите название игры',
+              },
+              formicObsceneValidator,
+            ]}
+          >
             <Input placeholder="Введите название игры" maxLength={25} />
           </Form.Item>
           <ModeratorFields />

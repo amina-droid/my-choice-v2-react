@@ -7,6 +7,7 @@ import {
   UpdateNickname,
   UpdateNicknameVariables,
 } from '../../apollo';
+import { formicObsceneValidator } from '../../utils/obsceneFilter';
 
 import s from './Profile.module.sass';
 
@@ -93,7 +94,7 @@ const Profile = () => {
         >
           <Form.Item
             name="nickname"
-            rules={[{ required: true, message: 'Не может быть пустым' }]}
+            rules={[{ required: true, message: 'Не может быть пустым' }, formicObsceneValidator]}
           >
             <Input maxLength={50} disabled={loading} />
           </Form.Item>
