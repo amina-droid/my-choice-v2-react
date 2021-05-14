@@ -1,6 +1,7 @@
 import React, { FC, useCallback, useEffect, useState } from 'react';
-import { Button, message, Popconfirm, Spin } from 'antd';
+import { Button, message, Popconfirm, Spin, Typography } from 'antd';
 import { RouteComponentProps, useHistory } from 'react-router-dom';
+import cn from 'classnames';
 import { ApolloError, useLazyQuery, useMutation } from '@apollo/client';
 import {
   CHOICE_DREAM,
@@ -94,6 +95,7 @@ const Game: FC<RouteComponentProps<{ gameId: string }>> = ({ match }) => {
     history.push('/lobby');
     await leaveGameReq({ variables: { gameId } });
   }, [history, leaveGameReq]);
+
   const onGameError = useCallback(
     (error: ApolloError | Error) => {
       message.error(error.message);
@@ -224,43 +226,50 @@ const Game: FC<RouteComponentProps<{ gameId: string }>> = ({ match }) => {
   const myResources = data.joinGame.players.find(player => player._id === user?._id)?.resources;
 
   return (
-    <div className={s.gameContainer}>
-      <Rules visible={visibleRules} closeModal={closeRulesModal} />
-      <CardModal gameId={match.params.gameId} onError={onGameError} />
-      <div className={s.header}>
-        {status === GameStatus.Awaiting && creator === user?._id && (
-          <Button
-            type="primary"
-            disabled={Boolean(!isPlayersExist)}
-            onClick={() => handleStartGame(gameId)}
+    <>
+      <Typography.Title level={2} className={s.gameName}>
+        {data.joinGame.name}
+      </Typography.Title>
+      <div className={s.gameContainer}>
+        <Rules visible={visibleRules} closeModal={closeRulesModal} />
+        <CardModal gameId={match.params.gameId} onError={onGameError} />
+        <div className={s.header}>
+          {status === GameStatus.Awaiting && creator === user?._id && (
+            <Button
+              type="primary"
+              disabled={Boolean(!isPlayersExist)}
+              onClick={() => handleStartGame(gameId)}
+            >
+              Начать игру
+            </Button>
+          )}
+          {status === GameStatus.InProgress && (
+            <Dice ready={mover === user?._id} onRoll={gameMove} />
+          )}
+        </div>
+        <div className={s.playersTableContainer}>
+          <PlayersTable players={data.joinGame.players} mover={mover} />
+        </div>
+        <div className={s.actionsContainer}>
+          <ChangeResources className={s.action} resources={myResources} />
+          <CheckRules className={s.action} onClick={openRulesModal} />
+          <Popconfirm
+            placement="right"
+            title="Вы уверены что хотите выйти из игры?"
+            onConfirm={leaveGame}
+            okText="Да"
+            cancelText="Нет"
           >
-            Начать игру
-          </Button>
-        )}
-        {status === GameStatus.InProgress && <Dice ready={mover === user?._id} onRoll={gameMove} />}
+            <div className={s.leaveGame}>
+              <LeaveGame className={s.action} />
+            </div>
+          </Popconfirm>
+        </div>
+        <div className={s.playingField}>
+          <GameField game={data.joinGame} onChoiceDream={handleChoiceDream} />
+        </div>
       </div>
-      <div className={s.playersTableContainer}>
-        <PlayersTable players={data.joinGame.players} mover={mover} />
-      </div>
-      <div className={s.actionsContainer}>
-        <ChangeResources className={s.action} resources={myResources} />
-        <CheckRules className={s.action} onClick={openRulesModal} />
-        <Popconfirm
-          placement="right"
-          title="Вы уверены что хотите выйти из игры?"
-          onConfirm={leaveGame}
-          okText="Да"
-          cancelText="Нет"
-        >
-          <div>
-            <LeaveGame className={s.action} />
-          </div>
-        </Popconfirm>
-      </div>
-      <div className={s.playingField}>
-        <GameField game={data.joinGame} onChoiceDream={handleChoiceDream} />
-      </div>
-    </div>
+    </>
   );
 };
 

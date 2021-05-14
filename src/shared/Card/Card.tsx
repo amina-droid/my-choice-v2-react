@@ -56,9 +56,9 @@ const Card: FC<CardProps> = ({ game, className, onClick, children }) => {
               <span
                 className={cn(
                   s.status,
-                  game.status !== GameStatus.Awaiting && s.statusNotAwaiting,
                   game.status === GameStatus.Finished && s.statusFinished,
                   game.status === GameStatus.Awaiting && s.statusAwaiting,
+                  game.status !== GameStatus.Awaiting && s.statusNotAwaiting,
                 )}
               >
                 {GAME_STATUS_DICTIONARY[game.status]}

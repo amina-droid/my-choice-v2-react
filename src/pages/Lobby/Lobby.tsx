@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Form, Input, message, Modal, Switch, Select } from 'antd';
+import { Button, Form, Input, message, Modal, Switch, Select, Popconfirm } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { useForm } from 'antd/es/form/Form';
 import { useHistory } from 'react-router-dom';
@@ -11,6 +11,9 @@ import {
   CREATE_GAME,
   CreateGame,
   CreateGameVariables,
+  DELETE_GAME,
+  DeleteGame,
+  DeleteGameVariables,
   GET_ACTIVE_GAMES,
   GET_TOURNAMENTS,
   GetActiveGames,
@@ -21,6 +24,7 @@ import {
 import useNotificationTimeout from '../../utils/useNotificationTimeout';
 import { withAccess } from '../../shared/AccessHOC/AccessHOC';
 import { UserRole } from '../../types';
+import CloseButton from '../../shared/CloseButton/CloseButton';
 
 const LOBBY_NOTIFICATION_OPTIONS = {
   key: 'lobby',
@@ -108,6 +112,21 @@ const useQuestionary = () => {
   }, []);
 };
 
+type ModeratorFieldCreateGameProps = {
+  showModal: () => void;
+};
+
+const ModeratorFieldCreateGame = withAccess<ModeratorFieldCreateGameProps>(
+  [UserRole.Moderator],
+  false,
+)(({ showModal }) => {
+  return (
+    <Card onClick={showModal} className={s.cardAdd}>
+      <PlusOutlined />
+    </Card>
+  );
+});
+
 const Lobby = () => {
   const [visible, setVisible] = useState<boolean>(false);
   const [form] = useForm();
@@ -166,9 +185,7 @@ const Lobby = () => {
 
   return (
     <div className={s.containCards}>
-      <Card onClick={showModal} className={s.cardAdd}>
-        <PlusOutlined />
-      </Card>
+      <ModeratorFieldCreateGame showModal={showModal} />
       {data?.getActiveGames.map(game => {
         return (
           <Card
