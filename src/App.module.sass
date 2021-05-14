@@ -1,16 +1,26 @@
+@import "index"
+
 .App
-    min-height: calc(100vh - 50px)
+    min-height: calc(100vh - #{$footerHeight})
     height: 100%
+
+    @media all and (max-width: $mobileMax)
+        min-height: calc(100vh - #{22px + 20px + 10px})
 
 
 .Footer
-    height: 50px
-    padding: 20px 50px 10px
+    height: $footerHeight + 20px + 10px
+    padding: 20px $appSizePadding 10px
     line-height: normal
     background: none
     position: fixed
     left: 0
     bottom: 0
+
+    @media all and (max-width: $mobileMax)
+        font-size: 11px
+        height: 22px + 20px + 10px
+        padding: 20px $appSizePaddingMobile 10px
 
 .Logo
     font-family: Neucha, serif
@@ -36,7 +46,10 @@
     box-sizing: content-box
     justify-content: space-between
     align-items: center
-    padding: 30px 60px 0
+    padding: 30px $appSizePadding 0
+
+    @media all and (max-width: $mobileMax)
+        padding: 15px 0 0 $appSizePaddingMobile
 
 .Nav
     background: none
@@ -46,13 +59,13 @@
         font-family: Neucha, serif
         font-weight: 600
         font-size: 20px
-        @media all and (min-width: 700px)
+        @media all and (min-width: $mobileMax)
             font-size: 24px
         & > a
             font-family: Neucha, serif
             font-weight: 600
             font-size: 20px
-            @media all and (min-width: 700px)
+            @media all and (min-width: $mobileMax)
                 font-size: 24px
 
     &Collapsed

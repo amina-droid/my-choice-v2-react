@@ -1,9 +1,18 @@
+@import "src/index"
+
+$cardMaxSize: 200px
+$cardMediumSize: 150px
+$cardSmallSize: 100px
+
 .containMain
     background-color: white
     border: 1px solid #f0f0f0
     border-radius: 2px
+    margin: 5px
+    padding: 0
 
     transition: 0.2s
+
     &:hover:enabled
         border: 1px solid #f0f0f0
         color: #1890ff
@@ -17,20 +26,37 @@
     align-items: center
     flex-direction: column
     position: relative
-    min-width: 200px
-    min-height: 100px
-    padding: 40px
-
-    width: 200px
-    height: 200px
-
     justify-content: center
 
+    padding: 40px
+    width: $cardMaxSize
+    height: $cardMaxSize
+    @media all and (max-width: $mobileMax)
+        width: $cardMediumSize
+        height: $cardMediumSize
 
+        .nameGame
+            font-size: 15px
 
+    @media all and (max-width: $smallMobileMax)
+        width: $cardSmallSize
+        height: $cardSmallSize
+
+        .nameGame
+            font-size: 13px
+
+    .status,
     .playersCount
         font-size: 15px
         position: absolute
+
+        @media all and (max-width: $mobileMax)
+            font-size: 12px
+
+        @media all and (max-width: $smallMobileMax)
+            font-size: 10px
+
+    .playersCount
         bottom: 10px
 
     .nameGame
@@ -38,9 +64,10 @@
 
     .status
         text-align: center
-        font-size: 15px
-        position: absolute
         top: 10px
+
+        @media all and (max-width: $smallMobileMax)
+            top: 5px
 
     .statusAwaiting
         color: var(--game-green)
@@ -63,3 +90,9 @@
 .containContentHover
     display: none
     font-size: 30px
+
+    @media all and (max-width: $mobileMax)
+        font-size: 18px
+
+    @media all and (max-width: $smallMobileMax)
+        font-size: 14px

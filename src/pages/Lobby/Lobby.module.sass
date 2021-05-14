@@ -1,19 +1,29 @@
-.card, .cardAdd
-    font-size: 100px
-    margin: 5px
+@import "src/index"
+@import "src/shared/Card/Card.module"
 
 .cardAdd
-    height: 200px
-    width: 200px
+    font-size: 100px
+    height: $cardMaxSize
+    width: $cardMaxSize
     outline: none
-    border: none
 
     &:hover
         outline: none
-        border: none
+
+    @media all and (max-width: $mobileMax)
+        height: $cardMediumSize
+        width: $cardMediumSize
+        font-size: 65px
+
+    @media all and (max-width: $smallMobileMax)
+        height: $cardSmallSize
+        width: $cardSmallSize
+        font-size: 45px
+
 
 .container
     margin: 0 40px 40px
+
 .containCards
     display: flex
     flex-wrap: wrap

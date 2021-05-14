@@ -1,7 +1,6 @@
 import React, { FC, useCallback, useEffect, useState } from 'react';
 import { Button, message, Popconfirm, Spin, Typography } from 'antd';
 import { RouteComponentProps, useHistory } from 'react-router-dom';
-import cn from 'classnames';
 import { ApolloError, useLazyQuery, useMutation } from '@apollo/client';
 import {
   CHOICE_DREAM,
@@ -38,6 +37,7 @@ import Rules from '../../components/Rules';
 import useWinner from './Winner/useWinner';
 import useNotificationTimeout from '../../utils/useNotificationTimeout';
 import useClosePage from '../../utils/useClosePage';
+import useScreenOrientation from '../../utils/useScreenOrientation';
 
 import s from './Game.module.sass';
 
@@ -70,6 +70,8 @@ const LEAVE_PAGE_MODAL_PROPS = {
 
 const Game: FC<RouteComponentProps<{ gameId: string }>> = ({ match }) => {
   const history = useHistory();
+  const orientation = useScreenOrientation();
+  console.log({ orientation });
   const [visibleRules, setVisibleRules] = useState(false);
   const { addTopic, removeTopic } = useChatContext();
   const { user } = useAuth();
@@ -181,7 +183,6 @@ const Game: FC<RouteComponentProps<{ gameId: string }>> = ({ match }) => {
 
   useEffect(() => {
     const isPlayer = data?.joinGame.players.some(player => player._id === user?._id);
-    console.log({ isPlayer });
     if (data?.joinGame.status === GameStatus.ChoiceDream && isPlayer) {
       callDreamAlert();
     }

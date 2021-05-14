@@ -1,11 +1,13 @@
+@import "src/index"
+
 .comments
     &List
         height: 400px
 
 
 .openBtn
-    width: 70px
-    height: 70px
+    width: $actionIconSize
+    height: $actionIconSize
     position: fixed
     z-index: 1100
     bottom: 20px
@@ -16,6 +18,16 @@
     align-items: center
     justify-content: center
     transition: all 0.3s ease
+
+    @media all and (max-width: $mobileMax)
+        width: $actionIconSizeMobile
+        height: $actionIconSizeMobile
+        bottom: 25px
+        right: 10px
+
+    @media all and (max-width: $smallMobileMax)
+        width: $actionIconSizeSmallMobile
+        height: $actionIconSizeSmallMobile
 
     & svg
         width: 100%
@@ -47,7 +59,8 @@
             width: 360px
             height: 520px
             padding: 15px 15px 0
-
+            border: 1px solid #f0f0f0
+            border-top: none
             background-color: white
 
             display: flex
