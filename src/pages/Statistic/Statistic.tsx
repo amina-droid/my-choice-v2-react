@@ -13,4 +13,4 @@ const Statistic = () => {
   );
 };
 
-export default withAccess([UserRole.Admin])(Statistic);
+export default withAccess([UserRole.Admin], true)(Statistic);

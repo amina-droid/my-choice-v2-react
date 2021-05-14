@@ -3,13 +3,14 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: LeaveGame
+// GraphQL mutation operation: RemoveMessage
 // ====================================================
 
-export interface LeaveGame {
-  leaveGame: boolean;
+export interface RemoveMessage {
+  deleteMessage: boolean;
 }
 
-export interface LeaveGameVariables {
-  gameId: any;
+export interface RemoveMessageVariables {
+  messageId: any;
+  topic: string;
 }

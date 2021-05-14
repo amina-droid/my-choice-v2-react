@@ -14,6 +14,8 @@ interface Card {
     typeName: String!
 }
 
+union ChatEvent = Message | RemoveMessage
+
 type Action {
     less: Resources
     more: Resources
@@ -98,6 +100,7 @@ type Mutation {
     createIncidentCard(createIncidentCard: CreateIncidentCardInput!): Card!
     createTournament(name: String!): Tournament!
     deleteGame(gameId: ObjectId!): Boolean!
+    deleteMessage(messageId: ObjectId!, topic: String!): Boolean!
     leaveGame(gameId: ObjectId!): Boolean!
     move(moveCount: Int!): Boolean!
     opportunityResult(diceResult: Int, opportunityId: ObjectId!): Boolean!
@@ -153,6 +156,10 @@ type Query {
     user(_id: ObjectId!): User
 }
 
+type RemoveMessage {
+    _id: ObjectId!
+}
+
 type Resources {
     dark: Int
     lives: Int
@@ -169,7 +176,7 @@ type Result {
 
 type Subscription {
     cardDropped(gameId: ObjectId!): DroppedCard!
-    onMessage(topic: String!): Message!
+    onMessage(topic: String!): ChatEvent!
     playerChoice(gameId: ObjectId!): ChoiceOption!
     updateActiveGame(gameId: ObjectId!): GameSession!
     updateActiveGames: [GameSession!]!

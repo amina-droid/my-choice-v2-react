@@ -88,7 +88,6 @@ type ModeratorFieldsProps = {
 
 const ModeratorFields = withAccess<ModeratorFieldsProps>(
   [UserRole.Moderator],
-  false,
 )(({ gameId }) => {
   const [removeGame] = useMutation<DeleteGame, DeleteGameVariables>(DELETE_GAME);
 

@@ -9,7 +9,8 @@ class ObsceneFilter {
     '^сволоч(ь|ъ|и|уга|ам|ами).*',
     '^лох[уеыаоэяию].*',
     '.*урод(ы|у|ам|ина|ины).*',
-    '.*бля(т|д).*', '.*гандо.*',
+    '.*бля(т|д).*',
+    '.*г(а|о)ндо.*',
     '^м(а|о)нд(а|о).*',
     '.*сперма.*',
     '.*[уеыаоэяию]еб$',
@@ -91,9 +92,11 @@ class ObsceneFilter {
     for (let i = 0; i < words.length; i++) {
       const word = this.convertEngToRus(words[i]);
 
-      if (this.isInGoodWords(word) && this.isInGoodPatterns(word)) continue;
-
-      if (this.isInBadPatterns(word)) return true;
+      if (this.isInBadPatterns(word)) {
+        if (!(this.isInGoodWords(word) && this.isInGoodPatterns(word))) {
+          return true;
+        }
+      }
     }
 
     return this.containsMatInSpaceWords(words);

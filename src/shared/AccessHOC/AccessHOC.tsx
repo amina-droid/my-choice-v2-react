@@ -21,7 +21,7 @@ export const access = (currentRole: UserRole | undefined, accessedRoles: UserRol
 
 export const withAccess = <T extends {}>(
   userRoles: UserRole[] = [UserRole.User],
-  seeNotFound = true,
+  seeNotFound = false,
 ) => {
   return (WrappedComponent: React.ComponentType<T>) => {
     return (props: T) => {

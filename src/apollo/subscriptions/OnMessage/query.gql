@@ -2,6 +2,11 @@
 
 subscription OnMessage ($topic: String!) {
     onMessage(topic: $topic) {
-        ...ChatMessage
+        ... on Message {
+            ...ChatMessage
+        }
+        ... on RemoveMessage {
+            _id
+        }
     }
 }

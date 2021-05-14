@@ -3,17 +3,14 @@ import { PlusOutlined } from '@ant-design/icons';
 import { Button, Form, Input, message, Modal, Select, Switch } from 'antd';
 import { useHistory } from 'react-router-dom';
 import { useForm } from 'antd/es/form/Form';
-import { useLazyQuery, useMutation, useQuery } from '@apollo/client';
+import { useLazyQuery, useMutation } from '@apollo/client';
 import {
   CREATE_GAME,
   CreateGame,
   CreateGameVariables,
-  GET_ACTIVE_GAMES,
   GET_TOURNAMENTS,
   GetActiveGames,
   GetTournaments,
-  UPDATE_ACTIVE_GAMES,
-  UpdateActiveGames,
 } from '../../apollo';
 import Card from '../../shared/Card/Card';
 import useNotificationTimeout from '../../utils/useNotificationTimeout';
@@ -37,7 +34,6 @@ type CreateGameValues = {
 
 const ModeratorFields = withAccess(
   [UserRole.Moderator],
-  false,
 )(() => {
   const [visibleTournaments, setVisibleTournaments] = useState(false);
   const [getTournaments, { data, loading }] = useLazyQuery<GetTournaments>(GET_TOURNAMENTS);
@@ -114,7 +110,6 @@ type ModeratorFieldCreateGameProps = {
 
 const ModeratorFieldCreateGame = withAccess<ModeratorFieldCreateGameProps>(
   [UserRole.Moderator],
-  false,
 )(({ showModal }) => {
   return (
     <Card onClick={showModal} className={s.cardAdd}>
@@ -132,7 +127,11 @@ const Games: FC<GamesProps> = ({ activeGames, isOnlineGame }) => {
   const [visible, setVisible] = useState<boolean>(false);
   const [form] = useForm();
 
-  const [createGame] = useMutation<CreateGame, CreateGameVariables>(CREATE_GAME);
+  const [
+    createGame,
+    {
+      loading: createGameLoading,
+    }] = useMutation<CreateGame, CreateGameVariables>(CREATE_GAME);
   const [callLobbyAlert, clearLobbyAlert] = useNotificationTimeout(LOBBY_NOTIFICATION_OPTIONS);
   const history = useHistory();
   useQuestionary();
@@ -158,22 +157,23 @@ const Games: FC<GamesProps> = ({ activeGames, isOnlineGame }) => {
 
   const handleCreateGame = async (values: CreateGameValues) => {
     form.resetFields();
-    const { data: res, errors } = await createGame({
-      variables: {
-        name: values.gameName,
-        observerMode: values.observerMode,
-        tournament: values.tournament,
-      },
-    });
-    if (errors) {
-      message.error(errors);
+    try {
+      const { data: res } = await createGame({
+        variables: {
+          name: values.gameName,
+          observerMode: values.observerMode,
+          tournament: values.tournament,
+        },
+      });
+
+      if (!res?.createGame._id) return;
       cancelModal();
-      return;
+      redirectToGame(res.createGame._id);
+      message.success('Игра создана');
+    } catch (e) {
+      message.error(e.message);
+      cancelModal();
     }
-    if (!res?.createGame._id) return;
-    cancelModal();
-    redirectToGame(res.createGame._id);
-    message.success('Игра создана');
   };
 
   return (
@@ -205,6 +205,7 @@ const Games: FC<GamesProps> = ({ activeGames, isOnlineGame }) => {
         footer={
           <Button
             type="primary"
+            loading={createGameLoading}
             onClick={() => {
               form.validateFields().then(handleCreateGame);
             }}

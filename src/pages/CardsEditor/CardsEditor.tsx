@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { withAccess } from '../../shared/AccessHOC/AccessHOC';
 import { FieldType, UserRole } from '../../types';
 
@@ -34,4 +34,4 @@ const CardsEditor = () => {
   );
 };
 
-export default withAccess([UserRole.Admin, UserRole.Moderator])(CardsEditor);
+export default withAccess([UserRole.Admin, UserRole.Moderator], true)(CardsEditor);

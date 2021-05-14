@@ -1,0 +1,3 @@
+mutation RemoveMessage ($messageId: ObjectId! $topic: String!) {
+    deleteMessage(messageId: $messageId topic: $topic)
+}
