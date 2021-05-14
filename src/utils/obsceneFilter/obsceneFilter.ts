@@ -90,7 +90,7 @@ class ObsceneFilter {
 
     for (let i = 0; i < words.length; i++) {
       const word = this.convertEngToRus(words[i]);
-      console.log(word);
+
       if (this.isInGoodWords(word) && this.isInGoodPatterns(word)) continue;
 
       if (this.isInBadPatterns(word)) return true;

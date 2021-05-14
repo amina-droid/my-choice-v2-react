@@ -12,7 +12,11 @@ type PlayersTableProps = {
 
 const PlayersTable: FC<PlayersTableProps> = ({ players, mover }) => {
   return (
-    <CustomScroll allowOuterScroll keepAtBottom>
+    <CustomScroll
+      allowOuterScroll
+      keepAtBottom
+      heightRelativeToParent="100%"
+    >
       <div className={s.playerTable}>
         {players.map(player => (
           <PlayerRow player={player} key={player._id} mover={mover} />
