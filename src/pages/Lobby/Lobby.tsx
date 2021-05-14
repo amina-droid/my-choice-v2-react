@@ -170,13 +170,18 @@ const Lobby = () => {
 
   const handleCreateGame = async (values: CreateGameValues) => {
     form.resetFields();
-    const { data: res } = await createGame({
+    const { data: res, errors } = await createGame({
       variables: {
         name: values.gameName,
         observerMode: values.observerMode,
         tournament: values.tournament,
       },
     });
+    if (errors) {
+      message.error(errors);
+      cancelModal();
+      return;
+    }
     if (!res?.createGame._id) return;
     cancelModal();
     redirectToGame(res.createGame._id);
@@ -216,7 +221,7 @@ const Lobby = () => {
       >
         <Form form={form}>
           <Form.Item name="gameName" rules={[{ required: true, message: 'Введите название игры' }]}>
-            <Input placeholder="Введите название игры" />
+            <Input placeholder="Введите название игры" maxLength={25} />
           </Form.Item>
           <ModeratorFields />
         </Form>
