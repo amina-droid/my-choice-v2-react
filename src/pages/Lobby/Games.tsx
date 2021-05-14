@@ -20,7 +20,7 @@ import useNotificationTimeout from '../../utils/useNotificationTimeout';
 import { withAccess } from '../../shared/AccessHOC/AccessHOC';
 import { UserRole } from '../../types';
 import s from './Lobby.module.sass';
-import {formicObsceneValidator} from "../../utils/obsceneFilter";
+import { formicObsceneValidator } from '../../utils/obsceneFilter';
 
 const LOBBY_NOTIFICATION_OPTIONS = {
   key: 'lobby',
