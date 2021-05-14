@@ -20,6 +20,7 @@ import useNotificationTimeout from '../../utils/useNotificationTimeout';
 import { withAccess } from '../../shared/AccessHOC/AccessHOC';
 import { UserRole } from '../../types';
 import s from './Lobby.module.sass';
+import {formicObsceneValidator} from "../../utils/obsceneFilter";
 
 const LOBBY_NOTIFICATION_OPTIONS = {
   key: 'lobby',
@@ -213,8 +214,17 @@ const Games: FC<GamesProps> = ({ activeGames, isOnlineGame }) => {
         }
       >
         <Form form={form}>
-          <Form.Item name="gameName" rules={[{ required: true, message: 'Введите название игры' }]}>
-            <Input placeholder="Введите название игры" maxLength={25} />
+          <Form.Item
+            name="gameName"
+            rules={[
+              {
+                required: true,
+                message: 'Введите название игры',
+              },
+              formicObsceneValidator,
+            ]}
+          >
+            <Input placeholder="Введите название игры" maxLength={23} />
           </Form.Item>
           {!isOnlineGame && <ModeratorFields />}
         </Form>
