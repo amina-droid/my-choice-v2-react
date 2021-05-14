@@ -227,18 +227,19 @@ const Game: FC<RouteComponentProps<{ gameId: string }>> = ({ match }) => {
 
   return (
     <>
-      <Typography.Title level={2} className={s.gameName}>
-        {data.joinGame.name}
-      </Typography.Title>
       <div className={s.gameContainer}>
         <Rules visible={visibleRules} closeModal={closeRulesModal} />
         <CardModal gameId={match.params.gameId} onError={onGameError} />
         <div className={s.header}>
+          <Typography.Title level={3} className={s.gameName}>
+            {data.joinGame.name}
+          </Typography.Title>
           {status === GameStatus.Awaiting && creator === user?._id && (
             <Button
               type="primary"
               disabled={Boolean(!isPlayersExist)}
               onClick={() => handleStartGame(gameId)}
+              className={s.startGameBtn}
             >
               Начать игру
             </Button>

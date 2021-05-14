@@ -15,6 +15,7 @@ export interface UpdateActiveGames_updateActiveGames {
   name: string;
   playersCount: number;
   status: GameStatus;
+  tournament: any | null;
 }
 
 export interface UpdateActiveGames {

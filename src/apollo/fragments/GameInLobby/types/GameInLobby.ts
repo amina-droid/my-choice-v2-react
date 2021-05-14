@@ -15,4 +15,5 @@ export interface GameInLobby {
   name: string;
   playersCount: number;
   status: GameStatus;
+  tournament: any | null;
 }

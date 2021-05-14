@@ -18,8 +18,8 @@ const { Title } = Typography;
 
 const GAME_STATUS_DICTIONARY = {
   [GameStatus.Awaiting]: 'В ожидании игроков',
-  [GameStatus.InProgress]: 'В прогрессе',
-  [GameStatus.ChoiceDream]: 'В прогрессе',
+  [GameStatus.InProgress]: 'В процессе',
+  [GameStatus.ChoiceDream]: 'В процессе',
   [GameStatus.Finished]: 'Игра окончена',
 };
 
