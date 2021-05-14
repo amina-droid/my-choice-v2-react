@@ -3,4 +3,5 @@ fragment GameInLobby on GameSession {
     name
     playersCount
     status
+    tournament
 }

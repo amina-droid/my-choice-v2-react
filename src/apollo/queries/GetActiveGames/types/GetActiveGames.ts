@@ -15,6 +15,7 @@ export interface GetActiveGames_getActiveGames {
   name: string;
   playersCount: number;
   status: GameStatus;
+  tournament: any | null;
 }
 
 export interface GetActiveGames {

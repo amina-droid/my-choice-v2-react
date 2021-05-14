@@ -1,141 +1,43 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Form, Input, message, Modal, Switch, Select, Popconfirm } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
-import { useForm } from 'antd/es/form/Form';
-import { useHistory } from 'react-router-dom';
-
-import { useLazyQuery, useMutation, useQuery } from '@apollo/client';
-import s from './Lobby.module.sass';
-import Card from '../../shared/Card/Card';
+import { Tabs } from 'antd';
+import { useQuery } from '@apollo/client';
 import {
-  CREATE_GAME,
-  CreateGame,
-  CreateGameVariables,
-  DELETE_GAME,
-  DeleteGame,
-  DeleteGameVariables,
   GET_ACTIVE_GAMES,
-  GET_TOURNAMENTS,
   GetActiveGames,
-  GetTournaments,
   UPDATE_ACTIVE_GAMES,
   UpdateActiveGames,
 } from '../../apollo';
-import useNotificationTimeout from '../../utils/useNotificationTimeout';
-import { withAccess } from '../../shared/AccessHOC/AccessHOC';
-import { UserRole } from '../../types';
-import { formicObsceneValidator } from '../../utils/obsceneFilter';
-import CloseButton from '../../shared/CloseButton/CloseButton';
+import Games from './Games';
 
-const LOBBY_NOTIFICATION_OPTIONS = {
-  key: 'lobby',
-  timeoutMessage: 'Добро пожаловать в игру!',
-  description:
-    'Здесь вы можете создать новую игровую комнату, нажав на "+", или присоединиться к уже существующей.',
+import s from './Lobby.module.sass';
+
+const { TabPane } = Tabs;
+
+type LobbyGamesState = {
+  netGames?: GetActiveGames['getActiveGames'];
+  tournamentGames?: GetActiveGames['getActiveGames'];
 };
-
-type CreateGameValues = {
-  gameName: string;
-  observerMode?: boolean;
-  tournament?: string;
-};
-
-const ModeratorFields = withAccess(
-  [UserRole.Moderator],
-  false,
-)(() => {
-  const [visibleTournaments, setVisibleTournaments] = useState(false);
-  const [getTournaments, { data, loading }] = useLazyQuery<GetTournaments>(GET_TOURNAMENTS);
-
-  useEffect(() => {
-    if (visibleTournaments) {
-      getTournaments();
-    }
-  }, [visibleTournaments, getTournaments]);
-  return (
-    <>
-      <Form.Item name="observerMode" label="Создать в роли наблюдателя">
-        <Switch />
-      </Form.Item>
-      <Form.Item name="visibleTournaments" label="Турнирная игра">
-        <Switch onChange={setVisibleTournaments} />
-      </Form.Item>
-      {visibleTournaments && (
-        <Form.Item name="tournament" label="Выберете турнир">
-          <Select loading={loading}>
-            {data?.tournaments.map(tournament => (
-              <Select.Option value={tournament._id} key={tournament._id}>
-                {tournament.name}
-              </Select.Option>
-            ))}
-          </Select>
-        </Form.Item>
-      )}
-    </>
-  );
-});
-
-const INCOMING_QUESTIONARY_KEY = 'incoming-questionary';
-const useQuestionary = () => {
-  useEffect(() => {
-    if (!localStorage.getItem(INCOMING_QUESTIONARY_KEY)) {
-      Modal.confirm({
-        title: 'Пройдите наш опросник!',
-        width: 600,
-        content: (
-          <>
-            Дорогие друзья!
-            <br />
-            Мы проводим опрос, нацеленный на выявление значимого отношения к проявлениям и
-            профилактике экстремизма в детско-подростковой и молодёжной среде. Ваши искренние ответы
-            позволят получить и проанализировать социально значимую информацию, повысить
-            эффективность принимаемых управленческих решений в сфере организации профилактики
-            экстремистских проявлений в детско-подростковой и молодёжной среде.
-            <br />
-            Благодарим Вас за терпение и понимание!
-          </>
-        ),
-        okText: 'Я готов пройти',
-        cancelText: 'Нет, спасибо',
-        closable: true,
-        onOk() {
-          window.open(
-            'https://vk.com/away.php?to=https%3A%2F%2Fdocs.google.com%2Fforms%2Fd%2F1VdDf9xS0YSymxBvYT-SBESqcQYXfPGt4m1CqBzxP8io%2Fedit&cc_key=',
-            '_blank',
-          );
-          localStorage.setItem(INCOMING_QUESTIONARY_KEY, 'true');
-        },
-        onCancel() {
-          localStorage.setItem(INCOMING_QUESTIONARY_KEY, 'true');
-        },
-      });
-    }
-  }, []);
-};
-
-type ModeratorFieldCreateGameProps = {
-  showModal: () => void;
-};
-
-const ModeratorFieldCreateGame = withAccess<ModeratorFieldCreateGameProps>(
-  [UserRole.Moderator],
-  false,
-)(({ showModal }) => {
-  return (
-    <Card onClick={showModal} className={s.cardAdd}>
-      <PlusOutlined />
-    </Card>
-  );
-});
 
 const Lobby = () => {
-  const [visible, setVisible] = useState<boolean>(false);
-  const [form] = useForm();
-  const { data, subscribeToMore } = useQuery<GetActiveGames>(GET_ACTIVE_GAMES);
-  const [createGame] = useMutation<CreateGame, CreateGameVariables>(CREATE_GAME);
-  const [callLobbyAlert, clearLobbyAlert] = useNotificationTimeout(LOBBY_NOTIFICATION_OPTIONS);
-  const history = useHistory();
-  useQuestionary();
+  const [{ netGames, tournamentGames }, setGamesList] = useState<LobbyGamesState>({});
+  const { subscribeToMore } = useQuery<GetActiveGames>(GET_ACTIVE_GAMES, {
+    onCompleted(data) {
+      setGamesList(
+        data?.getActiveGames?.reduce<LobbyGamesState>(
+          (acc, game) => {
+            if (game.tournament) {
+              acc.tournamentGames!.push(game);
+            } else acc.netGames!.push(game);
+            return acc;
+          },
+          {
+            netGames: [],
+            tournamentGames: [],
+          },
+        ) || {},
+      );
+    },
+  });
 
   useEffect(() => {
     if (!subscribeToMore) return;
@@ -150,92 +52,16 @@ const Lobby = () => {
     });
   }, [subscribeToMore]);
 
-  useEffect(() => {
-    callLobbyAlert();
-  }, []);
-
-  const showModal = () => {
-    clearLobbyAlert();
-    setVisible(true);
-  };
-
-  const cancelModal = () => {
-    form.resetFields();
-    setVisible(false);
-  };
-
-  const redirectToGame = (id: string) => {
-    history.push(`/game/${id}`);
-    clearLobbyAlert();
-  };
-
-  const handleCreateGame = async (values: CreateGameValues) => {
-    form.resetFields();
-    const { data: res, errors } = await createGame({
-      variables: {
-        name: values.gameName,
-        observerMode: values.observerMode,
-        tournament: values.tournament,
-      },
-    });
-    if (errors) {
-      message.error(errors);
-      cancelModal();
-      return;
-    }
-    if (!res?.createGame._id) return;
-    cancelModal();
-    redirectToGame(res.createGame._id);
-    message.success('Игра создана');
-  };
-
   return (
-    <div className={s.containCards}>
-      <ModeratorFieldCreateGame showModal={showModal} />
-      {data?.getActiveGames.map(game => {
-        return (
-          <Card
-            className={s.card}
-            game={game}
-            key={game._id}
-            onClick={() => redirectToGame(game._id)}
-          />
-        );
-      })}
-      <Modal
-        visible={visible}
-        onCancel={cancelModal}
-        destroyOnClose
-        title="Создать игру"
-        className={s.modalCreateGame}
-        centered
-        footer={
-          <Button
-            type="primary"
-            onClick={() => {
-              form.validateFields().then(handleCreateGame);
-            }}
-          >
-            Создать
-          </Button>
-        }
-      >
-        <Form form={form}>
-          <Form.Item
-            name="gameName"
-            rules={[
-              {
-                required: true,
-                message: 'Введите название игры',
-              },
-              formicObsceneValidator,
-            ]}
-          >
-            <Input placeholder="Введите название игры" maxLength={25} />
-          </Form.Item>
-          <ModeratorFields />
-        </Form>
-      </Modal>
+    <div className={s.container}>
+      <Tabs defaultActiveKey="OnlineGame" size="large" className={s.tab}>
+        <TabPane tab="Сетевые игры" key="OnlineGame">
+          <Games activeGames={netGames} isOnlineGame />
+        </TabPane>
+        <TabPane tab="Чемпионат" key="Сhampionship">
+          <Games activeGames={tournamentGames} />
+        </TabPane>
+      </Tabs>
     </div>
   );
 };
