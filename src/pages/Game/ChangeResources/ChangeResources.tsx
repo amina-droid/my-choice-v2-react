@@ -10,11 +10,12 @@ import { ResourcesInput, ResourceType } from '../../../types';
 import { RESOURCES_DICT_OBJ } from '../PlayersTable/PlayerRow';
 
 type ChangeResourcesProps = {
-  className: string;
+  className?: string;
+  iconClass?: string;
   resources?: ResourcesInput | null;
 };
 
-const ChangeResources: FC<ChangeResourcesProps> = ({ className, resources }) => {
+const ChangeResources: FC<ChangeResourcesProps> = ({ className, iconClass, resources }) => {
   const [visible, setVisible] = useState<boolean>(false);
   const [changeResources] = useMutation<ShareResources, ShareResourcesVariables>(SHARE_RESOURCES);
 
@@ -27,11 +28,11 @@ const ChangeResources: FC<ChangeResourcesProps> = ({ className, resources }) => 
       <Tooltip title="Обмен ресурсов">
         <button
           type="button"
-          className={s.btn}
+          className={className}
           onClick={() => setVisible(true)}
           disabled={!resources}
         >
-          <ChangerBtn className={className} />
+          <ChangerBtn className={iconClass} />
         </button>
       </Tooltip>
       <Modal

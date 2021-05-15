@@ -5,11 +5,12 @@
     height: 100%
 
     @media all and (max-width: $mobileMax)
-        min-height: calc(100vh - #{22px + 20px + 10px})
+        min-height: calc(100vh - #{$footerSmallHeight})
 
 
 .Footer
-    height: $footerHeight + 20px + 10px
+    height: $footerHeight
+    font-size: $footerFontSize
     padding: 20px $appSizePadding 10px
     line-height: normal
     background: none
@@ -18,8 +19,8 @@
     bottom: 0
 
     @media all and (max-width: $mobileMax)
-        font-size: 11px
-        height: 22px + 20px + 10px
+        font-size: $footerSmallFontSize
+        height: $footerSmallHeight
         padding: 20px $appSizePaddingMobile 10px
 
 .Logo

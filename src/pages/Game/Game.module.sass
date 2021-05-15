@@ -1,13 +1,20 @@
+@import "src/index"
+
 .gameContainer
     display: grid
     grid-template-areas: "playersTableContainer header actionsContainer" "playersTableContainer playingField actionsContainer"
-    grid-template-rows: 60px 90%
-    grid-template-columns: minmax(250px, 15%) 1fr 5%
+    grid-template-rows: $actionIconSize minmax(90%, 1fr)
+    grid-template-columns: minmax(250px, 15%) 1fr $actionIconSize - 10px
     grid-gap: 10px
     padding: 20px 20px 10px 0
     width: 100%
-    height: 100vh
+    height: calc(100vh - #{$footerHeight})
     position: relative
+
+    @media all and (max-width: $mobileMax)
+        grid-template-rows: $actionIconSizeSmallMobile minmax(90%, 1fr)
+        grid-template-columns: minmax(250px, 15%) 1fr $actionIconSizeSmallMobile
+        height: calc(100vh - #{$footerSmallHeight})
 
 
 .playingField
@@ -25,7 +32,7 @@
 .header
     grid-area: header
     width: 100%
-    height: 50px
+    height: 100%
     display: flex
     align-items: center
 
@@ -33,7 +40,7 @@
         position: absolute
 
     .gameName
-      margin-top: 1%
+      align-self: flex-end
 
     .startGameBtn
       position: absolute
@@ -53,12 +60,24 @@
     align-items: flex-end
     gap: 30px
 
-    .action
-        max-width: 50px
-        max-height: 50px
+    @media all and (max-width: $mobileMax)
+        gap: 20px
 
-.leaveGame
-  z-index: 1100
+    @media all and (max-width: $smallMobileMax)
+        gap: 15px
+
+    .actionBtn
+        max-width: 100%
+        max-height: 100%
+
+        transition: all 0.3s ease
+
+        &:hover
+            transform: scale(1.2)
+
+    .actionIcon
+        height: 100%
+        width: 100%
 
 .closeBtn
     position: absolute

@@ -253,8 +253,16 @@ const Game: FC<RouteComponentProps<{ gameId: string }>> = ({ match }) => {
           <PlayersTable players={data.joinGame.players} mover={mover} />
         </div>
         <div className={s.actionsContainer}>
-          <ChangeResources className={s.action} resources={myResources} />
-          <CheckRules className={s.action} onClick={openRulesModal} />
+          <ChangeResources
+            className={s.actionBtn}
+            resources={myResources}
+            iconClass={s.actionIcon}
+          />
+          <CheckRules
+            className={s.actionBtn}
+            onClick={openRulesModal}
+            iconClass={s.actionIcon}
+          />
           <Popconfirm
             placement="right"
             title="Вы уверены что хотите выйти из игры?"
@@ -262,8 +270,11 @@ const Game: FC<RouteComponentProps<{ gameId: string }>> = ({ match }) => {
             okText="Да"
             cancelText="Нет"
           >
-            <div className={s.leaveGame}>
-              <LeaveGame className={s.action} />
+            <div>
+              <LeaveGame
+                className={s.actionBtn}
+                iconClass={s.actionIcon}
+              />
             </div>
           </Popconfirm>
         </div>

@@ -3,18 +3,17 @@ import { Tooltip } from 'antd';
 
 import { ReactComponent as RulesBtn } from './rules.svg';
 
-import s from './CheckRules.module.sass';
-
 type Props = {
   className?: string;
+  iconClass?: string;
   onClick?: () => void;
 }
 
-const CheckRules: FC<Props> = ({ className, onClick }) => {
+const CheckRules: FC<Props> = ({ className, onClick, iconClass }) => {
   return (
     <Tooltip title="Правила">
-      <button type="button" className={s.btn} onClick={onClick}>
-        <RulesBtn className={className} />
+      <button type="button" className={className} onClick={onClick}>
+        <RulesBtn className={iconClass} />
       </button>
     </Tooltip>
   );
