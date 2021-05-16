@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
+import moment from 'moment';
 import cn from 'classnames';
 import { Statistic } from 'antd';
 import { ReactComponent as Dice0 } from './Dice0.svg';
@@ -37,11 +38,11 @@ type DiceProps = {
 type DiceStatus = 'ready' | 'roll' | 'disabled';
 
 const Dice: FC<DiceProps> = ({
-                               ready,
-                               onRoll,
-                               onRollComplete,
-                               serverTimer,
-                               isTimeoutDownDisabled,
+  ready,
+  onRoll,
+  onRollComplete,
+  serverTimer,
+  isTimeoutDownDisabled,
 }) => {
   const [diceStatus, setDiceStatus] = useState<DiceStatus>('disabled');
   const readyRef = useRef<boolean>();
@@ -92,7 +93,7 @@ const Dice: FC<DiceProps> = ({
         </button>
       </div>
       {serverTimer && <Statistic.Countdown
-        value={serverTimer}
+        value={moment(serverTimer).add(window.timeDiff, 'ms').toISOString()}
         format="mm:ss"
         onFinish={() => {
           if (isTimeoutDownDisabled) {

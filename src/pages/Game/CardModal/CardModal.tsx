@@ -136,7 +136,11 @@ const CardModal: FC<CardModalProps> = React.memo(
       <>
         <Title level={4}>{activeCard?.card.typeName}</Title>
         {serverTimer && (
-          <Statistic.Countdown value={serverTimer} format="mm:ss" className={s.timer} />
+          <Statistic.Countdown
+            value={moment(serverTimer).add(window.timeDiff, 'ms').toISOString()}
+            format="mm:ss"
+            className={s.timer}
+          />
         )}
       </>
     );
