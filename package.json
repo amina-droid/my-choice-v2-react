@@ -9,7 +9,7 @@
     "eject": "react-scripts eject",
     "lint:fix": "npx eslint --fix",
     "tunnel": "npx lt -p 3000",
-    "typegen:json": "npx apollo schema:download --endpoint=https://tough-cow-63.loca.lt/graphql schema.json",
+    "typegen:json": "npx apollo schema:download --endpoint=https://my-choice.loca.lt/graphql schema.json",
     "typegen": "yarn typegen:json & npx apollo client:codegen types --globalTypesFile=src/types/globalTypes.ts --localSchemaFile=schema.gql --target=typescript --includes=src/**/*.gql "
   },
   "dependencies": {
