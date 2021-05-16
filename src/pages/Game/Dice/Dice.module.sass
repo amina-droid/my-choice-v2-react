@@ -1,15 +1,21 @@
 @import "src/index"
 
 .container
+  display: flex
+  justify-content: space-between
+  align-items: center
+  width: 150px
+  position: absolute
+  left: calc(50% + #{($actionIconSize - 10) / 2})
+  @media all and (max-width: $mobileMax)
+      left: calc(50% + #{$actionIconSizeSmallMobile / 2})
+.containerDice
     display: flex
     align-self: center
     justify-content: center
-    width: $actionIconSize
-    position: absolute
-    left: calc(50% + #{$actionIconSize / 2})
+    width: $actionIconSize - 10
 
     @media all and (max-width: $mobileMax)
-        left: calc(50% + #{$actionIconSizeSmallMobile / 2})
         width: $actionIconSizeSmallMobile
 
 

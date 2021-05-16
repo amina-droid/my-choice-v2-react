@@ -1,6 +1,7 @@
-import React, { FC, useReducer } from 'react';
+import React, { FC, useEffect, useReducer, useState } from 'react';
 import { remove } from 'lodash';
-import { Modal, Spin, Typography } from 'antd';
+import { Modal, Spin, Statistic, Typography } from 'antd';
+import moment from 'moment';
 import { ApolloError, useSubscription } from '@apollo/client';
 
 import {
@@ -17,13 +18,17 @@ import OpportunityBody from './OpportunityBody';
 import ChoicesAndIncidentBody from './ChoicesAndIncidentBody';
 import { Actions } from '../../../types';
 
-import { getCardImgUrl, ModalBodyProps } from './utils';
+import { ModalBodyProps } from './utils';
 
 import s from './CardModal.module.sass';
+import { getTime } from '../../../utils/getTime';
+
+const { Title } = Typography;
 
 type CardModalProps = {
   gameId: string;
-  onError?: (error: Error | ApolloError) => void
+  serverTimer?: string;
+  onError?: (error: Error | ApolloError) => void;
 };
 type DroppedCard = OnDroppedCard['cardDropped'];
 
@@ -47,7 +52,7 @@ type CardState = {
   droppedCards: DroppedCard[];
   selectedChoiceId?: string;
   activeCard?: DroppedCard;
-}
+};
 
 const initialCardState: CardState = {
   droppedCards: [],
@@ -60,7 +65,7 @@ type CardActions = Actions<{
   pushCard: DroppedCard;
   removeCard: ID;
   addChoiceId: ID;
-}>
+}>;
 
 const cardReducer = (prevState: CardState, action: CardActions): CardState => {
   switch (action.type) {
@@ -80,13 +85,9 @@ const cardReducer = (prevState: CardState, action: CardActions): CardState => {
     case 'removeCard': {
       return {
         ...prevState,
-        droppedCards: remove(
-          prevState.droppedCards,
-          ({ card }) => card._id === action.payload,
-        ),
-        activeCard: prevState.activeCard?.card._id !== action.payload
-          ? prevState.activeCard
-          : undefined,
+        droppedCards: remove(prevState.droppedCards, ({ card }) => card._id === action.payload),
+        activeCard:
+          prevState.activeCard?.card._id !== action.payload ? prevState.activeCard : undefined,
         selectedChoiceId: undefined,
       };
     }
@@ -97,12 +98,9 @@ const cardReducer = (prevState: CardState, action: CardActions): CardState => {
 };
 
 const CardModal: FC<CardModalProps> = React.memo(
-  ({ gameId, onError }) => {
+  ({ gameId, onError, serverTimer }) => {
     const { user } = useAuth();
-    const [{
-      activeCard,
-      selectedChoiceId,
-    }, dispatch] = useReducer(cardReducer, initialCardState);
+    const [{ activeCard, selectedChoiceId }, dispatch] = useReducer(cardReducer, initialCardState);
     useSubscription<OnDroppedCard, OnDroppedCardVariables>(ON_DROPPED_CARD, {
       variables: {
         gameId,
@@ -124,8 +122,7 @@ const CardModal: FC<CardModalProps> = React.memo(
         if (subscriptionData.error) {
           onError?.(subscriptionData.error);
         }
-        const { cardId, choiceId } =
-          subscriptionData.data?.playerChoice || {};
+        const { cardId, choiceId } = subscriptionData.data?.playerChoice || {};
         dispatch({ type: 'addChoiceId', payload: choiceId });
         await timeout(500);
         dispatch({ type: 'removeCard', payload: cardId });
@@ -135,11 +132,20 @@ const CardModal: FC<CardModalProps> = React.memo(
 
     const isCurrentPlayer = activeCard?.forPlayer === user?._id;
 
+    const titleCard = (
+      <>
+        <Title level={4}>{activeCard?.card.typeName}</Title>
+        {serverTimer && (
+          <Statistic.Countdown value={serverTimer} format="mm:ss" className={s.timer} />
+        )}
+      </>
+    );
+
     return (
       <>
         <Modal
           visible={Boolean(activeCard)}
-          title={activeCard?.card.typeName}
+          title={titleCard}
           footer={false}
           closable={false}
           destroyOnClose
@@ -148,7 +154,7 @@ const CardModal: FC<CardModalProps> = React.memo(
             src={activeCard?.card.img!}
             className={s.choiceImg}
             alt={`Карточка № ${activeCard?.card._id}`}
-            onError={(event) => {
+            onError={event => {
               // eslint-disable-next-line
               (event.target as any).style.display = 'none';
             }}
@@ -160,7 +166,7 @@ const CardModal: FC<CardModalProps> = React.memo(
             <CardBody
               choiceId={selectedChoiceId}
               card={activeCard?.card}
-              onAction={(cardId) => dispatch({ type: 'removeCard', payload: cardId })}
+              onAction={cardId => dispatch({ type: 'removeCard', payload: cardId })}
               isCurrentPlayer={isCurrentPlayer}
             />
           </div>
@@ -169,9 +175,7 @@ const CardModal: FC<CardModalProps> = React.memo(
     );
   },
   (prevProps, nextProps) => {
-    return (
-      prevProps.gameId === nextProps.gameId
-    );
+    return prevProps.gameId === nextProps.gameId && prevProps.serverTimer === nextProps.serverTimer;
   },
 );
 

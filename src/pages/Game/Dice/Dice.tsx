@@ -1,5 +1,6 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
 import cn from 'classnames';
+import { Statistic } from 'antd';
 import { ReactComponent as Dice0 } from './Dice0.svg';
 import { ReactComponent as Dice1 } from './Dice1.svg';
 import { ReactComponent as Dice2 } from './Dice2.svg';
@@ -26,6 +27,7 @@ const getRandom = () => {
 };
 
 type DiceProps = {
+  serverTimer?: string;
   ready?: boolean;
   onRoll?: (value: number) => void;
   onRollComplete?: () => void;
@@ -33,7 +35,7 @@ type DiceProps = {
 
 type DiceStatus = 'ready' | 'roll' | 'disabled';
 
-const Dice: FC<DiceProps> = ({ ready, onRoll, onRollComplete }) => {
+const Dice: FC<DiceProps> = ({ ready, onRoll, onRollComplete, serverTimer }) => {
   const [diceStatus, setDiceStatus] = useState<DiceStatus>('disabled');
   const readyRef = useRef<boolean>();
   const [currentDice, setCurrentDice] = useState<number>(0);
@@ -72,14 +74,17 @@ const Dice: FC<DiceProps> = ({ ready, onRoll, onRollComplete }) => {
   const className = s[`${diceStatus}Dice`];
   return (
     <div className={s.container}>
-      <button
-        type="button"
-        className={cn(s.diceBtn, className)}
-        onClick={clickDice}
-        disabled={diceStatus !== 'ready'}
-      >
-        {diceEdges[currentDice]}
-      </button>
+      <div className={s.containerDice}>
+        <button
+          type="button"
+          className={cn(s.diceBtn, className)}
+          onClick={clickDice}
+          disabled={diceStatus !== 'ready'}
+        >
+          {diceEdges[currentDice]}
+        </button>
+      </div>
+      {serverTimer && <Statistic.Countdown value={serverTimer} format="mm:ss" />}
     </div>
   );
 };

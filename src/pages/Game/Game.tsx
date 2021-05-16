@@ -71,7 +71,6 @@ const LEAVE_PAGE_MODAL_PROPS = {
 const Game: FC<RouteComponentProps<{ gameId: string }>> = ({ match }) => {
   const history = useHistory();
   const orientation = useScreenOrientation();
-  console.log({ orientation });
   const [visibleRules, setVisibleRules] = useState(false);
   const { addTopic, removeTopic } = useChatContext();
   const { user } = useAuth();
@@ -231,7 +230,11 @@ const Game: FC<RouteComponentProps<{ gameId: string }>> = ({ match }) => {
     <>
       <div className={s.gameContainer}>
         <Rules visible={visibleRules} closeModal={closeRulesModal} />
-        <CardModal gameId={match.params.gameId} onError={onGameError} />
+        <CardModal
+          serverTimer={data?.joinGame.timers?.card}
+          gameId={match.params.gameId}
+          onError={onGameError}
+        />
         <div className={s.header}>
           <Typography.Title level={3} className={s.gameName}>
             {data.joinGame.name}
@@ -247,7 +250,11 @@ const Game: FC<RouteComponentProps<{ gameId: string }>> = ({ match }) => {
             </Button>
           )}
           {status === GameStatus.InProgress && (
-            <Dice ready={mover === user?._id} onRoll={gameMove} />
+            <Dice
+              ready={mover === user?._id}
+              onRoll={gameMove}
+              serverTimer={data.joinGame.timers?.dice}
+            />
           )}
         </div>
         <div className={s.playersTableContainer}>
@@ -259,11 +266,7 @@ const Game: FC<RouteComponentProps<{ gameId: string }>> = ({ match }) => {
             resources={myResources}
             iconClass={s.actionIcon}
           />
-          <CheckRules
-            className={s.actionBtn}
-            onClick={openRulesModal}
-            iconClass={s.actionIcon}
-          />
+          <CheckRules className={s.actionBtn} onClick={openRulesModal} iconClass={s.actionIcon} />
           <Popconfirm
             placement="right"
             title="Вы уверены что хотите выйти из игры?"
@@ -272,10 +275,7 @@ const Game: FC<RouteComponentProps<{ gameId: string }>> = ({ match }) => {
             cancelText="Нет"
           >
             <div>
-              <LeaveGame
-                className={s.actionBtn}
-                iconClass={s.actionIcon}
-              />
+              <LeaveGame className={s.actionBtn} iconClass={s.actionIcon} />
             </div>
           </Popconfirm>
         </div>
