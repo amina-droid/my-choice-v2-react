@@ -8,6 +8,12 @@ import { GameStatus, PlayerPosition, UserSex } from "./../../../../types/globalT
 // GraphQL subscription operation: UpdateActiveGame
 // ====================================================
 
+export interface UpdateActiveGame_updateActiveGame_timers {
+  __typename: "GameSessionTimers";
+  move: any | null;
+  choice: any | null;
+}
+
 export interface UpdateActiveGame_updateActiveGame_players_resources {
   __typename: "Resources";
   lives: number | null;
@@ -41,6 +47,7 @@ export interface UpdateActiveGame_updateActiveGame {
   status: GameStatus;
   winner: any | null;
   mover: any | null;
+  timers: UpdateActiveGame_updateActiveGame_timers | null;
   players: UpdateActiveGame_updateActiveGame_players[];
 }
 

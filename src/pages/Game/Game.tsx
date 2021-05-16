@@ -121,6 +121,7 @@ const Game: FC<RouteComponentProps<{ gameId: string }>> = ({ match }) => {
   const [moveReq] = useMutation<GameMove, GameMoveVariables>(GAME_MOVE, {
     onError: onGameError,
   });
+  console.log({ timers: data?.joinGame.timers });
   const [callDiceAlert, clearDiceAlert] = useNotificationTimeout(DICE_NOTIFICATION_OPTIONS);
   const [callDreamAlert, clearDreamAlert] = useNotificationTimeout(DREAM_NOTIFICATION_OPTIONS);
   const [callStartGameAlert, clearStartGameAlert] = useNotificationTimeout(

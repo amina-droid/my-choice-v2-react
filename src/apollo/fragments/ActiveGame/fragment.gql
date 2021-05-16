@@ -8,6 +8,10 @@ fragment ActiveGame on GameSession {
     status,
     winner,
     mover,
+    timers {
+        move
+        choice
+    }
     players {
         ...ActivePlayer
     }

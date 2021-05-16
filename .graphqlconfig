@@ -3,7 +3,7 @@
   "extensions": {
     "endpoints": {
       "dev": {
-        "url": "https://my-choice.loca.lt/graphql",
+        "url": "https://tough-cow-63.loca.lt/graphql",
         "introspect": true
       }
     }

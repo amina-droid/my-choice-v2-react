@@ -71,8 +71,14 @@ type GameSession {
     players: [Player!]!
     playersCount: Int!
     status: GameStatus!
+    timers: GameSessionTimers
     tournament: ObjectId
     winner: ObjectId
+}
+
+type GameSessionTimers {
+    choice: DateTime
+    move: DateTime
 }
 
 type Incident implements Card {

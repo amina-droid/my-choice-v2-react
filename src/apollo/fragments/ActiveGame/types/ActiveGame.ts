@@ -8,6 +8,12 @@ import { GameStatus, PlayerPosition, UserSex } from "./../../../../types/globalT
 // GraphQL fragment: ActiveGame
 // ====================================================
 
+export interface ActiveGame_timers {
+  __typename: "GameSessionTimers";
+  move: any | null;
+  choice: any | null;
+}
+
 export interface ActiveGame_players_resources {
   __typename: "Resources";
   lives: number | null;
@@ -41,5 +47,6 @@ export interface ActiveGame {
   status: GameStatus;
   winner: any | null;
   mover: any | null;
+  timers: ActiveGame_timers | null;
   players: ActiveGame_players[];
 }

@@ -8,6 +8,12 @@ import { GameStatus, PlayerPosition, UserSex } from "./../../../../types/globalT
 // GraphQL query operation: JoinGame
 // ====================================================
 
+export interface JoinGame_joinGame_timers {
+  __typename: "GameSessionTimers";
+  move: any | null;
+  choice: any | null;
+}
+
 export interface JoinGame_joinGame_players_resources {
   __typename: "Resources";
   lives: number | null;
@@ -41,6 +47,7 @@ export interface JoinGame_joinGame {
   status: GameStatus;
   winner: any | null;
   mover: any | null;
+  timers: JoinGame_joinGame_timers | null;
   players: JoinGame_joinGame_players[];
 }
 
