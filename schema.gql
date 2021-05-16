@@ -77,8 +77,8 @@ type GameSession {
 }
 
 type GameSessionTimers {
-    choice: DateTime
-    move: DateTime
+    card: DateTime
+    dice: DateTime
 }
 
 type Incident implements Card {

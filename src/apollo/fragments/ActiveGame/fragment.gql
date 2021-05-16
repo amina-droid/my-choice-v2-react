@@ -9,8 +9,8 @@ fragment ActiveGame on GameSession {
     winner,
     mover,
     timers {
-        move
-        choice
+        dice
+        card
     }
     players {
         ...ActivePlayer
