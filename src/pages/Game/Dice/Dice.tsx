@@ -29,13 +29,20 @@ const getRandom = () => {
 type DiceProps = {
   serverTimer?: string;
   ready?: boolean;
+  isTimeoutDownDisabled?: boolean;
   onRoll?: (value: number) => void;
   onRollComplete?: () => void;
 };
 
 type DiceStatus = 'ready' | 'roll' | 'disabled';
 
-const Dice: FC<DiceProps> = ({ ready, onRoll, onRollComplete, serverTimer }) => {
+const Dice: FC<DiceProps> = ({
+                               ready,
+                               onRoll,
+                               onRollComplete,
+                               serverTimer,
+                               isTimeoutDownDisabled,
+}) => {
   const [diceStatus, setDiceStatus] = useState<DiceStatus>('disabled');
   const readyRef = useRef<boolean>();
   const [currentDice, setCurrentDice] = useState<number>(0);
@@ -84,7 +91,15 @@ const Dice: FC<DiceProps> = ({ ready, onRoll, onRollComplete, serverTimer }) => 
           {diceEdges[currentDice]}
         </button>
       </div>
-      {serverTimer && <Statistic.Countdown value={serverTimer} format="mm:ss" />}
+      {serverTimer && <Statistic.Countdown
+        value={serverTimer}
+        format="mm:ss"
+        onFinish={() => {
+          if (isTimeoutDownDisabled) {
+            setDiceStatus('disabled');
+          }
+        }}
+      />}
     </div>
   );
 };

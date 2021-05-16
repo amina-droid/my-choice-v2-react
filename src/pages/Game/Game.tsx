@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect, useState } from 'react';
+import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { Button, message, Popconfirm, Spin, Typography } from 'antd';
 import { RouteComponentProps, useHistory } from 'react-router-dom';
 import { ApolloError, useLazyQuery, useMutation } from '@apollo/client';
@@ -143,6 +143,11 @@ const Game: FC<RouteComponentProps<{ gameId: string }>> = ({ match }) => {
     }
   }, [match.params.gameId]);
 
+  const isTimeoutDownDiceDisabled = useMemo(() => (
+    data?.joinGame.players.filter(({ disconnected }) => !disconnected).length || 0) > 1, [
+    data?.joinGame.players.length,
+  ]);
+
   useEffect(() => {
     const { _id: id, name: title } = data?.joinGame || {};
     if (id && title) {
@@ -253,6 +258,7 @@ const Game: FC<RouteComponentProps<{ gameId: string }>> = ({ match }) => {
             <Dice
               ready={mover === user?._id}
               onRoll={gameMove}
+              isTimeoutDownDisabled={isTimeoutDownDiceDisabled}
               serverTimer={data.joinGame.timers?.dice}
             />
           )}
