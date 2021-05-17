@@ -1,5 +1,4 @@
-import React, { FC, useEffect, useRef, useState } from 'react';
-import moment from 'moment';
+import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
 import cn from 'classnames';
 import { Statistic } from 'antd';
 import { ReactComponent as Dice0 } from './Dice0.svg';
@@ -10,8 +9,10 @@ import { ReactComponent as Dice4 } from './Dice4.svg';
 import { ReactComponent as Dice5 } from './Dice5.svg';
 import { ReactComponent as Dice6 } from './Dice6.svg';
 
-import s from './Dice.module.sass';
 import timeout from '../../../utils/timeout';
+import useDeadline from '../../../utils/useDeadline';
+
+import s from './Dice.module.sass';
 
 const diceEdges = [
   <Dice0 key="0" />,
@@ -46,6 +47,13 @@ const Dice: FC<DiceProps> = ({
 }) => {
   const [diceStatus, setDiceStatus] = useState<DiceStatus>('disabled');
   const readyRef = useRef<boolean>();
+  const deadline = useDeadline(serverTimer);
+  const deadlineHandler = useCallback(() => {
+    if (isTimeoutDownDisabled) {
+      setDiceStatus('disabled');
+    }
+  }, [isTimeoutDownDisabled]);
+
   const [currentDice, setCurrentDice] = useState<number>(0);
 
   useEffect(() => {
@@ -93,13 +101,9 @@ const Dice: FC<DiceProps> = ({
         </button>
       </div>
       {serverTimer && <Statistic.Countdown
-        value={moment(serverTimer).add(window.timeDiff, 'ms').toISOString()}
+        value={deadline}
         format="mm:ss"
-        onFinish={() => {
-          if (isTimeoutDownDisabled) {
-            setDiceStatus('disabled');
-          }
-        }}
+        onFinish={deadlineHandler}
       />}
     </div>
   );

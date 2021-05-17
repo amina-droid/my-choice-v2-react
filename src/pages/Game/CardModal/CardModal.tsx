@@ -1,7 +1,6 @@
-import React, { FC, useEffect, useReducer, useState } from 'react';
+import React, { FC, useReducer } from 'react';
 import { remove } from 'lodash';
 import { Modal, Spin, Statistic, Typography } from 'antd';
-import moment from 'moment';
 import { ApolloError, useSubscription } from '@apollo/client';
 
 import {
@@ -13,6 +12,7 @@ import {
   ON_OPTION_CHOICE,
 } from '../../../apollo';
 import timeout from '../../../utils/timeout';
+import useDeadline from '../../../utils/useDeadline';
 import { useAuth } from '../../../context/auth';
 import OpportunityBody from './OpportunityBody';
 import ChoicesAndIncidentBody from './ChoicesAndIncidentBody';
@@ -21,7 +21,6 @@ import { Actions } from '../../../types';
 import { ModalBodyProps } from './utils';
 
 import s from './CardModal.module.sass';
-import { getTime } from '../../../utils/getTime';
 
 const { Title } = Typography;
 
@@ -101,6 +100,7 @@ const CardModal: FC<CardModalProps> = React.memo(
   ({ gameId, onError, serverTimer }) => {
     const { user } = useAuth();
     const [{ activeCard, selectedChoiceId }, dispatch] = useReducer(cardReducer, initialCardState);
+    const deadline = useDeadline(serverTimer);
     useSubscription<OnDroppedCard, OnDroppedCardVariables>(ON_DROPPED_CARD, {
       variables: {
         gameId,
@@ -137,7 +137,7 @@ const CardModal: FC<CardModalProps> = React.memo(
         <Title level={4}>{activeCard?.card.typeName}</Title>
         {serverTimer && (
           <Statistic.Countdown
-            value={moment(serverTimer).add(window.timeDiff, 'ms').toISOString()}
+            value={deadline}
             format="mm:ss"
             className={s.timer}
           />
