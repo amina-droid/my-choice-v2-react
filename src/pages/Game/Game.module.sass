@@ -29,6 +29,14 @@
     max-width: 100%
     max-height: 80vh
 
+
+.dice
+    width: 150px
+    position: absolute
+    left: calc(50% + #{($actionIconSize - 10) / 2})
+
+    @media all and (max-width: $mobileMax)
+        left: calc(50% + #{$actionIconSizeSmallMobile / 2})
 .header
     grid-area: header
     width: 100%

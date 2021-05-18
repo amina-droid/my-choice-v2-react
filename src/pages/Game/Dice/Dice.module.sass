@@ -1,14 +1,14 @@
 @import "src/index"
 
+/* width: 150px; */
+/* position: absolute; */
+/* left: calc(50% + 30px); */
+
 .container
   display: flex
   justify-content: space-between
   align-items: center
-  width: 150px
-  position: absolute
-  left: calc(50% + #{($actionIconSize - 10) / 2})
-  @media all and (max-width: $mobileMax)
-      left: calc(50% + #{$actionIconSizeSmallMobile / 2})
+
 .containerDice
     display: flex
     align-self: center
@@ -26,6 +26,10 @@
         width: 100%
         height: 100%
         padding: 0
+
+        & svg
+            height: 100%
+            width: 100%
 
     .disabledDice
         display: flex

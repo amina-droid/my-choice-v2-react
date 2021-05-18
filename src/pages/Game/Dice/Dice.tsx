@@ -31,6 +31,7 @@ const getRandom = () => {
 type DiceProps = {
   serverTimer?: string;
   ready?: boolean;
+  className?: string;
   isTimeoutDownDisabled?: boolean;
   onRoll?: (value: number) => void;
   onRollComplete?: () => void;
@@ -44,6 +45,7 @@ const Dice: FC<DiceProps> = ({
   onRollComplete,
   serverTimer,
   isTimeoutDownDisabled,
+  className: outerClassName,
 }) => {
   const [diceStatus, setDiceStatus] = useState<DiceStatus>('disabled');
   const readyRef = useRef<boolean>();
@@ -87,13 +89,20 @@ const Dice: FC<DiceProps> = ({
     setCurrentDice(0);
   };
 
-  const className = s[`${diceStatus}Dice`];
+  const btnClassName = cn(
+    s[`${diceStatus}Dice`],
+    s.diceBtn,
+  );
+  const containerClassName = cn(
+    outerClassName,
+    s.container,
+  );
   return (
-    <div className={s.container}>
+    <div className={containerClassName}>
       <div className={s.containerDice}>
         <button
           type="button"
-          className={cn(s.diceBtn, className)}
+          className={btnClassName}
           onClick={clickDice}
           disabled={diceStatus !== 'ready'}
         >

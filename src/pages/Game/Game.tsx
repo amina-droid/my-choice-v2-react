@@ -121,7 +121,7 @@ const Game: FC<RouteComponentProps<{ gameId: string }>> = ({ match }) => {
   const [moveReq] = useMutation<GameMove, GameMoveVariables>(GAME_MOVE, {
     onError: onGameError,
   });
-  console.log({ timers: data?.joinGame.timers });
+  console.log(orientation);
   const [callDiceAlert, clearDiceAlert] = useNotificationTimeout(DICE_NOTIFICATION_OPTIONS);
   const [callDreamAlert, clearDreamAlert] = useNotificationTimeout(DREAM_NOTIFICATION_OPTIONS);
   const [callStartGameAlert, clearStartGameAlert] = useNotificationTimeout(
@@ -264,6 +264,7 @@ const Game: FC<RouteComponentProps<{ gameId: string }>> = ({ match }) => {
             <Dice
               ready={mover === user?._id}
               onRoll={gameMove}
+              className={s.dice}
               isTimeoutDownDisabled={isTimeoutDownDiceDisabled}
               serverTimer={data.joinGame.timers?.dice}
             />
