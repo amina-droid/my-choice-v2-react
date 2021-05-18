@@ -35,6 +35,7 @@ import { GameStatus } from '../../types';
 import GameField from './GameField/GameField';
 import Rules from '../../components/Rules';
 import useWinner from './Winner/useWinner';
+import DreamTimer from './DreamTimer/DreamTimer';
 import useNotificationTimeout from '../../utils/useNotificationTimeout';
 import useClosePage from '../../utils/useClosePage';
 import useScreenOrientation from '../../utils/useScreenOrientation';
@@ -253,6 +254,11 @@ const Game: FC<RouteComponentProps<{ gameId: string }>> = ({ match }) => {
             >
               Начать игру
             </Button>
+          )}
+          {status === GameStatus.ChoiceDream && (
+            <DreamTimer
+              serverTimer={data?.joinGame.timers?.dream}
+            />
           )}
           {status === GameStatus.InProgress && (
             <Dice

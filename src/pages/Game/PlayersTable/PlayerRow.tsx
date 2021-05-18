@@ -98,7 +98,7 @@ const PlayerRow: FC<Props> = ({ player, className: outerClassName, mover }) => {
 
   return (
     <Spin spinning={player.disconnected ?? false}>
-      <div key={player._id} className={className}>
+      <div key={player._id} className={className} id={`player:${player._id}`}>
         <Badge count={player.hold} offset={[-20, 20]} className={s.playerHold}>
           <Tooltip placement="top" title={player.nickname} color={player.color}>
             <Avatar

@@ -11,6 +11,7 @@ fragment ActiveGame on GameSession {
     timers {
         dice
         card
+        dream
     }
     players {
         ...ActivePlayer

@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @generated
 // This file was automatically generated and should not be edited.
 
 import { GameStatus, PlayerPosition, UserSex } from "./../../../../types/globalTypes";
@@ -13,6 +12,7 @@ export interface UpdateActiveGame_updateActiveGame_timers {
   __typename: "GameSessionTimers";
   dice: any | null;
   card: any | null;
+  dream: any | null;
 }
 
 export interface UpdateActiveGame_updateActiveGame_players_resources {

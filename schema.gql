@@ -59,7 +59,8 @@ type Game {
     _id: ObjectId!
     creator: User!
     name: String!
-    players: [Player!]!
+    players: [User!]!
+    winner: User
 }
 
 type GameSession {
@@ -79,6 +80,7 @@ type GameSession {
 type GameSessionTimers {
     card: DateTime
     dice: DateTime
+    dream: DateTime
 }
 
 type Incident implements Card {
