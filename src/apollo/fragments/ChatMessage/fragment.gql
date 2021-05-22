@@ -1,6 +1,7 @@
 fragment ChatMessage on Message {
     _id
     author {
+        _id
         nickname
         avatar
     }

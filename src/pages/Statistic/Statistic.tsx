@@ -1,7 +1,7 @@
-import React, { FC, useMemo } from 'react';
-import { useQuery } from '@apollo/client';
+import React, { FC, useEffect, useMemo } from 'react';
+import { useLazyQuery, useQuery } from '@apollo/client';
 import { Card, Spin, Statistic } from 'antd';
-import { GET_STATISTIC, GetStatistic } from '../../apollo';
+import { GET_STATISTIC, GetStatistic, GetStatisticVariables } from '../../apollo';
 
 import { withAccess } from '../../shared/AccessHOC/AccessHOC';
 import { UserRole } from '../../types';
@@ -11,9 +11,26 @@ import { StatisticTable } from './StatisticTable';
 import { GamesStatistic, gamesToStatistic } from './utils';
 import s from './Statistic.module.sass';
 
-const StatisticPage = () => {
+type Props = {
+  userId: string,
+  title: React.ReactNode,
+};
+
+const StatisticPage: FC<Props> = ({ userId, title }) => {
   const { user } = useAuth();
-  const { data, loading, error } = useQuery<GetStatistic>(GET_STATISTIC);
+  const [
+    fetchStatistic,
+    { data, loading, error },
+    ] = useLazyQuery<GetStatistic, GetStatisticVariables>(GET_STATISTIC);
+
+  useEffect(() => {
+    console.log(userId);
+    fetchStatistic({
+      variables: {
+        userId,
+      },
+    });
+  }, [userId]);
 
   const statistic: GamesStatistic | undefined = useMemo(
     () => gamesToStatistic(data?.games, user),
@@ -38,6 +55,7 @@ const StatisticPage = () => {
 
   return (
     <div className={s.container}>
+      {title}
       <div className={s.shortStat}>
         <Card>
           <Statistic
@@ -79,4 +97,4 @@ const StatisticPage = () => {
   );
 };
 
-export default withAccess([UserRole.User], true)(StatisticPage);
+export default withAccess<Props>([UserRole.User], true)(StatisticPage);

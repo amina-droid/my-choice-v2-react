@@ -1,5 +1,5 @@
-query GetStatistic {
-    games {
+query GetStatistic($userId: ObjectId) {
+    games(userId: $userId) {
         _id
         name
         createdAt

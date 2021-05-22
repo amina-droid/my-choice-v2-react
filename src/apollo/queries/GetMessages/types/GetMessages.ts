@@ -8,6 +8,7 @@
 
 export interface GetMessages_messages_author {
   __typename: "Author";
+  _id: any;
   nickname: string;
   avatar: string | null;
 }

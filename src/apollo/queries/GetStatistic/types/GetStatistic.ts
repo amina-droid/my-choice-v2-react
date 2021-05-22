@@ -49,3 +49,7 @@ export interface GetStatistic_games {
 export interface GetStatistic {
   games: GetStatistic_games[];
 }
+
+export interface GetStatisticVariables {
+  userId?: any | null;
+}

@@ -8,6 +8,7 @@
 
 export interface OnMessage_onMessage_Message_author {
   __typename: "Author";
+  _id: any;
   nickname: string;
   avatar: string | null;
 }

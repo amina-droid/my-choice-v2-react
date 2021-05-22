@@ -157,7 +157,7 @@ type Query {
     card(_id: ObjectId!): Card!
     cards: [Card!]!
     game(_id: ObjectId!): Game!
-    games: [Game!]!
+    games(userId: ObjectId): [Game!]!
     getActiveGames: [GameSession!]!
     getVKOAuthRedirect: AuthRedirect!
     joinGame(gameId: ObjectId!): GameSession!

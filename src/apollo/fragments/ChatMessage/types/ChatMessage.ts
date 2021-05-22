@@ -8,6 +8,7 @@
 
 export interface ChatMessage_author {
   __typename: "Author";
+  _id: any;
   nickname: string;
   avatar: string | null;
 }

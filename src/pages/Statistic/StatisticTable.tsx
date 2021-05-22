@@ -1,5 +1,6 @@
 import React, { ComponentProps, FC } from 'react';
 import moment from 'moment';
+import { Link } from 'react-router-dom';
 import { Avatar, Table, Typography } from 'antd';
 
 import { StatisticGame } from './utils';
@@ -13,10 +14,10 @@ type TableProps = {
 const getUserRow = (nullMessage: string) => (user: any) => {
   if (!user) return nullMessage;
   return (
-    <span>
+    <Link to={`/statistic/${user._id}`}>
       <Avatar src={user?.photos[0].url} className={s.avatar} />
       {user?.nickname}
-    </span>
+    </Link>
   );
 };
 
@@ -59,15 +60,19 @@ const columns: ComponentProps<typeof Table>['columns'] = [
 
 export const StatisticTable: FC<TableProps> = ({ title, games }) => {
   return (
-    <div className={s.tableContainer}>
-      <Typography.Title level={3}>{title || ''}</Typography.Title>
-      <Table
-        columns={columns}
-        dataSource={games}
-        bordered
-        scroll={{ x: 900 }}
-        pagination={{ pageSizeOptions: ['10'] }}
-      />
-    </div>
+    <>
+      {games.length ? (
+        <div className={s.tableContainer}>
+          <Typography.Title level={3}>{title || ''}</Typography.Title>
+          <Table
+            columns={columns}
+            dataSource={games}
+            bordered
+            scroll={{ x: 900 }}
+            pagination={{ pageSizeOptions: ['10'] }}
+          />
+        </div>
+      ) : null}
+    </>
   );
 };

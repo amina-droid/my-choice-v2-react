@@ -32,11 +32,11 @@ export const AuthContextProvider: React.FC = ({ children }) => {
   const [getUser, { data, loading }] = useLazyQuery<GetUser, GetUserVariables>(GET_USER);
 
   useEffect(() => {
-    if (token && !data?.user) {
+    if (!loading && token && !data?.user) {
       const { _id } = jwtDecode(token) as any;
       getUser({ variables: { userId: _id } });
     }
-  }, [token, data, getUser]);
+  }, [token, data, getUser, loading]);
 
   const login = useCallback((newToken: string) => {
     setToken(newToken);

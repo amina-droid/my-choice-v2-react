@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Avatar, Comment, List, Popconfirm, Tooltip } from 'antd';
 import { MinusCircleOutlined } from '@ant-design/icons/lib';
 import moment from 'moment';
@@ -54,7 +55,7 @@ const CommentList: React.FC<Props> = ({
           return (
             <Comment
               avatar={<Avatar src={author.avatar} />}
-              author={author.nickname}
+              author={<Link to={`/statistic/${author._id}`}>{author.nickname}</Link>}
               datetime={
                 <>
                   <Tooltip title={date.format('DD.MM.YY HH:mm:ss')} overlayStyle={Z_INDEX}>

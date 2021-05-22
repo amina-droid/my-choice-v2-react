@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Menu, Layout } from 'antd';
 import { without } from 'lodash';
 import { MenuOutlined } from '@ant-design/icons/lib';
@@ -13,6 +13,8 @@ import Login from './pages/Login/Login';
 import Lobby from './pages/Lobby/Lobby';
 import Statistic from './pages/Statistic/Statistic';
 import Game from './pages/Game/Game';
+import AddTournament from './pages/AddTournament/AddTournament';
+import UserStatistic from './pages/Statistic/UserStatistic';
 import NotFound from './pages/NotFound/NotFound';
 import CardsEditor from './pages/CardsEditor/CardsEditor';
 import ProtectedRoute from './utils/ProtectedRoute';
@@ -23,13 +25,18 @@ import Rules, { RulesContextProvider } from './components/Rules';
 import logo from './assets/logo.png';
 
 import s from './App.module.sass';
-import AddTournament from './pages/AddTournament/AddTournament';
 
 const PagesWithNavigation = () => {
   const { user } = useAuth();
   const history = useHistory();
   const [selectedKeys, setSelectedKeys] = useState<string[]>([history.location.pathname]);
   const [visibleRules, setVisibleRules] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (history.location.pathname.startsWith('/statistic')) {
+      setSelectedKeys(['/statistic']);
+    }
+  }, [history.location.pathname]);
 
   const handleClick = (e: any) => {
     if (e.key === '/rules') {
@@ -90,6 +97,7 @@ const PagesWithNavigation = () => {
       <Switch>
         <ProtectedRoute exact path="/lobby" component={Lobby} />
         <ProtectedRoute exact path="/statistic" component={Statistic} />
+        <ProtectedRoute exact path="/statistic/:userId" component={UserStatistic} />
         <ProtectedRoute exact path="/edit-cards" component={CardsEditor} />
         <ProtectedRoute exact path="/add-tournament" component={AddTournament} />
       </Switch>
