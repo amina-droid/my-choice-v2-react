@@ -24,7 +24,6 @@ const StatisticPage: FC<Props> = ({ userId, title }) => {
     ] = useLazyQuery<GetStatistic, GetStatisticVariables>(GET_STATISTIC);
 
   useEffect(() => {
-    console.log(userId);
     fetchStatistic({
       variables: {
         userId,
