@@ -36,7 +36,6 @@ const StatisticPage = () => {
     );
   }
 
-  console.log(statistic);
   return (
     <div className={s.container}>
       <div className={s.shortStat}>
