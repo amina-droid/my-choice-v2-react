@@ -11,11 +11,11 @@ export type GamesStatistic = {
 
 const NON_TOURNAMENT_GAMES = 'non_tournament';
 
-export function gamesToStatistic(games?: StatisticGame[], user?: { _id: string } | null) {
-  if (!games || !user) return undefined;
+export function gamesToStatistic(games?: StatisticGame[], userId?: string) {
+  if (!games || !userId) return undefined;
 
   return games.reduce<GamesStatistic>((acc, game) => {
-    if (game.winner?._id === user?._id) {
+    if (game.winner?._id === userId) {
       acc.winCount += 1;
     }
 

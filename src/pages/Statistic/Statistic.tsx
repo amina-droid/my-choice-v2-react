@@ -32,8 +32,8 @@ const StatisticPage: FC<Props> = ({ userId, title }) => {
   }, [userId]);
 
   const statistic: GamesStatistic | undefined = useMemo(
-    () => gamesToStatistic(data?.games, user),
-    [data, user?._id],
+    () => gamesToStatistic(data?.games, userId || user?._id),
+    [data, user?._id, userId],
   );
 
   if (loading) {
