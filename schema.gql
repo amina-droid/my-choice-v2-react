@@ -57,9 +57,11 @@ type DroppedCard {
 
 type Game {
     _id: ObjectId!
+    createdAt: DateTime!
     creator: User!
     name: String!
     players: [User!]!
+    tournament: Tournament
     winner: User
 }
 

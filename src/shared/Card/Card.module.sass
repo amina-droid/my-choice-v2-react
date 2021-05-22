@@ -31,14 +31,14 @@ $cardSmallSize: 100px
     padding: 40px
     width: $cardMaxSize
     height: $cardMaxSize
-    @media all and (max-width: $mobileMax)
+    @media all and (max-width: $mobileMax), all and (max-height: $mobileMax)
         width: $cardMediumSize
         height: $cardMediumSize
 
         .nameGame
             font-size: 15px
 
-    @media all and (max-width: $smallMobileMax)
+    @media all and (max-width: $smallMobileMax), all and (max-height: $smallMobileMax)
         width: $cardSmallSize
         height: $cardSmallSize
 
@@ -50,10 +50,10 @@ $cardSmallSize: 100px
         font-size: 15px
         position: absolute
 
-        @media all and (max-width: $mobileMax)
+        @media all and (max-width: $mobileMax), all and (max-height: $mobileMax)
             font-size: 12px
 
-        @media all and (max-width: $smallMobileMax)
+        @media all and (max-width: $smallMobileMax), all and (max-height: $smallMobileMax)
             font-size: 10px
 
     .playersCount
@@ -66,7 +66,7 @@ $cardSmallSize: 100px
         text-align: center
         top: 10px
 
-        @media all and (max-width: $smallMobileMax)
+        @media all and (max-width: $smallMobileMax), all and (max-height: $smallMobileMax)
             top: 5px
 
     .statusAwaiting
@@ -91,8 +91,8 @@ $cardSmallSize: 100px
     display: none
     font-size: 30px
 
-    @media all and (max-width: $mobileMax)
+    @media all and (max-width: $mobileMax), all and (max-height: $mobileMax)
         font-size: 18px
 
-    @media all and (max-width: $smallMobileMax)
+    @media all and (max-width: $smallMobileMax), all and (max-height: $smallMobileMax)
         font-size: 14px

@@ -1,0 +1,25 @@
+query GetStatistic {
+    games {
+        _id
+        name
+        createdAt
+        winner {
+            _id
+            nickname
+            photos {
+                url
+            }
+        }
+        tournament {
+            _id
+            name
+        }
+        players {
+            _id
+            nickname
+            photos {
+                url
+            }
+        }
+    }
+}

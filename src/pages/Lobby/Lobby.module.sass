@@ -1,6 +1,9 @@
 @import "src/index"
 @import "src/shared/Card/Card.module"
 
+.navItem
+    font-family: Neucha, serif
+
 .cardAdd
     font-size: 100px
     height: $cardMaxSize
@@ -10,19 +13,22 @@
     &:hover
         outline: none
 
-    @media all and (max-width: $mobileMax)
+    @media all and (max-width: $mobileMax), all and (max-height: $mobileMax)
         height: $cardMediumSize
         width: $cardMediumSize
         font-size: 65px
 
-    @media all and (max-width: $smallMobileMax)
+    @media all and (max-width: $smallMobileMax), all and (max-height: $smallMobileMax)
         height: $cardSmallSize
         width: $cardSmallSize
         font-size: 45px
 
 
 .container
-    margin: 0 40px 40px
+    margin: 0 $appSizePadding 40px
+
+    @media all and (max-width: $mobileMax), all and (max-height: $mobileMax)
+        margin: 0 $appSizePaddingMobile 20px
 
 .containCards
     display: flex

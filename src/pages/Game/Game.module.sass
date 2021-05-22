@@ -11,7 +11,7 @@
     height: calc(100vh - #{$footerHeight})
     position: relative
 
-    @media all and (max-width: $mobileMax)
+    @media all and (max-width: $mobileMax), all and (max-height: $mobileMax)
         grid-template-rows: $actionIconSizeSmallMobile minmax(90%, 1fr)
         grid-template-columns: minmax(250px, 15%) 1fr $actionIconSizeSmallMobile
         height: calc(100vh - #{$footerSmallHeight})
@@ -35,7 +35,7 @@
     position: absolute
     left: calc(50% + #{($actionIconSize - 10) / 2})
 
-    @media all and (max-width: $mobileMax)
+    @media all and (max-width: $mobileMax), all and (max-height: $mobileMax)
         left: calc(50% + #{$actionIconSizeSmallMobile / 2})
 .header
     grid-area: header
@@ -68,10 +68,10 @@
     align-items: flex-end
     gap: 30px
 
-    @media all and (max-width: $mobileMax)
+    @media all and (max-width: $mobileMax), all and (max-height: $mobileMax)
         gap: 20px
 
-    @media all and (max-width: $smallMobileMax)
+    @media all and (max-width: $smallMobileMax), all and (max-height: $smallMobileMax)
         gap: 15px
 
     .actionBtn

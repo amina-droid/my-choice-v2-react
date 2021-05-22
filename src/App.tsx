@@ -67,7 +67,7 @@ const PagesWithNavigation = () => {
           <Menu.Item key="/lobby" className={s.NavItem}>
             <Link to="/lobby">Играть</Link>
           </Menu.Item>
-          <Menu.Item key="/statistic" className={s.NavItem} disabled>
+          <Menu.Item key="/statistic" className={s.NavItem}>
             <Link to="/statistic">Статистика</Link>
           </Menu.Item>
           <Menu.Item key="/rules" className={s.NavItem}>

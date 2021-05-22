@@ -55,10 +55,10 @@ const Lobby = () => {
   return (
     <div className={s.container}>
       <Tabs defaultActiveKey="OnlineGame" size="large" className={s.tab}>
-        <TabPane tab="Сетевые игры" key="OnlineGame">
+        <TabPane tab={<span className={s.navItem}>Сетевые игры</span>} key="OnlineGame">
           <Games activeGames={netGames} isOnlineGame />
         </TabPane>
-        <TabPane tab="Чемпионат" key="Сhampionship">
+        <TabPane tab={<span className={s.navItem}>Чемпионат</span>} key="Сhampionship">
           <Games activeGames={tournamentGames} />
         </TabPane>
       </Tabs>

@@ -1,0 +1,41 @@
+@import "src/index"
+
+.container
+  padding: 0 $appSizePadding 70px
+
+  @media all and (max-width: $mobileMax), all and (max-height: $mobileMax)
+    padding: 0 $appSizePaddingMobile 40px
+
+.shortStat
+  margin-top: 15px
+  display: flex
+  flex-wrap: wrap
+  justify-content: center
+  margin-left: -10px
+  margin-right: -10px
+
+  & > *
+    margin-left: 10px
+    margin-right: 10px
+    margin-top: 10px
+    min-width: 250px
+
+.statItem
+  display: flex
+  align-items: center
+  flex-direction: column
+  justify-content: center
+
+.tableContainer
+  margin-top: 30px
+
+.avatar
+  margin-right: 10px
+
+.players
+  display: flex
+  flex-direction: column
+  margin-top: -10px
+
+  & > *
+    margin-top: 10px

@@ -4,7 +4,7 @@
     min-height: calc(100vh - #{$footerHeight})
     height: 100%
 
-    @media all and (max-width: $mobileMax)
+    @media all and (max-width: $mobileMax), all and (max-height: $mobileMax)
         min-height: calc(100vh - #{$footerSmallHeight})
 
 
@@ -18,7 +18,7 @@
     left: 0
     bottom: 0
 
-    @media all and (max-width: $mobileMax)
+    @media all and (max-width: $mobileMax), all and (max-height: $mobileMax)
         font-size: $footerSmallFontSize
         height: $footerSmallHeight
         padding: 20px $appSizePaddingMobile 10px
@@ -49,7 +49,7 @@
     align-items: center
     padding: 30px $appSizePadding 0
 
-    @media all and (max-width: $mobileMax)
+    @media all and (max-width: $mobileMax), all and (max-height: $mobileMax)
         padding: 15px 0 0 $appSizePaddingMobile
 
 .Nav
@@ -60,13 +60,13 @@
         font-family: Neucha, serif
         font-weight: 600
         font-size: 20px
-        @media all and (min-width: $mobileMax)
+        @media all and (min-width: $mobileMax), all and (min-height: $mobileMax)
             font-size: 24px
         & > a
             font-family: Neucha, serif
             font-weight: 600
             font-size: 20px
-            @media all and (min-width: $mobileMax)
+            @media all and (min-width: $mobileMax), all and (min-height: $mobileMax)
                 font-size: 24px
 
     &Collapsed

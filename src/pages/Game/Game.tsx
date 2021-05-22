@@ -83,7 +83,7 @@ const Game: FC<RouteComponentProps<{ gameId: string }>> = ({ match }) => {
   }, [setVisibleRules]);
 
   const { gameId } = match.params;
-
+  console.log(orientation);
   const [leaveGameReq] = useMutation<TLeaveGame, LeaveGameVariables>(LEAVE_GAME, {
     update: cache => {
       cache.evict({
