@@ -1,8 +1,14 @@
 @import "src/index"
 
+$chatHeight: 520px
+$chatWidth: 360px
+
 .comments
     &List
-        height: 400px
+        height: $chatHeight - 120px
+
+        @media all and (max-height: $chatHeight)
+            height: calc(100vh - 200px)
 
 
 .openBtn
@@ -56,8 +62,8 @@
             .ant-tabs-nav
                 margin-bottom: 0
         .chatContainer
-            width: 360px
-            height: 520px
+            width: $chatWidth
+            height: $chatHeight
             padding: 15px 15px 0
             border: 1px solid #f0f0f0
             border-top: none
@@ -73,6 +79,12 @@
                     margin-right: 20px
                 .rcs-custom-scroll
                     width: 100%
+
+            @media all and (max-height: $chatHeight + 60)
+                height: calc(100vh - 80px)
+
+            @media all and (max-width: $chatWidth + 20)
+                width: calc(100vw - 40px)
 
 
 .editorContainer

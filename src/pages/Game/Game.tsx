@@ -1,5 +1,7 @@
 import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
-import { Button, message, Popconfirm, Spin, Typography } from 'antd';
+import { withOrientationChange } from 'react-device-detect';
+import cn from 'classnames';
+import { Button, message, Modal, Popconfirm, Spin, Typography } from 'antd';
 import { RouteComponentProps, useHistory } from 'react-router-dom';
 import { ApolloError, useLazyQuery, useMutation } from '@apollo/client';
 import {
@@ -38,7 +40,6 @@ import useWinner from './Winner/useWinner';
 import DreamTimer from './DreamTimer/DreamTimer';
 import useNotificationTimeout from '../../utils/useNotificationTimeout';
 import useClosePage from '../../utils/useClosePage';
-import useScreenOrientation from '../../utils/useScreenOrientation';
 
 import s from './Game.module.sass';
 
@@ -46,6 +47,7 @@ const DICE_NOTIFICATION_OPTIONS = {
   key: 'dice',
   timeoutMessage: 'Ваш ход!',
   description: 'Кидайте кубик',
+  timeout: 5_500,
 };
 const DREAM_NOTIFICATION_OPTIONS = {
   key: 'dream',
@@ -69,95 +71,27 @@ const LEAVE_PAGE_MODAL_PROPS = {
   ),
 };
 
-const Game: FC<RouteComponentProps<{ gameId: string }>> = ({ match }) => {
-  const history = useHistory();
-  const orientation = useScreenOrientation();
-  const [visibleRules, setVisibleRules] = useState(false);
-  const { addTopic, removeTopic } = useChatContext();
-  const { user } = useAuth();
-  const openRulesModal = useCallback(() => {
-    setVisibleRules(true);
-  }, [setVisibleRules]);
-  const closeRulesModal = useCallback(() => {
-    setVisibleRules(false);
-  }, [setVisibleRules]);
-
-  const { gameId } = match.params;
-  console.log(orientation);
-  const [leaveGameReq] = useMutation<TLeaveGame, LeaveGameVariables>(LEAVE_GAME, {
-    update: cache => {
-      cache.evict({
-        id: `GameSession:${match.params.gameId}`,
-        fieldName: 'players',
-      });
-      cache.gc();
-    },
-  });
-  const leaveGame = useCallback(async () => {
-    history.push('/lobby');
-    await leaveGameReq({ variables: { gameId } });
-  }, [history, leaveGameReq]);
-
-  const onGameError = useCallback(
-    (error: ApolloError | Error) => {
-      message.error(error.message);
-      leaveGame();
-    },
-    [leaveGame],
-  );
-  const [choiceDream] = useMutation<ChoiceDream, ChoiceDreamVariables>(CHOICE_DREAM, {
-    onError: onGameError,
-  });
-  const [startGameReq] = useMutation<StartGame, StartGameVariables>(START_GAME, {
-    onError: onGameError,
-  });
-  const [joinGameReq, { data, subscribeToMore }] = useLazyQuery<JoinGame, JoinGameVariables>(
+const useJoinGame = (
+  gameId: string,
+  onError?: (error: ApolloError | Error) => void,
+) => {
+  const [fetchJoinGame, { data, subscribeToMore }] = useLazyQuery<JoinGame, JoinGameVariables>(
     JOIN_GAME,
     {
       fetchPolicy: 'cache-first',
-      onError: onGameError,
+      onError,
     },
   );
-  const [moveReq] = useMutation<GameMove, GameMoveVariables>(GAME_MOVE, {
-    onError: onGameError,
-  });
-  const [callDiceAlert, clearDiceAlert] = useNotificationTimeout(DICE_NOTIFICATION_OPTIONS);
-  const [callDreamAlert, clearDreamAlert] = useNotificationTimeout(DREAM_NOTIFICATION_OPTIONS);
-  const [callStartGameAlert, clearStartGameAlert] = useNotificationTimeout(
-    START_GAME_NOTIFICATION_OPTIONS,
-  );
-  useWinner({
-    winnerId: data?.joinGame.winner,
-    onOk: leaveGame,
-    gameId: data?.joinGame._id,
-  });
-  useClosePage(leaveGame, LEAVE_PAGE_MODAL_PROPS);
 
   useEffect(() => {
-    if (match.params.gameId) {
-      joinGameReq({
+    if (gameId) {
+      fetchJoinGame({
         variables: {
-          gameId: match.params.gameId,
+          gameId,
         },
       });
     }
-  }, [match.params.gameId]);
-
-  const isTimeoutDownDiceDisabled = useMemo(() => (
-    data?.joinGame.players.filter(({ disconnected }) => !disconnected).length || 0) > 1, [
-    data?.joinGame.players.length,
-  ]);
-
-  useEffect(() => {
-    const { _id: id, name: title } = data?.joinGame || {};
-    if (id && title) {
-      addTopic({
-        id,
-        title,
-      });
-    }
-    return () => removeTopic(id);
-  }, [data?.joinGame?._id]);
+  }, [gameId]);
 
   useEffect(() => {
     if (!subscribeToMore) return () => {};
@@ -170,41 +104,126 @@ const Game: FC<RouteComponentProps<{ gameId: string }>> = ({ match }) => {
           joinGame: newData,
         };
       },
-      onError: onGameError,
-      variables: { gameId: match.params.gameId },
+      onError,
+      variables: { gameId },
       document: UPDATE_ACTIVE_GAME,
     });
 
     return () => unsubscribe();
-  }, [subscribeToMore, match.params.gameId]);
+  }, [subscribeToMore, gameId]);
+
+  return data?.joinGame;
+};
+
+type GamePageProps = RouteComponentProps<{ gameId: string }>
+type GameDeviceProps = {
+  isPortrait: boolean;
+  isLandscape: boolean;
+}
+
+type GameProps= GameDeviceProps & GamePageProps;
+
+const Game: FC<GameProps> = ({ match, isPortrait }) => {
+  const history = useHistory();
+  const [visibleRules, setVisibleRules] = useState(false);
+  const { addTopic, removeTopic } = useChatContext();
+  const { user } = useAuth();
+  const openRulesModal = useCallback(() => {
+    setVisibleRules(true);
+  }, [setVisibleRules]);
+  const closeRulesModal = useCallback(() => {
+    setVisibleRules(false);
+  }, [setVisibleRules]);
+
+  const { gameId } = match.params;
+  const [fetchLeaveGame] = useMutation<TLeaveGame, LeaveGameVariables>(LEAVE_GAME, {
+    update: cache => {
+      cache.evict({
+        id: `GameSession:${match.params.gameId}`,
+        fieldName: 'players',
+      });
+      cache.gc();
+    },
+  });
+  const leaveGame = useCallback(async () => {
+    history.push('/lobby');
+    await fetchLeaveGame({ variables: { gameId } });
+  }, [history, fetchLeaveGame]);
+
+  const onGameError = useCallback(
+    (error: ApolloError | Error) => {
+      message.error(error.message);
+      leaveGame();
+    },
+    [leaveGame],
+  );
+
+  const game = useJoinGame(gameId, onGameError);
+  const [choiceDream] = useMutation<ChoiceDream, ChoiceDreamVariables>(CHOICE_DREAM, {
+    onError: onGameError,
+  });
+  const [fetchStartGame] = useMutation<StartGame, StartGameVariables>(START_GAME, {
+    onError: onGameError,
+  });
+
+  const [moveReq] = useMutation<GameMove, GameMoveVariables>(GAME_MOVE, {
+    onError: onGameError,
+  });
+  const [callDiceAlert, clearDiceAlert] = useNotificationTimeout(DICE_NOTIFICATION_OPTIONS);
+  const [callDreamAlert, clearDreamAlert] = useNotificationTimeout(DREAM_NOTIFICATION_OPTIONS);
+  const [callStartGameAlert, clearStartGameAlert] = useNotificationTimeout(
+    START_GAME_NOTIFICATION_OPTIONS,
+  );
+  useWinner({
+    winnerId: game?.winner,
+    onOk: leaveGame,
+    gameId: game?._id,
+  });
+  useClosePage(leaveGame, LEAVE_PAGE_MODAL_PROPS);
+
+  const isTimeoutDownDiceDisabled = useMemo(() => (
+    game?.players.filter(({ disconnected }) => !disconnected).length || 0) > 1, [
+    game?.players.length,
+  ]);
 
   useEffect(() => {
-    if (data?.joinGame.mover === user?._id && data?.joinGame.status === GameStatus.InProgress) {
+    const { _id: id, name: title } = game || {};
+    if (id && title) {
+      addTopic({
+        id,
+        title,
+      });
+    }
+    return () => removeTopic(id);
+  }, [game?._id]);
+
+  useEffect(() => {
+    if (game?.mover === user?._id && game?.status === GameStatus.InProgress) {
       callDiceAlert();
     }
-  }, [data?.joinGame.mover, user?._id, data?.joinGame.status]);
+  }, [game?.mover, user?._id, game?.status]);
 
-  const isPlayersExist = data?.joinGame.players.length;
+  const isPlayersExist = game?.players.length;
 
   useEffect(() => {
-    const isPlayer = data?.joinGame.players.some(player => player._id === user?._id);
-    if (data?.joinGame.status === GameStatus.ChoiceDream && isPlayer) {
+    const isPlayer = game?.players.some(player => player._id === user?._id);
+    if (game?.status === GameStatus.ChoiceDream && isPlayer) {
       callDreamAlert();
     }
-  }, [data?.joinGame.status]);
+  }, [game?.status]);
 
   useEffect(() => {
     if (
-      data?.joinGame.status === GameStatus.Awaiting &&
-      data?.joinGame.creator === user?._id &&
+      game?.status === GameStatus.Awaiting &&
+      game?.creator === user?._id &&
       isPlayersExist
     ) {
       callStartGameAlert();
     }
-  }, [data?.joinGame.status, user?._id, isPlayersExist]);
+  }, [game?.status, user?._id, isPlayersExist]);
 
   const startGame = (id: string) => {
-    startGameReq({ variables: { gameId: id } });
+    fetchStartGame({ variables: { gameId: id } });
   };
 
   const gameMove = (move: number) => {
@@ -221,28 +240,37 @@ const Game: FC<RouteComponentProps<{ gameId: string }>> = ({ match }) => {
     choiceDream({ variables: { dream: id } });
   };
 
-  if (!data?.joinGame) return <Spin size="large" />;
-  const { creator, status, mover, name: gameName } = data.joinGame;
+  if (!game) return <Spin size="large" />;
+  const { creator, status, mover } = game;
 
   const handleStartGame = (id: string) => {
     clearStartGameAlert();
     startGame(id);
   };
 
-  const myResources = data.joinGame.players.find(player => player._id === user?._id)?.resources;
+  const myResources = game.players.find(player => player._id === user?._id)?.resources;
 
+  const containerClassName = cn(
+    s.gameContainer,
+    isPortrait && s.blur,
+  );
   return (
     <>
-      <div className={s.gameContainer}>
+      <Modal visible={isPortrait} footer={null} closable={false}>
+        Поддержка мобильных устройств ограничена,
+        переключите ориентацию на альбомную (включите
+        автоповорот экрана и поверните устройство на 90°)
+      </Modal>
+      <div className={containerClassName}>
         <Rules visible={visibleRules} closeModal={closeRulesModal} />
         <CardModal
-          serverTimer={data?.joinGame.timers?.card}
+          serverTimer={game?.timers?.card}
           gameId={match.params.gameId}
           onError={onGameError}
         />
         <div className={s.header}>
           <Typography.Title level={3} className={s.gameName}>
-            {data.joinGame.name}
+            {game?.name}
           </Typography.Title>
           {status === GameStatus.Awaiting && creator === user?._id && (
             <Button
@@ -256,7 +284,7 @@ const Game: FC<RouteComponentProps<{ gameId: string }>> = ({ match }) => {
           )}
           {status === GameStatus.ChoiceDream && (
             <DreamTimer
-              serverTimer={data?.joinGame.timers?.dream}
+              serverTimer={game?.timers?.dream}
             />
           )}
           {status === GameStatus.InProgress && (
@@ -265,12 +293,12 @@ const Game: FC<RouteComponentProps<{ gameId: string }>> = ({ match }) => {
               onRoll={gameMove}
               className={s.dice}
               isTimeoutDownDisabled={isTimeoutDownDiceDisabled}
-              serverTimer={data.joinGame.timers?.dice}
+              serverTimer={game?.timers?.dice}
             />
           )}
         </div>
         <div className={s.playersTableContainer}>
-          <PlayersTable players={data.joinGame.players} mover={mover} />
+          <PlayersTable players={game?.players} mover={mover} />
         </div>
         <div className={s.actionsContainer}>
           <ChangeResources
@@ -292,11 +320,11 @@ const Game: FC<RouteComponentProps<{ gameId: string }>> = ({ match }) => {
           </Popconfirm>
         </div>
         <div className={s.playingField}>
-          <GameField game={data.joinGame} onChoiceDream={handleChoiceDream} />
+          <GameField game={game} onChoiceDream={handleChoiceDream} />
         </div>
       </div>
     </>
   );
 };
 
-export default Game;
+export default withOrientationChange(Game);

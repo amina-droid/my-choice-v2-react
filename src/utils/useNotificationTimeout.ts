@@ -1,15 +1,23 @@
 import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { notification } from 'antd';
 
-const addTimeout = (key: string, timeoutMessage: string, description: string) => {
+type NotificationType = 'info' | 'warning' | 'error' | 'success';
+
+const addTimeout = (
+  key: string,
+  timeoutMessage: string,
+  description: string,
+  type: NotificationType = 'info',
+  timeout: number = 3000,
+) => {
   return setTimeout(() => {
-    notification.info({
+    notification[type]({
       key,
       message: timeoutMessage,
       description,
       duration: 0,
     });
-  }, 3000);
+  }, timeout);
 };
 type CallNotification = () => void;
 type ClearNotification = () => void;
@@ -18,11 +26,15 @@ type Options = {
   key: string,
   timeoutMessage: string,
   description: string,
+  type?: NotificationType,
+  timeout?: number;
 }
 function useNotificationTimeout({
   key,
   timeoutMessage,
   description,
+  type,
+  timeout,
 }: Options): UseNotificationTimeoutHandlers {
   const ref = useRef<NodeJS.Timeout>();
   const clearNotification = useCallback(() => {
@@ -37,10 +49,10 @@ function useNotificationTimeout({
 
   return useMemo(() => ([
     () => {
-      ref.current = addTimeout(key, timeoutMessage, description);
+      ref.current = addTimeout(key, timeoutMessage, description, type, timeout);
     },
     clearNotification,
-  ]), [key, timeoutMessage, description, clearNotification]);
+  ]), [key, timeoutMessage, description, clearNotification, type, timeout]);
 }
 
 export default useNotificationTimeout;

@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
+import { isMobile } from 'react-device-detect';
 import { Tabs } from 'antd';
 import { useQuery } from '@apollo/client';
 import {
@@ -8,10 +9,27 @@ import {
   UpdateActiveGames,
 } from '../../apollo';
 import Games from './Games';
+import useNotificationTimeout from '../../utils/useNotificationTimeout';
 
 import s from './Lobby.module.sass';
 
 const { TabPane } = Tabs;
+
+const LOBBY_NOTIFICATION_OPTIONS = {
+  key: 'lobby',
+  timeoutMessage: 'Добро пожаловать в игру!',
+  description:
+    'Здесь вы можете создать новую игровую комнату, нажав на "+", или присоединиться к уже существующей.',
+};
+
+const MOBILE_NOTIFICATION_OPTIONS = {
+  key: 'mobile',
+  timeoutMessage: 'Предупреждение',
+  description:
+    'Поддержка мобильных устройств ограничена',
+  type: 'warning' as const,
+  timeout: 0,
+};
 
 type LobbyGamesState = {
   netGames?: GetActiveGames['getActiveGames'];
@@ -20,6 +38,8 @@ type LobbyGamesState = {
 
 const Lobby = () => {
   const [{ netGames, tournamentGames }, setGamesList] = useState<LobbyGamesState>({});
+  const [callLobbyAlert, clearLobbyAlert] = useNotificationTimeout(LOBBY_NOTIFICATION_OPTIONS);
+  const [callMobileAlert, clearMobileAlert] = useNotificationTimeout(MOBILE_NOTIFICATION_OPTIONS);
   const { subscribeToMore } = useQuery<GetActiveGames>(GET_ACTIVE_GAMES, {
     onCompleted(data) {
       setGamesList(
@@ -52,14 +72,33 @@ const Lobby = () => {
     });
   }, [subscribeToMore]);
 
+  useEffect(() => {
+    if (isMobile) {
+      callMobileAlert();
+    }
+    callLobbyAlert();
+  }, []);
+
+  const clearAlerts = useCallback(() => {
+    clearLobbyAlert();
+    clearMobileAlert();
+  }, [clearLobbyAlert, clearMobileAlert]);
+
   return (
     <div className={s.container}>
       <Tabs defaultActiveKey="OnlineGame" size="large" className={s.tab}>
         <TabPane tab={<span className={s.navItem}>Сетевые игры</span>} key="OnlineGame">
-          <Games activeGames={netGames} isOnlineGame />
+          <Games
+            activeGames={netGames}
+            clearAlerts={clearAlerts}
+            isOnlineGame
+          />
         </TabPane>
         <TabPane tab={<span className={s.navItem}>Чемпионат</span>} key="Сhampionship">
-          <Games activeGames={tournamentGames} />
+          <Games
+            activeGames={tournamentGames}
+            clearAlerts={clearAlerts}
+          />
         </TabPane>
       </Tabs>
     </div>

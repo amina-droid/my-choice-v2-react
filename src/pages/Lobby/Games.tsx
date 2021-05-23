@@ -13,19 +13,11 @@ import {
   GetTournaments,
 } from '../../apollo';
 import Card from '../../shared/Card/Card';
-import useNotificationTimeout from '../../utils/useNotificationTimeout';
 import { withAccess } from '../../shared/AccessHOC/AccessHOC';
 import { UserRole } from '../../types';
 import { formicObsceneValidator } from '../../utils/obsceneFilter';
 
 import s from './Lobby.module.sass';
-
-const LOBBY_NOTIFICATION_OPTIONS = {
-  key: 'lobby',
-  timeoutMessage: 'Добро пожаловать в игру!',
-  description:
-    'Здесь вы можете создать новую игровую комнату, нажав на "+", или присоединиться к уже существующей.',
-};
 
 type CreateGameValues = {
   gameName: string;
@@ -121,10 +113,15 @@ const ModeratorFieldCreateGame = withAccess<ModeratorFieldCreateGameProps>(
 
 type GamesProps = {
   activeGames?: GetActiveGames['getActiveGames'];
+  clearAlerts?: () => void;
   isOnlineGame?: boolean;
 };
 
-const Games: FC<GamesProps> = ({ activeGames, isOnlineGame }) => {
+const Games: FC<GamesProps> = ({
+  activeGames,
+  isOnlineGame,
+  clearAlerts,
+}) => {
   const [visible, setVisible] = useState<boolean>(false);
   const [form] = useForm();
 
@@ -133,18 +130,8 @@ const Games: FC<GamesProps> = ({ activeGames, isOnlineGame }) => {
     {
       loading: createGameLoading,
     }] = useMutation<CreateGame, CreateGameVariables>(CREATE_GAME);
-  const [callLobbyAlert, clearLobbyAlert] = useNotificationTimeout(LOBBY_NOTIFICATION_OPTIONS);
   const history = useHistory();
   useQuestionary();
-
-  useEffect(() => {
-    callLobbyAlert();
-  }, []);
-
-  const showModal = () => {
-    clearLobbyAlert();
-    setVisible(true);
-  };
 
   const cancelModal = () => {
     form.resetFields();
@@ -153,7 +140,12 @@ const Games: FC<GamesProps> = ({ activeGames, isOnlineGame }) => {
 
   const redirectToGame = (id: string) => {
     history.push(`/game/${id}`);
-    clearLobbyAlert();
+    clearAlerts?.();
+  };
+
+  const showModal = () => {
+    clearAlerts?.();
+    setVisible(true);
   };
 
   const handleCreateGame = async (values: CreateGameValues) => {

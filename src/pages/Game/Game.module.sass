@@ -1,5 +1,8 @@
 @import "src/index"
 
+.blur
+    opacity: 0
+
 .gameContainer
     display: grid
     grid-template-areas: "playersTableContainer header actionsContainer" "playersTableContainer playingField actionsContainer"
@@ -13,7 +16,7 @@
 
     @media all and (max-width: $mobileMax), all and (max-height: $mobileMax)
         grid-template-rows: $actionIconSizeSmallMobile minmax(90%, 1fr)
-        grid-template-columns: minmax(250px, 15%) 1fr $actionIconSizeSmallMobile
+        grid-template-columns: minmax(160px, 15%) 1fr $actionIconSizeSmallMobile
         height: calc(100vh - #{$footerSmallHeight})
 
 
@@ -23,6 +26,10 @@
     max-width: 1200px
     width: 100%
     justify-self: center
+
+    @media all and (max-width: $mobileMax), all and (max-height: $mobileMax)
+        margin: -30px 0 10px -38px
+
 
 .svg
     height: 100%
