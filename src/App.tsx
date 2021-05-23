@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { Menu, Layout } from 'antd';
+import React, { useCallback, useEffect, Suspense, useState } from 'react';
+import { Menu, Layout, Spin } from 'antd';
 import { without } from 'lodash';
 import { MenuOutlined } from '@ant-design/icons/lib';
 import { BrowserRouter, Link, Route, Switch, useHistory } from 'react-router-dom';
@@ -9,14 +9,7 @@ import 'antd/dist/antd.css';
 import { client } from './apollo';
 import { AuthContextProvider, useAuth } from './context/auth';
 import { ChatContextProvider } from './context/chat';
-import Login from './pages/Login/Login';
-import Lobby from './pages/Lobby/Lobby';
-import Statistic from './pages/Statistic/Statistic';
-import Game from './pages/Game/Game';
-import AddTournament from './pages/AddTournament/AddTournament';
-import UserStatistic from './pages/Statistic/UserStatistic';
 import NotFound from './pages/NotFound/NotFound';
-import CardsEditor from './pages/CardsEditor/CardsEditor';
 import ProtectedRoute from './utils/ProtectedRoute';
 import { UserRole } from './types';
 import Profile from './components/Profile/Profile';
@@ -25,6 +18,14 @@ import Rules, { RulesContextProvider } from './components/Rules';
 import logo from './assets/logo.png';
 
 import s from './App.module.sass';
+
+const Game = React.lazy(() => import('./pages/Game/Game'));
+const Statistic = React.lazy(() => import('./pages/Statistic/Statistic'));
+const AddTournament = React.lazy(() => import('./pages/AddTournament/AddTournament'));
+const UserStatistic = React.lazy(() => import('./pages/Statistic/UserStatistic'));
+const CardsEditor = React.lazy(() => import('./pages/CardsEditor/CardsEditor'));
+const Lobby = React.lazy(() => import('./pages/Lobby/Lobby'));
+const Login = React.lazy(() => import('./pages/Login/Login'));
 
 const PagesWithNavigation = () => {
   const { user } = useAuth();
@@ -126,11 +127,13 @@ function App() {
         <RulesContextProvider>
           <BrowserRouter>
             <div className={s.App}>
-              <Switch>
-                <Route exact path="/" component={Login} />
-                <ActivePages />
-                <Route component={NotFound} exact />
-              </Switch>
+              <Suspense fallback={<Spin size="large" />}>
+                <Switch>
+                  <Route exact path="/" component={Login} />
+                  <ActivePages />
+                  <Route component={NotFound} exact />
+                </Switch>
+              </Suspense>
             </div>
             <Layout.Footer className={s.Footer}>
               Backend -{' '}
