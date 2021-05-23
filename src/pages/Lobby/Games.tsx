@@ -1,9 +1,17 @@
 import React, { FC, useEffect, useState } from 'react';
-import { PlusOutlined } from '@ant-design/icons';
-import { Button, Form, Input, message, Modal, Select, Switch } from 'antd';
 import { useHistory } from 'react-router-dom';
-import { useForm } from 'antd/es/form/Form';
 import { useLazyQuery, useMutation } from '@apollo/client';
+
+import Button from 'antd/es/button';
+import Input from 'antd/es/input';
+import message from 'antd/es/message';
+import Modal from 'antd/es/modal';
+import Select from 'antd/es/select';
+import Switch from 'antd/es/switch';
+import Form from 'antd/es/form';
+import { useForm } from 'antd/es/form/Form';
+import PlusOutlined from '@ant-design/icons/lib/icons/PlusOutlined';
+
 import {
   CREATE_GAME,
   CreateGame,

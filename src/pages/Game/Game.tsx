@@ -1,9 +1,16 @@
 import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { withOrientationChange } from 'react-device-detect';
-import cn from 'classnames';
-import { Button, message, Modal, Popconfirm, Spin, Typography } from 'antd';
 import { RouteComponentProps, useHistory } from 'react-router-dom';
 import { ApolloError, useLazyQuery, useMutation } from '@apollo/client';
+import cn from 'classnames';
+
+import Button from 'antd/es/button';
+import Modal from 'antd/es/modal';
+import message from 'antd/es/message';
+import Popconfirm from 'antd/es/popconfirm';
+import Typography from 'antd/es/typography';
+import Spin from 'antd/es/spin';
+
 import {
   CHOICE_DREAM,
   ChoiceDream,

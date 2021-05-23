@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useRef } from 'react';
+
 import { useSVGContext } from './GameFieldSVG';
 import { Coords, getPlayerURLAvatarSVG, getSelector, PlayerControlProps, usePlayerIndex } from './utils';
 import { FieldType } from '../../../types';

@@ -1,7 +1,10 @@
 import React, { ComponentProps, FC } from 'react';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
-import { Avatar, Table, Typography } from 'antd';
+
+import Avatar from 'antd/es/avatar';
+import Table from 'antd/es/table';
+import Title from 'antd/es/typography/Title';
 
 import { StatisticGame } from './utils';
 import s from './Statistic.module.sass';
@@ -63,7 +66,7 @@ export const StatisticTable: FC<TableProps> = ({ title, games }) => {
     <>
       {games.length ? (
         <div className={s.tableContainer}>
-          <Typography.Title level={3}>{title || ''}</Typography.Title>
+          <Title level={3}>{title || ''}</Title>
           <Table
             columns={columns}
             dataSource={games}

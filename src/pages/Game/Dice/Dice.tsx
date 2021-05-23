@@ -1,6 +1,8 @@
 import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
 import cn from 'classnames';
-import { Statistic } from 'antd';
+
+import Statistic from 'antd/es/statistic';
+
 import { ReactComponent as Dice0 } from './Dice0.svg';
 import { ReactComponent as Dice1 } from './Dice1.svg';
 import { ReactComponent as Dice2 } from './Dice2.svg';

@@ -1,10 +1,13 @@
 import React, { FC } from 'react';
-import { Button } from 'antd';
-import { useMutation } from '@apollo/client';
 import cn from 'classnames';
+import { useMutation } from '@apollo/client';
+
+import Button from 'antd/es/button';
+
 import { CHOICE, Choice, ChoiceVariables } from '../../../apollo';
 
 import { ModalBodyProps } from './utils';
+
 import s from './CardModal.module.sass';
 
 const ChoicesAndIncidentBody: FC<ModalBodyProps<'Incident' | 'ChoiceCard'>> = ({

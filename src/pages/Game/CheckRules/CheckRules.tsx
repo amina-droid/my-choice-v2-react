@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
-import { Tooltip } from 'antd';
+
+import Tooltip from 'antd/es/tooltip';
 
 import { ReactComponent as RulesBtn } from './rules.svg';
 

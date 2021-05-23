@@ -1,5 +1,8 @@
 import React from 'react';
-import { Badge, Tabs } from 'antd';
+
+import Tabs from 'antd/es/tabs';
+import Badge from 'antd/es/badge';
+
 import { useAuth } from '../../context/auth';
 import { useChatContext } from '../../context/chat';
 

@@ -1,6 +1,8 @@
 import React, { FC } from 'react';
-import { Tooltip } from 'antd';
 import cn from 'classnames';
+
+import Tooltip from 'antd/es/tooltip';
+
 import { ReactComponent as LeaveGameBtn } from './Leave.svg';
 
 import s from './LeaveGame.module.sass';

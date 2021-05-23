@@ -1,5 +1,7 @@
 import React, { FC } from 'react';
-import { Statistic } from 'antd';
+
+import Statistic from 'antd/es/statistic';
+
 import useDeadline from '../../../utils/useDeadline';
 
 import s from './DreamTimer.module.sass';

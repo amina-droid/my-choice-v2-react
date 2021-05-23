@@ -1,5 +1,5 @@
 import React, { Reducer, useCallback, useContext, useMemo, useReducer } from 'react';
-import { omit } from 'lodash';
+import omit from 'lodash/omit';
 import { Actions } from '../../types';
 
 type ChatTopic = {

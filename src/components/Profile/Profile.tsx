@@ -1,6 +1,13 @@
 import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
-import { Button, Modal, Menu, Avatar, Form, Input } from 'antd';
+
+import Button from 'antd/es/button';
+import Modal from 'antd/es/modal';
+import Menu from 'antd/es/menu';
+import Avatar from 'antd/es/avatar';
+import Form from 'antd/es/form';
+import Input from 'antd/es/input';
+
 import { useAuth } from '../../context/auth';
 import {
   UPDATE_NICKNAME,

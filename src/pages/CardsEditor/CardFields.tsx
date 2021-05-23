@@ -1,10 +1,18 @@
 import React from 'react';
-import { Button, Card, Form, InputNumber, Select, Space, Typography } from 'antd';
+
+import Button from 'antd/es/button';
+import InputNumber from 'antd/es/input-number';
+import Select from 'antd/es/select';
+import Space from 'antd/es/space';
+import Form from 'antd/es/form';
+import Text from 'antd/es/typography/Text';
 import TextArea from 'antd/es/input/TextArea';
-import { MinusCircleOutlined } from '@ant-design/icons';
-import s from './CardsEditor.module.sass';
+import MinusCircleOutlined from '@ant-design/icons/lib/icons/MinusCircleOutlined';
+
 import { FieldType } from '../../types';
 import { FIELD_DICTIONARY } from './CardsEditor';
+
+import s from './CardsEditor.module.sass';
 
 const CHOICES_CARD = [FieldType.Dream, FieldType.Situation, FieldType.Reaction, FieldType.Offer];
 
@@ -44,9 +52,9 @@ const CardFields = () => {
           <>
             {fields.map((field, index) => (
               <Space key={field.key} direction="vertical" style={{ width: '100%' }}>
-                <Typography.Text>
+                <Text>
                   Вариант №{index + 1} <MinusCircleOutlined onClick={() => remove(field.name)} />
-                </Typography.Text>
+                </Text>
                 <div className={s.choice}>
                   <Form.Item
                     {...field}

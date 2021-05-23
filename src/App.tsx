@@ -1,9 +1,13 @@
 import React, { useCallback, useEffect, Suspense, useState } from 'react';
-import { Menu, Layout, Spin } from 'antd';
-import { without } from 'lodash';
-import { MenuOutlined } from '@ant-design/icons/lib';
 import { BrowserRouter, Link, Route, Switch, useHistory } from 'react-router-dom';
+import without from 'lodash/without';
 import { ApolloProvider } from '@apollo/client';
+
+import Spin from 'antd/es/spin';
+import Layout from 'antd/es/layout';
+import Menu from 'antd/es/menu';
+import MenuOutlined from '@ant-design/icons/lib/icons/MenuOutlined';
+
 import 'antd/dist/antd.css';
 
 import { client } from './apollo';

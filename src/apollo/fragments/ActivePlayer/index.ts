@@ -1,5 +1,5 @@
 import { loader } from 'graphql.macro';
-import { isNil } from 'lodash';
+import isNil from 'lodash/isNil';
 import { TypePolicy } from '@apollo/client/cache/inmemory/policies';
 import { ACTIVE_GAME, ActiveGame } from '../ActiveGame';
 

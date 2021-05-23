@@ -1,6 +1,7 @@
 import React, { PropsWithChildren, RefObject, Suspense, useContext } from 'react';
 import ReactDOM from 'react-dom';
-import { Spin } from 'antd';
+
+import Spin from 'antd/es/spin';
 
 const GameFieldSvg = React.lazy(() => import('./GameFieldSvg'));
 

@@ -1,8 +1,17 @@
 import React, { useState } from 'react';
-import { Button, Card, List, message, Modal, Popconfirm, Typography } from 'antd';
-import { EditOutlined, MinusCircleOutlined } from '@ant-design/icons';
 import { useMutation, useQuery } from '@apollo/client';
 import CustomScroll from 'react-custom-scroll';
+
+import Button from 'antd/es/button';
+import Modal from 'antd/es/modal';
+import message from 'antd/es/message';
+import Popconfirm from 'antd/es/popconfirm';
+import Text from 'antd/es/typography/Text';
+import Card from 'antd/es/card';
+import List from 'antd/es/list';
+import MinusCircleOutlined from '@ant-design/icons/lib/icons/MinusCircleOutlined';
+import EditOutlined from '@ant-design/icons/lib/icons/EditOutlined';
+
 import { GET_CARDS, GetCards, DELETE_CARD, DeleteCard, DeleteCardVariables } from '../../apollo';
 import EditCard from './EditCard';
 
@@ -59,14 +68,14 @@ const CardList = () => {
               <List.Item>
                 <List.Item.Meta
                   description={
-                    <Typography.Text
+                    <Text
                       copyable={{
                         text: card._id,
                         tooltips: ['Скопировать ID', 'Скопировано!'],
                       }}
                     >
                       ID: {card._id}
-                    </Typography.Text>
+                    </Text>
                   }
                   title={
                     <>

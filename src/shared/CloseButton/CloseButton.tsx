@@ -1,7 +1,8 @@
 import React, { FC } from 'react';
-import { CloseOutlined } from '@ant-design/icons';
-import { Button } from 'antd';
 import cn from 'classnames';
+
+import Button from 'antd/es/button';
+import CloseOutlined from '@ant-design/icons/lib/icons/CloseOutlined';
 
 import s from './CloseButton.module.sass';
 

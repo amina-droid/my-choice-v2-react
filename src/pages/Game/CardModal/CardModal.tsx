@@ -1,7 +1,12 @@
 import React, { FC, useReducer } from 'react';
-import { remove } from 'lodash';
-import { Modal, Spin, Statistic, Typography } from 'antd';
+import remove from 'lodash/remove';
 import { ApolloError, useSubscription } from '@apollo/client';
+
+import Spin from 'antd/es/spin';
+import Modal from 'antd/es/modal';
+import Statistic from 'antd/es/statistic';
+import Title from 'antd/es/typography/Title';
+import Text from 'antd/es/typography/Text';
 
 import {
   OnDroppedCard,
@@ -21,8 +26,6 @@ import { Actions } from '../../../types';
 import { ModalBodyProps } from './utils';
 
 import s from './CardModal.module.sass';
-
-const { Title } = Typography;
 
 type CardModalProps = {
   gameId: string;
@@ -163,9 +166,9 @@ const CardModal: FC<CardModalProps> = React.memo(
               (event.target as any).style.display = 'none';
             }}
           />
-          <Typography.Text className={s.choiceDescription}>
+          <Text className={s.choiceDescription}>
             {activeCard?.card.description}
-          </Typography.Text>
+          </Text>
           <div className={s.choiceContainer}>
             <CardBody
               choiceId={selectedChoiceId}

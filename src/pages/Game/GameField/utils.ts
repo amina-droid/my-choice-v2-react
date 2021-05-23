@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
-import { isNil } from 'lodash';
+import isNil from 'lodash/isNil';
 import { useApolloClient } from '@apollo/client';
+
 import { FieldType } from '../../../types';
 import { ACTIVE_PLAYER, ActiveGame, ActivePlayer } from '../../../apollo';
 import { useAuth } from '../../../context/auth';

@@ -1,7 +1,11 @@
 import React, { FC } from 'react';
-import { message, Popconfirm, Typography } from 'antd';
 import cn from 'classnames';
 import { useMutation } from '@apollo/client';
+
+import message from 'antd/es/message';
+import Popconfirm from 'antd/es/popconfirm';
+import Typography from 'antd/es/typography';
+
 import {
   DELETE_GAME,
   DeleteGame,

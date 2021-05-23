@@ -1,5 +1,9 @@
 import React, { FC } from 'react';
-import { Modal, Typography } from 'antd';
+
+import Modal from 'antd/es/modal';
+import Title from 'antd/es/typography/Title';
+import Paragraph from 'antd/es/typography/Paragraph';
+
 import { NavButton } from './utils';
 import { useRulesContext } from './context';
 
@@ -170,7 +174,6 @@ const Blocks: FC = () => {
   }
 };
 
-const { Title, Paragraph } = Typography;
 const Rules: FC<RulesProps> = ({ closeModal, visible }) => (
   <Modal
     title="Правила игры"

@@ -1,7 +1,10 @@
 import React, { FC, useEffect, useMemo } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { useLazyQuery } from '@apollo/client';
-import { Avatar, Spin } from 'antd';
+
+import Spin from 'antd/es/spin';
+import Avatar from 'antd/es/avatar';
+
 import { GET_USER, GetUser, GetUserVariables } from '../../apollo';
 
 import { withAccess } from '../../shared/AccessHOC/AccessHOC';

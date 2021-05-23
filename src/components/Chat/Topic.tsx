@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { useLazyQuery, useMutation } from '@apollo/client';
-import { Comment } from 'antd';
+
+import Comment from 'antd/es/comment';
 
 import { useChatContext } from '../../context/chat';
 import CommentList from './CommentList';

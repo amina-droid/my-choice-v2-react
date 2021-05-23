@@ -1,9 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Avatar, Comment, List, Popconfirm, Tooltip } from 'antd';
-import { MinusCircleOutlined } from '@ant-design/icons/lib';
 import moment from 'moment';
 import CustomScroll from 'react-custom-scroll';
+
+import Tooltip from 'antd/es/tooltip';
+import Popconfirm from 'antd/es/popconfirm';
+import Avatar from 'antd/es/avatar';
+import Comment from 'antd/es/comment';
+import List from 'antd/es/list';
+import MinusCircleOutlined from '@ant-design/icons/lib/icons/MinusCircleOutlined';
+
 import 'react-custom-scroll/dist/customScroll.css';
 import { GetMessages } from '../../apollo';
 import { withAccess } from '../../shared/AccessHOC/AccessHOC';

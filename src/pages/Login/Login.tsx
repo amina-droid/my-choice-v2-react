@@ -1,7 +1,11 @@
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useApolloClient } from '@apollo/client';
-import { Button, Card, Tooltip } from 'antd';
+
+import Tooltip from 'antd/es/tooltip';
+import Button from 'antd/es/button';
+import Card from 'antd/es/card';
+
 import {
   AUTH_VK,
   AuthVK,

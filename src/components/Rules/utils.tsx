@@ -1,5 +1,7 @@
 import React, { FC } from 'react';
-import { Button } from 'antd';
+
+import Button from 'antd/es/button';
+
 import { BlockTypes, useRulesContext } from './context';
 
 import s from './Rules.module.sass';

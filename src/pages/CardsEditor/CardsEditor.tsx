@@ -2,9 +2,10 @@ import React from 'react';
 import { withAccess } from '../../shared/AccessHOC/AccessHOC';
 import { FieldType, UserRole } from '../../types';
 
-import s from './CardsEditor.module.sass';
 import AddCard from './AddCard';
 import CardList from './CardList';
+
+import s from './CardsEditor.module.sass';
 
 export const FIELD_DICTIONARY = {
   [FieldType.Start]: 'Старт',

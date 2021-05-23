@@ -1,7 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { isMobile } from 'react-device-detect';
-import { Tabs } from 'antd';
 import { useQuery } from '@apollo/client';
+
+import Tabs from 'antd/es/tabs';
+
 import {
   GET_ACTIVE_GAMES,
   GetActiveGames,

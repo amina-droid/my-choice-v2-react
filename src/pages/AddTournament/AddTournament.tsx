@@ -1,5 +1,13 @@
 import React, { useEffect } from 'react';
-import { Button, Card, Form, Input, List, message, Popconfirm, Typography } from 'antd';
+
+import Button from 'antd/es/button';
+import Input from 'antd/es/input';
+import message from 'antd/es/message';
+import Form from 'antd/es/form';
+import Text from 'antd/es/typography/Text';
+import Card from 'antd/es/card';
+import List from 'antd/es/list';
+
 import CustomScroll from 'react-custom-scroll';
 import { useForm } from 'antd/es/form/Form';
 import { useLazyQuery, useMutation } from '@apollo/client';
@@ -65,14 +73,14 @@ const AddTournament = () => {
               <List.Item>
                 <List.Item.Meta
                   description={
-                    <Typography.Text
+                    <Text
                       copyable={{
                         text: tournament._id,
                         tooltips: ['Скопировать ID', 'Скопировано!'],
                       }}
                     >
                       ID: {tournament._id}
-                    </Typography.Text>
+                    </Text>
                   }
                   title={<>{tournament.name}</>}
                 />

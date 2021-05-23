@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
-import { Button } from 'antd';
 import { useMutation } from '@apollo/client';
+
+import Button from 'antd/es/button';
 
 import {
   SEND_OPPORTUNITY_RESULT,

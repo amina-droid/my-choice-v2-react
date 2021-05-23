@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useApolloClient } from '@apollo/client';
-import { Modal } from 'antd';
+
+import Modal from 'antd/es/modal';
+
 import { ACTIVE_PLAYER, ActivePlayer } from '../../../apollo';
 import { useAuth } from '../../../context/auth';
 import { UserSex } from '../../../types';

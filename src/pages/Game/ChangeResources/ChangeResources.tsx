@@ -1,13 +1,18 @@
 import React, { FC, useState } from 'react';
-import { Button, Modal, Tooltip } from 'antd';
-import { SwapOutlined } from '@ant-design/icons';
 import { useMutation } from '@apollo/client';
+
+import Button from 'antd/es/button';
+import Modal from 'antd/es/modal';
+import Tooltip from 'antd/es/tooltip';
+import SwapOutlined from '@ant-design/icons/lib/icons/SwapOutlined';
+
 import { SHARE_RESOURCES, ShareResources, ShareResourcesVariables } from '../../../apollo';
 import { ReactComponent as ChangerBtn } from './changer.svg';
 
-import s from './ChangeResources.module.sass';
 import { ResourcesInput, ResourceType } from '../../../types';
 import { RESOURCES_DICT_OBJ } from '../PlayersTable/PlayerRow';
+
+import s from './ChangeResources.module.sass';
 
 type ChangeResourcesProps = {
   className?: string;

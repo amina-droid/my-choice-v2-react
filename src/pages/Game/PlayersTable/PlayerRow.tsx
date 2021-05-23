@@ -1,7 +1,13 @@
 import React, { FC, useEffect } from 'react';
-import { isNil } from 'lodash';
-import { Avatar, Badge, message, Spin, Tooltip } from 'antd';
+import isNil from 'lodash/isNil';
 import cn from 'classnames';
+
+import Avatar from 'antd/es/avatar';
+import Badge from 'antd/es/badge';
+import message from 'antd/es/message';
+import Spin from 'antd/es/spin';
+import Tooltip from 'antd/es/tooltip';
+
 import { ActivePlayer } from '../../../apollo';
 
 import { ReactComponent as Lives } from '../Resources/Lives.svg';

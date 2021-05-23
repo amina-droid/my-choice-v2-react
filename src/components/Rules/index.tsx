@@ -1,5 +1,5 @@
 import React, { FC, lazy, Suspense } from 'react';
-import { Spin } from 'antd';
+import Spin from 'antd/es/spin';
 import { RulesProps } from './Rules';
 
 export * from './context';

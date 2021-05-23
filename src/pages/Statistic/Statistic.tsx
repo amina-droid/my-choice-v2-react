@@ -1,6 +1,10 @@
 import React, { FC, useEffect, useMemo } from 'react';
-import { useLazyQuery, useQuery } from '@apollo/client';
-import { Card, Spin, Statistic } from 'antd';
+import { useLazyQuery } from '@apollo/client';
+
+import Spin from 'antd/es/spin';
+import Statistic from 'antd/es/statistic';
+import Card from 'antd/es/card';
+
 import { GET_STATISTIC, GetStatistic, GetStatisticVariables } from '../../apollo';
 
 import { withAccess } from '../../shared/AccessHOC/AccessHOC';
