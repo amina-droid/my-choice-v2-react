@@ -110,7 +110,7 @@ type Mutation {
     createIncidentCard(createIncidentCard: CreateIncidentCardInput!): Card!
     createTournament(name: String!): Tournament!
     deleteGame(gameId: ObjectId!): Boolean!
-    deleteMessage(messageId: ObjectId!, topic: String!): Boolean!
+    deleteMessage(messageId: ObjectId!): Boolean!
     leaveGame(gameId: ObjectId!): Boolean!
     move(moveCount: Int!): Boolean!
     opportunityResult(diceResult: Int, opportunityId: ObjectId!): Boolean!
@@ -157,13 +157,14 @@ type Query {
     card(_id: ObjectId!): Card!
     cards: [Card!]!
     game(_id: ObjectId!): Game!
-    games(userId: ObjectId): [Game!]!
     getActiveGames: [GameSession!]!
     getVKOAuthRedirect: AuthRedirect!
     joinGame(gameId: ObjectId!): GameSession!
     messages(topic: String!): [Message!]!
+    tournamentGames(limit: Int, offset: Int, tournamentId: ObjectId): [Game!]!
     tournaments: [Tournament!]!
     user(_id: ObjectId!): User
+    userGames(userId: ObjectId): [Game!]!
 }
 
 type RemoveMessage {

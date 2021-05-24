@@ -1,0 +1,7 @@
+#import "./../../fragments/Statistic/fragment.gql"
+
+query GetUserStatistic($userId: ObjectId) {
+    userGames(userId: $userId) {
+        ...Statistic
+    }
+}

@@ -1,0 +1,7 @@
+fragment GameUser on User {
+    _id
+    nickname
+    photos {
+        url
+    }
+}

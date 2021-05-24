@@ -49,7 +49,6 @@ export const Topic: React.FC<Props> = ({ topic }) => {
     await removeMessage({
       variables: {
         messageId,
-        topic,
       },
     });
     refetch?.();

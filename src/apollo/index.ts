@@ -1,4 +1,5 @@
 import { ApolloClient, InMemoryCache } from '@apollo/client';
+import { offsetLimitPagination } from '@apollo/client/utilities';
 import { PlayerPolicy } from './fragments';
 import link from './links';
 
@@ -15,6 +16,11 @@ export const client = new ApolloClient({
       Card: ['ChoiceCard', 'Incident', 'Opportunity'],
     },
     typePolicies: {
+      Query: {
+        fields: {
+          tournamentGames: offsetLimitPagination(['tournamentId']),
+        },
+      },
       Player: PlayerPolicy,
     },
   }),

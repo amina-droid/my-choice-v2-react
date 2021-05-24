@@ -1,6 +1,4 @@
-import { GetStatistic } from '../../apollo';
-
-export type StatisticGame = GetStatistic['games'][0]
+import { Statistic as StatisticGame } from '../../apollo';
 
 export type GamesStatistic = {
   winCount: number;

@@ -26,7 +26,6 @@ import s from './App.module.sass';
 const Game = React.lazy(() => import('./pages/Game/Game'));
 const Statistic = React.lazy(() => import('./pages/Statistic/Statistic'));
 const AddTournament = React.lazy(() => import('./pages/AddTournament/AddTournament'));
-const UserStatistic = React.lazy(() => import('./pages/Statistic/UserStatistic'));
 const CardsEditor = React.lazy(() => import('./pages/CardsEditor/CardsEditor'));
 const Lobby = React.lazy(() => import('./pages/Lobby/Lobby'));
 const Login = React.lazy(() => import('./pages/Login/Login'));
@@ -101,8 +100,7 @@ const PagesWithNavigation = () => {
       <Rules visible={visibleRules} closeModal={closeRulesModal} />
       <Switch>
         <ProtectedRoute exact path="/lobby" component={Lobby} />
-        <ProtectedRoute exact path="/statistic" component={Statistic} />
-        <ProtectedRoute exact path="/statistic/:userId" component={UserStatistic} />
+        <ProtectedRoute exact path="/statistic/:tabId?" component={Statistic} />
         <ProtectedRoute exact path="/edit-cards" component={CardsEditor} />
         <ProtectedRoute exact path="/add-tournament" component={AddTournament} />
       </Switch>

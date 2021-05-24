@@ -1,0 +1,7 @@
+#import "./../../fragments/Statistic/fragment.gql"
+
+query GetTournamentsStatistic($limit: Int, $offset: Int, $tournamentId: ObjectId) {
+    tournamentGames(limit: $limit, offset: $offset, tournamentId: $tournamentId) {
+        ...Statistic
+    }
+}

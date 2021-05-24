@@ -1,103 +1,91 @@
-import React, { FC, useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
+import { useRouteMatch, Switch, useHistory } from 'react-router-dom';
 import { useLazyQuery } from '@apollo/client';
 
-import Spin from 'antd/es/spin';
-import Statistic from 'antd/es/statistic';
-import Card from 'antd/es/card';
+import Tabs from 'antd/es/tabs';
+import Avatar from 'antd/es/avatar';
 
-import { GET_STATISTIC, GetStatistic, GetStatisticVariables } from '../../apollo';
+import usePrevious from '../../utils/usePrevious';
+import { GET_USER, GetUser, GetUserVariables } from '../../apollo';
 
-import { withAccess } from '../../shared/AccessHOC/AccessHOC';
-import { UserRole } from '../../types';
-import { useAuth } from '../../context/auth';
-
-import { StatisticTable } from './StatisticTable';
-import { GamesStatistic, gamesToStatistic } from './utils';
 import s from './Statistic.module.sass';
 
-type Props = {
-  userId: string,
-  title: React.ReactNode,
-};
+const ProfileStatistic = React.lazy(() => import('./ProfileStatistic'));
+const GamesStatistic = React.lazy(() => import('./GamesStatistic'));
 
-const StatisticPage: FC<Props> = ({ userId, title }) => {
-  const { user } = useAuth();
-  const [
-    fetchStatistic,
-    { data, loading, error },
-    ] = useLazyQuery<GetStatistic, GetStatisticVariables>(GET_STATISTIC);
+const { TabPane } = Tabs;
+
+type RouteMatchProps = {
+  tabId?: string;
+}
+
+const StatisticPage = () => {
+  const { path, url, params } = useRouteMatch<RouteMatchProps>();
+  const [customUser, setCustomUser] = useState<string>();
+  const history = useHistory();
+  const [getUser, { data, loading, error }] = useLazyQuery<GetUser, GetUserVariables>(GET_USER);
+  const previousUser = usePrevious(customUser);
 
   useEffect(() => {
-    fetchStatistic({
-      variables: {
-        userId,
-      },
-    });
-  }, [userId]);
+    if (!loading && customUser && customUser !== previousUser) {
+      getUser({
+        variables: {
+          userId: customUser,
+        },
+      });
+    }
+  }, [getUser, customUser, loading]);
 
-  const statistic: GamesStatistic | undefined = useMemo(
-    () => gamesToStatistic(data?.games, userId || user?._id),
-    [data, user?._id, userId],
-  );
-
-  if (loading) {
+  const userTitle = useMemo(() => {
+    if (!data?.user) return undefined;
     return (
-      <div className={s.container}>
-        <Spin size="large" />
+      <div className={s.userTitle}>
+        <Avatar className={s.userTitleAvatar} src={data?.user?.photos[0].url} size={50} />
+        {data?.user?.nickname}
       </div>
     );
-  }
+  }, [data]);
 
-  if (!data?.games) {
-    return (
-      <div className={s.container}>
-        Вы еще не поучаствовали ни в одной из игр
-      </div>
-    );
-  }
+  useEffect(() => {
+    if (params.tabId && params.tabId !== 'own') {
+      setCustomUser(params.tabId);
+    }
+  }, [params.tabId]);
 
   return (
     <div className={s.container}>
-      {title}
-      <div className={s.shortStat}>
-        <Card>
-          <Statistic
-            className={s.statItem}
-            title="Сыграно игр"
-            value={data?.games.length}
-          />
-        </Card>
-        <Card>
-          <Statistic
-            className={s.statItem}
-            title="Одержано побед"
-            value={statistic?.winCount}
-          />
-        </Card>
-        <Card>
-          <Statistic
-            className={s.statItem}
-            title="Участие в турнирах"
-            value={statistic?.tournamentCount}
-          />
-        </Card>
-      </div>
-      {statistic?.categories && (
-        <div>
-          {Object.entries(statistic?.categories).map(([
-            tournamentId,
-            games,
-          ]) => (
-            <StatisticTable
-              key={tournamentId}
-              games={games}
-              title={statistic?.tournamentsConfig.get(tournamentId)}
-            />
-          ))}
-        </div>
-      )}
+      <Switch>
+        <Tabs
+          activeKey={url}
+          size="large"
+          className={s.tab}
+          onChange={history.push}
+        >
+          <TabPane tab={<span className={s.navItem}>Моя статистика</span>} key="/statistic">
+            <ProfileStatistic />
+          </TabPane>
+          {customUser && (
+            <TabPane
+              tab={
+                <span
+                  className={s.navItem}
+                >
+                {(loading || !data?.user) ? 'Загрузка...' : data.user.nickname}
+                </span>
+              }
+              closable
+              key={`/statistic/${customUser}`}
+            >
+              <ProfileStatistic title={userTitle} userId={customUser} />
+            </TabPane>
+          )}
+          <TabPane tab={<span className={s.navItem}>Общая статистика</span>} key="/statistic/own">
+            <GamesStatistic />
+          </TabPane>
+        </Tabs>
+      </Switch>
     </div>
   );
 };
 
-export default withAccess<Props>([UserRole.User], true)(StatisticPage);
+export default StatisticPage;

@@ -6,12 +6,13 @@ import Avatar from 'antd/es/avatar';
 import Table from 'antd/es/table';
 import Title from 'antd/es/typography/Title';
 
-import { StatisticGame } from './utils';
+import { Statistic as StatisticGame } from '../../apollo';
 import s from './Statistic.module.sass';
 
 type TableProps = {
   title?: string;
-  games: StatisticGame[]
+  loading?: boolean;
+  games?: StatisticGame[]
 }
 
 const getUserRow = (nullMessage: string) => (user: any) => {
@@ -61,21 +62,22 @@ const columns: ComponentProps<typeof Table>['columns'] = [
   },
 ];
 
-export const StatisticTable: FC<TableProps> = ({ title, games }) => {
+export const StatisticTable: FC<TableProps> = ({
+  title,
+  games,
+  loading,
+}) => {
   return (
-    <>
-      {games.length ? (
-        <div className={s.tableContainer}>
-          <Title level={3}>{title || ''}</Title>
-          <Table
-            columns={columns}
-            dataSource={games}
-            bordered
-            scroll={{ x: 900 }}
-            pagination={{ pageSizeOptions: ['10'] }}
-          />
-        </div>
-      ) : null}
-    </>
+    <div className={s.tableContainer}>
+      <Title level={3}>{title || ''}</Title>
+      <Table
+        loading={loading}
+        columns={columns}
+        dataSource={games}
+        bordered
+        scroll={{ x: 900 }}
+        pagination={{ pageSizeOptions: ['10'] }}
+      />
+    </div>
   );
 };

@@ -1,0 +1,17 @@
+#import "./../GameUser/fragment.gql
+
+fragment Statistic on Game {
+    _id
+    name
+    createdAt
+    winner {
+        ...GameUser
+    }
+    tournament {
+        _id
+        name
+    }
+    players {
+        ...GameUser
+    }
+}
