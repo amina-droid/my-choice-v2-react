@@ -16,11 +16,6 @@ export const client = new ApolloClient({
       Card: ['ChoiceCard', 'Incident', 'Opportunity'],
     },
     typePolicies: {
-      Query: {
-        fields: {
-          tournamentGames: offsetLimitPagination(['tournamentId']),
-        },
-      },
       Player: PlayerPolicy,
     },
   }),

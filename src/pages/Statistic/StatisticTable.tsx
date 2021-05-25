@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import Avatar from 'antd/es/avatar';
 import Table from 'antd/es/table';
 import Title from 'antd/es/typography/Title';
+import { PaginationProps } from 'antd/es/pagination';
 
 import { Statistic as StatisticGame } from '../../apollo';
 import s from './Statistic.module.sass';
@@ -12,8 +13,9 @@ import s from './Statistic.module.sass';
 type TableProps = {
   title?: string;
   loading?: boolean;
-  games?: StatisticGame[]
-}
+  games?: StatisticGame[];
+  pagination?: PaginationProps;
+};
 
 const getUserRow = (nullMessage: string) => (user: any) => {
   if (!user) return nullMessage;
@@ -39,7 +41,7 @@ const columns: ComponentProps<typeof Table>['columns'] = [
     width: 200,
     render: (createdAt: string) => {
       const date = moment(createdAt);
-      return (<span>{date.format('Do MMMM YYYY, в HH:mm')}</span>);
+      return <span>{date.format('Do MMMM YYYY, в HH:mm')}</span>;
     },
   },
   {
@@ -48,9 +50,7 @@ const columns: ComponentProps<typeof Table>['columns'] = [
     key: 'players',
     width: 400,
     render: (players: StatisticGame['players']) => (
-      <div className={s.players}>
-        {players.map(getUserRow('Игрок не найден'))}
-      </div>
+      <div className={s.players}>{players.map(getUserRow('Игрок не найден'))}</div>
     ),
   },
   {
@@ -66,6 +66,7 @@ export const StatisticTable: FC<TableProps> = ({
   title,
   games,
   loading,
+  pagination = { pageSizeOptions: ['10'], size: 'small', showSizeChanger: false },
 }) => {
   return (
     <div className={s.tableContainer}>
@@ -76,7 +77,7 @@ export const StatisticTable: FC<TableProps> = ({
         dataSource={games}
         bordered
         scroll={{ x: 900 }}
-        pagination={{ pageSizeOptions: ['10'] }}
+        pagination={pagination}
       />
     </div>
   );

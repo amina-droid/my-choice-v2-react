@@ -85,6 +85,11 @@ type GameSessionTimers {
     dream: DateTime
 }
 
+type GamesWithCounter {
+    games: [Game!]!
+    totalCount: Int!
+}
+
 type Incident implements Card {
     _id: ObjectId!
     action: Action!
@@ -161,7 +166,7 @@ type Query {
     getVKOAuthRedirect: AuthRedirect!
     joinGame(gameId: ObjectId!): GameSession!
     messages(topic: String!): [Message!]!
-    tournamentGames(limit: Int, offset: Int, tournamentId: ObjectId): [Game!]!
+    tournamentGames(limit: Int, offset: Int, tournamentId: ObjectId): GamesWithCounter!
     tournaments: [Tournament!]!
     user(_id: ObjectId!): User
     userGames(userId: ObjectId): [Game!]!

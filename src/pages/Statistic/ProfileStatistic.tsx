@@ -16,16 +16,16 @@ import { GamesStatistic, gamesToStatistic } from './utils';
 import s from './Statistic.module.sass';
 
 type Props = {
-  userId?: string,
-  title?: React.ReactNode,
+  userId?: string;
+  title?: React.ReactNode;
 };
 
 const ProfileStatistic: FC<Props> = ({ userId, title }) => {
   const { user } = useAuth();
-  const [
-    fetchStatistic,
-    { data, loading, error },
-    ] = useLazyQuery<GetUserStatistic, GetUserStatisticVariables>(GET_USER_STATISTIC);
+  const [fetchStatistic, { data, loading, error }] = useLazyQuery<
+    GetUserStatistic,
+    GetUserStatisticVariables
+  >(GET_USER_STATISTIC);
 
   useEffect(() => {
     fetchStatistic({
@@ -41,15 +41,11 @@ const ProfileStatistic: FC<Props> = ({ userId, title }) => {
   );
 
   if (loading) {
-    return (<Spin size="large" />);
+    return <Spin size="large" />;
   }
 
   if (!data?.userGames) {
-    return (
-      <>
-        Вы еще не поучаствовали ни в одной из игр
-      </>
-    );
+    return <>Вы еще не поучаствовали ни в одной из игр</>;
   }
 
   return (
@@ -57,18 +53,10 @@ const ProfileStatistic: FC<Props> = ({ userId, title }) => {
       {title}
       <div className={s.shortStat}>
         <Card>
-          <Statistic
-            className={s.statItem}
-            title="Сыграно игр"
-            value={data?.userGames.length}
-          />
+          <Statistic className={s.statItem} title="Сыграно игр" value={data?.userGames.length} />
         </Card>
         <Card>
-          <Statistic
-            className={s.statItem}
-            title="Одержано побед"
-            value={statistic?.winCount}
-          />
+          <Statistic className={s.statItem} title="Одержано побед" value={statistic?.winCount} />
         </Card>
         <Card>
           <Statistic
@@ -80,10 +68,7 @@ const ProfileStatistic: FC<Props> = ({ userId, title }) => {
       </div>
       {statistic?.categories && (
         <div>
-          {Object.entries(statistic?.categories).map(([
-            tournamentId,
-            games,
-          ]) => (
+          {Object.entries(statistic?.categories).map(([tournamentId, games]) => (
             <StatisticTable
               key={tournamentId}
               games={games}
@@ -96,7 +81,4 @@ const ProfileStatistic: FC<Props> = ({ userId, title }) => {
   );
 };
 
-export default withAccess<Props>(
-  [UserRole.User],
-  true,
-)(ProfileStatistic);
+export default withAccess<Props>([UserRole.User], true)(ProfileStatistic);
