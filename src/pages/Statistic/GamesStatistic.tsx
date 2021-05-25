@@ -94,6 +94,7 @@ const GamesStatistic: FC = () => {
       current: state.currentPage,
       onChange: handlePaginationChange,
       size: 'small' as const,
+      position: ['bottomLeft' as const],
     }),
     [statistic, handlePaginationChange],
   );

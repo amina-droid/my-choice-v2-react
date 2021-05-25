@@ -3,9 +3,8 @@ import moment from 'moment';
 import { Link } from 'react-router-dom';
 
 import Avatar from 'antd/es/avatar';
-import Table from 'antd/es/table';
+import Table, { TablePaginationConfig } from 'antd/es/table';
 import Title from 'antd/es/typography/Title';
-import { PaginationProps } from 'antd/es/pagination';
 
 import { Statistic as StatisticGame } from '../../apollo';
 import s from './Statistic.module.sass';
@@ -14,7 +13,7 @@ type TableProps = {
   title?: string;
   loading?: boolean;
   games?: StatisticGame[];
-  pagination?: PaginationProps;
+  pagination?: TablePaginationConfig;
 };
 
 const getUserRow = (nullMessage: string) => (user: any) => {
@@ -66,7 +65,12 @@ export const StatisticTable: FC<TableProps> = ({
   title,
   games,
   loading,
-  pagination = { pageSizeOptions: ['10'], size: 'small', showSizeChanger: false },
+  pagination = {
+    pageSizeOptions: ['10'],
+    size: 'small',
+    showSizeChanger: false,
+    position: ['bottomLeft'],
+  },
 }) => {
   return (
     <div className={s.tableContainer}>
