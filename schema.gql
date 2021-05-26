@@ -165,7 +165,7 @@ type Query {
     getActiveGames: [GameSession!]!
     getVKOAuthRedirect: AuthRedirect!
     joinGame(gameId: ObjectId!): GameSession!
-    messages(topic: String!): [Message!]!
+    messages(limit: Int, offset: Int, topic: String!): [Message!]!
     tournamentGames(limit: Int, offset: Int, tournamentId: ObjectId): GamesWithCounter!
     tournaments: [Tournament!]!
     user(_id: ObjectId!): User

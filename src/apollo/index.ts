@@ -12,10 +12,16 @@ export const client = new ApolloClient({
   link,
   credentials: 'same-origin', // Additional fetch() options like `credentials` or `headers`
   cache: new InMemoryCache({
+
     possibleTypes: {
       Card: ['ChoiceCard', 'Incident', 'Opportunity'],
     },
     typePolicies: {
+      Query: {
+        fields: {
+          messages: offsetLimitPagination(['topic']),
+        },
+      },
       Player: PlayerPolicy,
     },
   }),

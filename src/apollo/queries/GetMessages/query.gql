@@ -1,7 +1,7 @@
 #import "./../../fragments/ChatMessage/fragment.gql"
 
-query GetMessages($topic: String!) {
-    messages(topic: $topic) {
+query GetMessages($topic: String!, $limit: Int, $offset: Int) {
+    messages(topic: $topic, limit: $limit, offset: $offset) {
         ...ChatMessage
     }
 }

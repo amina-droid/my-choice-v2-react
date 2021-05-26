@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-// @generated
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -28,4 +27,6 @@ export interface GetMessages {
 
 export interface GetMessagesVariables {
   topic: string;
+  limit?: number | null;
+  offset?: number | null;
 }

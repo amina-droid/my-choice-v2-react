@@ -8,6 +8,7 @@ import Popconfirm from 'antd/es/popconfirm';
 import Avatar from 'antd/es/avatar';
 import Comment from 'antd/es/comment';
 import List from 'antd/es/list';
+import Button from 'antd/es/button';
 import MinusCircleOutlined from '@ant-design/icons/lib/icons/MinusCircleOutlined';
 
 import 'react-custom-scroll/dist/customScroll.css';
@@ -22,6 +23,8 @@ const Z_INDEX = { zIndex: 1200 };
 type Props = {
   comments: GetMessages['messages'];
   onRemove: (id: string) => void;
+  onLoad?: () => void;
+  visible?: boolean;
   loading?: boolean;
 };
 
@@ -48,9 +51,13 @@ const CommentList: React.FC<Props> = ({
   comments,
   loading,
   onRemove,
+  onLoad,
+  visible,
 }) => {
   return (
     <CustomScroll allowOuterScroll keepAtBottom>
+      {visible && !loading && (
+        <Button type="link" block onClick={onLoad} loading={loading}>Загрузить еще</Button>)}
       <List
         dataSource={comments}
         itemLayout="horizontal"
