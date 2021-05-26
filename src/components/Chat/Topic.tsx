@@ -42,42 +42,50 @@ const initialState = {
 export const Topic: React.FC<Props> = ({ topic }) => {
   const [{ limit, visibleLoadMore }, setLimit] = useState<LoadMoreState>(initialState);
   const { incrementMessage } = useChatContext();
+  const
+    [
+      fetchMessages,
+      { data, loading: initLoading, subscribeToMore, fetchMore },
+    ] = useLazyQuery<
+      GetMessages,
+      GetMessagesVariables
+      >(GET_MESSAGES, {
+      nextFetchPolicy: 'cache-only',
+    });
   const [sendMessage, {
     loading: sendLoading,
   }] = useMutation<SendMessage, SendMessageVariables>(SEND_MESSAGE);
-  const [removeMessage, {
-    loading: removeLoading,
-  }] = useMutation<RemoveMessage, RemoveMessageVariables>(REMOVE_MESSAGE);
-
-  const
-    [
-      getMessages,
-      { data, loading: initLoading, subscribeToMore, refetch, fetchMore },
-    ] = useLazyQuery<
-    GetMessages,
-    GetMessagesVariables
-  >(GET_MESSAGES, {
-    nextFetchPolicy: 'cache-only',
-  });
+  const [removeMessage] = useMutation<RemoveMessage, RemoveMessageVariables>(REMOVE_MESSAGE);
 
   const removeMessageHandler = useCallback(async (messageId) => {
     await removeMessage({
       variables: {
         messageId,
       },
+      update(cache) {
+        cache.writeQuery<GetMessages, GetMessagesVariables>({
+          query: GET_MESSAGES,
+          variables: { topic },
+          data: {
+            messages: cache.readQuery<GetMessages, GetMessagesVariables>({
+              query: GET_MESSAGES,
+              variables: { topic },
+            })!.messages.filter((m) => (m._id !== messageId)),
+          },
+        });
+      },
     });
-    refetch?.();
-  }, [removeMessage, topic, refetch]);
+  }, [removeMessage, topic]);
 
   useEffect(() => {
-    getMessages({
+    fetchMessages({
       variables: {
         topic,
         offset: 0,
         limit,
       },
     });
-  }, [getMessages]);
+  }, [fetchMessages]);
 
   useEffect(() => {
     if (!subscribeToMore) return () => {};
