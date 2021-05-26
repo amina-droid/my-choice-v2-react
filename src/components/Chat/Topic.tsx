@@ -63,6 +63,10 @@ export const Topic: React.FC<Props> = ({ topic }) => {
         messageId,
       },
       update(cache) {
+        setLimit(prevState => ({
+          ...prevState,
+          limit: prevState.limit - 1,
+        }));
         cache.writeQuery<GetMessages, GetMessagesVariables>({
           query: GET_MESSAGES,
           variables: { topic },
