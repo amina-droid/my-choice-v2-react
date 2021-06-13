@@ -1,12 +1,13 @@
 import { WebSocketLink } from '@apollo/client/link/ws';
 import { SubscriptionClient } from 'subscriptions-transport-ws';
 import apolloConfig from './config';
+import Token from '../../utils/token';
 
 const client = new SubscriptionClient(apolloConfig.WS_URL, {
   reconnect: true,
-  connectionParams: {
-    authToken: localStorage.getItem('token'),
-  },
+  connectionParams: () => ({
+    authToken: Token.getAccessToken(),
+  }),
 });
 
 client.onDisconnected(() => {

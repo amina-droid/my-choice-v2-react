@@ -3,20 +3,20 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: AuthVK
+// GraphQL mutation operation: RefreshTokens
 // ====================================================
 
-export interface AuthVK_authVK {
+export interface RefreshTokens_refreshTokens {
   __typename: "Tokens";
   access: string;
   refresh: string;
 }
 
-export interface AuthVK {
-  authVK: AuthVK_authVK;
+export interface RefreshTokens {
+  refreshTokens: RefreshTokens_refreshTokens;
 }
 
-export interface AuthVKVariables {
-  code: string;
-  extra?: string | null;
+export interface RefreshTokensVariables {
+  access: string;
+  refresh: string;
 }

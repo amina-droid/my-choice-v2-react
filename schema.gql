@@ -26,10 +26,6 @@ type AuthRedirect {
     url: String!
 }
 
-type AuthResponse {
-    token: String!
-}
-
 type Author {
     _id: ObjectId!
     avatar: String
@@ -107,7 +103,7 @@ type Message {
 }
 
 type Mutation {
-    authVK(code: String!, extra: String): AuthResponse!
+    authVK(code: String!, extra: String): Tokens!
     choice(cardId: ObjectId!, choiceId: ObjectId): Boolean!
     choiceDream(dream: Int!): Boolean!
     createChoicesCard(createChoicesCard: CreateChoicesCardInput!): Card!
@@ -119,6 +115,7 @@ type Mutation {
     leaveGame(gameId: ObjectId!): Boolean!
     move(moveCount: Int!): Boolean!
     opportunityResult(diceResult: Int, opportunityId: ObjectId!): Boolean!
+    refreshTokens(oldTokens: TokensInput!): Tokens!
     removeCard(cardId: ObjectId!): Card!
     sendMessage(message: String!, topic: String!): Boolean!
     shareResources(shareResourcesInput: ShareResourcesInput!): Boolean!
@@ -196,6 +193,11 @@ type Subscription {
     playerChoice(gameId: ObjectId!): ChoiceOption!
     updateActiveGame(gameId: ObjectId!): GameSession!
     updateActiveGames: [GameSession!]!
+}
+
+type Tokens {
+    access: String!
+    refresh: String!
 }
 
 type Tournament {
@@ -319,6 +321,11 @@ input ResultInput {
 input ShareResourcesInput {
     exchange: ResourceType!
     for: ResourceType!
+}
+
+input TokensInput {
+    access: String!
+    refresh: String!
 }
 
 input UpdateChoicesCardInput {

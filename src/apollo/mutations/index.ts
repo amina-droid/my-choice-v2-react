@@ -6,6 +6,7 @@ export * from './CreateGame';
 export * from './DeleteCard';
 export * from './GameMove';
 export * from './LeaveGame';
+export * from './RefreshTokens';
 export * from './RemoveMessage';
 export * from './SendMessage';
 export * from './SendOpportunityResult';

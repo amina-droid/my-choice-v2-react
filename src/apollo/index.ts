@@ -1,5 +1,6 @@
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { offsetLimitPagination } from '@apollo/client/utilities';
+
 import { PlayerPolicy } from './fragments';
 import link from './links';
 

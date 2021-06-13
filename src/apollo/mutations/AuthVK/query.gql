@@ -1,5 +1,6 @@
 mutation AuthVK($code: String!, $extra: String) {
     authVK(code: $code, extra: $extra) {
-        token
+        access
+        refresh
     }
 }

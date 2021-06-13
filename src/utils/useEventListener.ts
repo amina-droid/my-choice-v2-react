@@ -27,6 +27,12 @@ function useEventListener(
   element?: HTMLElement | Window | Document | null,
   options?: Options
 ): void;
+function useEventListener<T>(
+  eventName: string,
+  handler: (e: CustomEvent<T>) => void,
+  element?: HTMLElement | Window | Document | null,
+  options?: Options
+): void;
 function useEventListener<
   K extends keyof (HTMLElementEventMap & DocumentEventMap & WindowEventMap)
   >(

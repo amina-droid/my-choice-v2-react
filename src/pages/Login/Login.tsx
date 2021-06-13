@@ -39,8 +39,7 @@ const Login = () => {
       if (errors) throw errors;
       if (!data) return;
 
-      const { token: responseToken } = data.authVK;
-      login(responseToken);
+      login(data.authVK);
     },
     redirectLink: async () => {
       const { data, error } = await apolloClient.query<GetVKOAuthRedirect>({
