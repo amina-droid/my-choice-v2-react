@@ -47,29 +47,14 @@ class Token extends EventTarget {
     }
   }
 
-  getAccessToken() {
-    return localStorage.getItem(this.accessKey) || '';
-  }
-
-  getRefreshToken() {
-    return localStorage.getItem(this.refreshKey) || '';
-  }
-
-  get() {
-    return ({
-      access: this.getAccessToken(),
-      refresh: this.getRefreshToken(),
-    });
-  }
-
-  clear(reload: boolean = false) {
+  private clear(reload: boolean = false) {
     localStorage.removeItem(ACCESS_TOKEN);
     localStorage.removeItem(REFRESH_TOKEN);
 
     this.dispatchTokenUpdate(null, reload);
   }
 
-  set(tokens: Tokens, reload: boolean = false) {
+  private set(tokens: Tokens, reload: boolean = false) {
     localStorage.setItem(ACCESS_TOKEN, tokens.access);
     localStorage.setItem(REFRESH_TOKEN, tokens.refresh);
 
@@ -78,7 +63,30 @@ class Token extends EventTarget {
     this.dispatchTokenUpdate(tokens, reload);
   }
 
-  async refresh() {
+  private getRefreshToken() {
+    return localStorage.getItem(this.refreshKey) || '';
+  }
+
+  public getAccessToken() {
+    return localStorage.getItem(this.accessKey) || '';
+  }
+
+  public login(tokens: Tokens) {
+    this.set(tokens, true);
+  }
+
+  public logout() {
+    this.clear(true);
+  }
+
+  public get() {
+    return ({
+      access: this.getAccessToken(),
+      refresh: this.getRefreshToken(),
+    });
+  }
+
+  public async refresh(): Promise<Tokens> {
     const tokens = this.get();
 
     try {

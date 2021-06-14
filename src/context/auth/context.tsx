@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { useLazyQuery } from '@apollo/client';
 import { GET_USER, GetUser, GetUserVariables } from '../../apollo';
 
@@ -36,14 +36,6 @@ export const AuthContextProvider: React.FC = ({ children }) => {
     setToken(e.detail?.access || null);
   }, Token);
 
-  const logout = useCallback(() => {
-    Token.clear(true);
-  }, []);
-
-  const login = useCallback((tokens: Tokens) => {
-    Token.set(tokens, true);
-  }, []);
-
   useEffect(() => {
     if (!loading && token && !data?.user) {
       getUser({ variables: { userId: Token.decodedData._id } });
@@ -51,8 +43,8 @@ export const AuthContextProvider: React.FC = ({ children }) => {
   }, [token, data, getUser, loading]);
 
   const contextValue = useMemo(() => ({
-    logout,
-    login,
+    logout: Token.logout,
+    login: Token.login,
     token,
     user: data?.user,
     userLoad: loading,
