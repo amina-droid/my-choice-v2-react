@@ -1,11 +1,9 @@
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
-import jwtDecode from 'jwt-decode';
 import { useLazyQuery } from '@apollo/client';
 import { GET_USER, GetUser, GetUserVariables } from '../../apollo';
 
 import useEventListener from '../../utils/useEventListener';
-import { getTime } from '../../utils/getTime';
-import Token, { Tokens } from '../../utils/token';
+import Token, { Tokens, UpdateEvent } from '../../utils/token';
 
 interface State {
   token: string | null;
@@ -34,6 +32,10 @@ export const AuthContextProvider: React.FC = ({ children }) => {
   const [token, setToken] = useState<string | null>(INITIAL_TOKEN);
   const [getUser, { data, loading }] = useLazyQuery<GetUser, GetUserVariables>(GET_USER);
 
+  useEventListener<UpdateEvent>('token:update', (e) => {
+    setToken(e.detail?.access || null);
+  }, Token);
+
   const logout = useCallback(() => {
     Token.clear(true);
   }, []);
@@ -42,20 +44,9 @@ export const AuthContextProvider: React.FC = ({ children }) => {
     Token.set(tokens, true);
   }, []);
 
-  useEventListener<Tokens | null>('token:update', (e) => {
-    setToken(e.detail?.access || null);
-  }, document);
-
   useEffect(() => {
     if (!loading && token && !data?.user) {
-      const { _id, exp } = jwtDecode(token) as any;
-      const isExpired = exp < getTime() / 1000;
-
-      if (isExpired) {
-        Token.refresh();
-        return;
-      }
-      getUser({ variables: { userId: _id } });
+      getUser({ variables: { userId: Token.decodedData._id } });
     }
   }, [token, data, getUser, loading]);
 

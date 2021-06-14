@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { CustomEventDict } from '../types';
 
 type Options = Pick<AddEventListenerOptions, 'capture' | 'passive' | 'once'>;
 
@@ -27,10 +28,10 @@ function useEventListener(
   element?: HTMLElement | Window | Document | null,
   options?: Options
 ): void;
-function useEventListener<T>(
-  eventName: string,
-  handler: (e: CustomEvent<T>) => void,
-  element?: HTMLElement | Window | Document | null,
+function useEventListener<T extends CustomEventDict<any, any>>(
+  eventName: T[0],
+  handler: (e: CustomEvent<T[1]>) => void,
+  element: T[2],
   options?: Options
 ): void;
 function useEventListener<

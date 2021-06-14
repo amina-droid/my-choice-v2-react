@@ -8,3 +8,5 @@ export type Actions<R> = {
     payload: R[K]
   }
 }[keyof R]
+
+export type CustomEventDict<E extends string, P, T extends EventTarget = any> = [E, P, T];

@@ -22,7 +22,6 @@ const errorLink = onError(
       for (let i = 0; i < graphQLErrors.length; i + 1) {
         const err = graphQLErrors[i];
         if (err.extensions?.exception.name === 'TokenExpiredError') {
-          console.log(err);
           return new Observable(observer => {
             Token.refresh()
               .then(tokens => {

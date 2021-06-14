@@ -1,78 +1,101 @@
+import jwtDecode from 'jwt-decode';
+
 import { client, REFRESH_TOKENS, RefreshTokens, RefreshTokensVariables } from '../../apollo';
+import { CustomEventDict } from '../../types';
+import { getTime } from '../getTime';
 
 const ACCESS_TOKEN = 'access_token';
 const REFRESH_TOKEN = 'refresh_token';
 
+const UPDATE_EVENT = 'token:update';
 export type Tokens = {
   access: string;
   refresh: string;
 }
 
-function getAccessToken() {
-  return localStorage.getItem(ACCESS_TOKEN) || '';
-}
+export type UpdateEvent = CustomEventDict<typeof UPDATE_EVENT, Tokens | null, Token>;
 
-function getRefreshToken() {
-  return localStorage.getItem(REFRESH_TOKEN) || '';
-}
+class Token extends EventTarget {
+  public decodedData: any;
 
-function getTokens() {
-  return ({
-    access: getAccessToken(),
-    refresh: getRefreshToken(),
-  });
-}
+  constructor(
+    private readonly accessKey: string,
+    private readonly refreshKey: string,
+  ) {
+    super();
 
-function clearTokens(reload: boolean = false) {
-  localStorage.removeItem(ACCESS_TOKEN);
-  localStorage.removeItem(REFRESH_TOKEN);
+    const token = this.getAccessToken();
 
-  document.dispatchEvent(new CustomEvent<null>('token:update', {
-    detail: null,
-  }));
+    if (token) {
+      this.decodedData = jwtDecode(token) as any;
 
-  if (reload) {
-    window.location.reload();
+      const isExpired = this.decodedData.exp < getTime() / 1000;
+
+      if (isExpired) {
+        this.refresh();
+      }
+    }
   }
-}
 
-function setTokens(tokens: Tokens, reload: boolean = false) {
-  localStorage.setItem(ACCESS_TOKEN, tokens.access);
-  localStorage.setItem(REFRESH_TOKEN, tokens.refresh);
+  private dispatchTokenUpdate(detail: Tokens | null = null, reload: boolean = false) {
+    this.dispatchEvent(new CustomEvent<Tokens | null>(UPDATE_EVENT, {
+      detail,
+    }));
 
-  document.dispatchEvent(new CustomEvent<Tokens>('token:update', {
-    detail: tokens,
-  }));
-
-  if (reload) {
-    window.location.reload();
+    if (reload) {
+      window.location.reload();
+    }
   }
-}
 
-async function getNewTokens() {
-  const tokens = getTokens();
+  getAccessToken() {
+    return localStorage.getItem(this.accessKey) || '';
+  }
 
-  try {
-    const response = await client.mutate<RefreshTokens, RefreshTokensVariables>({
-      mutation: REFRESH_TOKENS,
-      variables: tokens,
+  getRefreshToken() {
+    return localStorage.getItem(this.refreshKey) || '';
+  }
+
+  get() {
+    return ({
+      access: this.getAccessToken(),
+      refresh: this.getRefreshToken(),
     });
-    if (!response.data?.refreshTokens) {
+  }
+
+  clear(reload: boolean = false) {
+    localStorage.removeItem(ACCESS_TOKEN);
+    localStorage.removeItem(REFRESH_TOKEN);
+
+    this.dispatchTokenUpdate(null, reload);
+  }
+
+  set(tokens: Tokens, reload: boolean = false) {
+    localStorage.setItem(ACCESS_TOKEN, tokens.access);
+    localStorage.setItem(REFRESH_TOKEN, tokens.refresh);
+
+    this.decodedData = jwtDecode(tokens.access) as any;
+
+    this.dispatchTokenUpdate(tokens, reload);
+  }
+
+  async refresh() {
+    const tokens = this.get();
+
+    try {
+      const response = await client.mutate<RefreshTokens, RefreshTokensVariables>({
+        mutation: REFRESH_TOKENS,
+        variables: tokens,
+      });
+      if (!response.data?.refreshTokens) {
+        throw new Error('NOT TOKENS!');
+      }
+      this.set(response.data?.refreshTokens);
+      return response.data?.refreshTokens;
+    } catch (e) {
+      this.clear(true);
       throw new Error('NOT TOKENS!');
     }
-    setTokens(response.data?.refreshTokens);
-    return response.data?.refreshTokens;
-  } catch (e) {
-    clearTokens(true);
-    throw new Error('NOT TOKENS!');
   }
 }
 
-export default {
-  clear: clearTokens,
-  set: setTokens,
-  get: getTokens,
-  refresh: getNewTokens,
-  getAccessToken,
-  getRefreshToken,
-};
+export default new Token(ACCESS_TOKEN, REFRESH_TOKEN);
