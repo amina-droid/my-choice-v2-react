@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { CustomEventDict } from '../types';
+import { CustomEventDict } from 'types';
 
 type Options = Pick<AddEventListenerOptions, 'capture' | 'passive' | 'once'>;
 
@@ -58,7 +58,7 @@ function useEventListener(
   }, [handler]);
 
   useEffect(() => {
-    const isSupported = element && element.addEventListener;
+    const isSupported = element?.addEventListener;
     if (!isSupported) {
       return;
     }

@@ -2,8 +2,9 @@ import React, { FC, useEffect, useState } from 'react';
 import { Animate } from 'react-move';
 import { easeExpOut } from 'd3-ease';
 
+import { FieldType, PlayerPosition } from 'types';
+
 import { useSVGContext } from './GameFieldSVG';
-import { FieldType, PlayerPosition } from '../../../types';
 import { Coords, getPlayerURLAvatarSVG, getSelector, PlayerControlProps, usePlayerIndex } from './utils';
 
 enum MarkerSize {

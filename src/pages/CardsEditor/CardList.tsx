@@ -12,7 +12,8 @@ import List from 'antd/es/list';
 import MinusCircleOutlined from '@ant-design/icons/lib/icons/MinusCircleOutlined';
 import EditOutlined from '@ant-design/icons/lib/icons/EditOutlined';
 
-import { GET_CARDS, GetCards, DELETE_CARD, DeleteCard, DeleteCardVariables } from '../../apollo';
+import { GET_CARDS, GetCards, DELETE_CARD, DeleteCard, DeleteCardVariables } from 'api/apollo';
+
 import EditCard from './EditCard';
 
 import s from './CardsEditor.module.sass';

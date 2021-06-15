@@ -1,7 +1,8 @@
 import React, { FC, useEffect, useRef } from 'react';
 
-import { ActiveGame } from '../../../apollo';
-import { FieldType, GameStatus } from '../../../types';
+import { ActiveGame } from 'api/apollo';
+import { FieldType, GameStatus } from 'types';
+
 import { getSelector, getPlayerAvatarSVG, usePlayer } from './utils';
 import { GameFieldSVG } from './GameFieldSVG';
 import PlayerDream from './PlayerDream';

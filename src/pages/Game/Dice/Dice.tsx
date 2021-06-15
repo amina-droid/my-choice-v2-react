@@ -3,6 +3,9 @@ import cn from 'classnames';
 
 import Statistic from 'antd/es/statistic';
 
+import timeout from 'utils/timeout';
+import useDeadline from 'utils/useDeadline';
+
 import { ReactComponent as Dice0 } from './Dice0.svg';
 import { ReactComponent as Dice1 } from './Dice1.svg';
 import { ReactComponent as Dice2 } from './Dice2.svg';
@@ -10,9 +13,6 @@ import { ReactComponent as Dice3 } from './Dice3.svg';
 import { ReactComponent as Dice4 } from './Dice4.svg';
 import { ReactComponent as Dice5 } from './Dice5.svg';
 import { ReactComponent as Dice6 } from './Dice6.svg';
-
-import timeout from '../../../utils/timeout';
-import useDeadline from '../../../utils/useDeadline';
 
 import s from './Dice.module.sass';
 

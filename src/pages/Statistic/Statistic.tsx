@@ -5,8 +5,9 @@ import { useLazyQuery } from '@apollo/client';
 import Tabs from 'antd/es/tabs';
 import Avatar from 'antd/es/avatar';
 
-import usePrevious from '../../utils/usePrevious';
-import { GET_USER, GetUser, GetUserVariables } from '../../apollo';
+import { GET_USER, GetUser, GetUserVariables } from 'api/apollo';
+
+import usePrevious from 'utils/usePrevious';
 
 import s from './Statistic.module.sass';
 

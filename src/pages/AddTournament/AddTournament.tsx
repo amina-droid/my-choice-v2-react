@@ -11,13 +11,15 @@ import List from 'antd/es/list';
 import CustomScroll from 'react-custom-scroll';
 import { useForm } from 'antd/es/form/Form';
 import { useLazyQuery, useMutation } from '@apollo/client';
+
 import {
   CREATE_TOURNAMENT,
   CreateTournament,
   CreateTournamentVariables,
   GET_TOURNAMENTS,
   GetTournaments,
-} from '../../apollo';
+} from 'api/apollo';
+
 import s from './AddTournament.module.sass';
 
 const AddTournament = () => {

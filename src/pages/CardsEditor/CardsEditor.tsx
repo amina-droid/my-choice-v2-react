@@ -1,6 +1,7 @@
 import React from 'react';
-import { withAccess } from '../../shared/AccessHOC/AccessHOC';
-import { FieldType, UserRole } from '../../types';
+
+import { withAccess } from 'shared/AccessHOC/AccessHOC';
+import { FieldType, UserRole } from 'types';
 
 import AddCard from './AddCard';
 import CardList from './CardList';

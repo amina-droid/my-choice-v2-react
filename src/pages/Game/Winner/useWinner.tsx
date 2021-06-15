@@ -3,9 +3,10 @@ import { useApolloClient } from '@apollo/client';
 
 import Modal from 'antd/es/modal';
 
-import { ACTIVE_PLAYER, ActivePlayer } from '../../../apollo';
-import { useAuth } from '../../../context/auth';
-import { UserSex } from '../../../types';
+import { ACTIVE_PLAYER, ActivePlayer } from 'api/apollo';
+
+import { useAuth } from 'context/auth';
+import { UserSex } from 'types';
 
 type WinnerProps = {
   winnerId?: string;

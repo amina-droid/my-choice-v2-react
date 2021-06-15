@@ -12,9 +12,10 @@ import Button from 'antd/es/button';
 import MinusCircleOutlined from '@ant-design/icons/lib/icons/MinusCircleOutlined';
 
 import 'react-custom-scroll/dist/customScroll.css';
-import { GetMessages } from '../../apollo';
-import { withAccess } from '../../shared/AccessHOC/AccessHOC';
-import { UserRole } from '../../types';
+
+import { GetMessages } from 'api/apollo';
+import { withAccess } from 'shared/AccessHOC/AccessHOC';
+import { UserRole } from 'types';
 
 import s from './Chat.module.sass';
 

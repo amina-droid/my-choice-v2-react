@@ -11,7 +11,8 @@ import {
   UPDATE_CHOICES_CARD,
   UpdateChoicesCard,
   UpdateChoicesCardVariables,
-} from '../../apollo';
+} from 'api/apollo';
+
 import CardFields, { normalizeChoices } from './CardFields';
 
 import s from './CardsEditor.module.sass';

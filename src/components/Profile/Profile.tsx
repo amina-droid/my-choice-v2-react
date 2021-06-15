@@ -8,13 +8,13 @@ import Avatar from 'antd/es/avatar';
 import Form from 'antd/es/form';
 import Input from 'antd/es/input';
 
-import { useAuth } from '../../context/auth';
+import { useAuth } from 'context/auth';
 import {
   UPDATE_NICKNAME,
   UpdateNickname,
   UpdateNicknameVariables,
-} from '../../apollo';
-import { formicObsceneValidator } from '../../utils/obsceneFilter';
+} from 'api/apollo';
+import { formicObsceneValidator } from 'utils/obsceneFilter';
 
 import s from './Profile.module.sass';
 

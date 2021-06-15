@@ -3,9 +3,7 @@ import { useLazyQuery, useMutation } from '@apollo/client';
 
 import Comment from 'antd/es/comment';
 
-import { useChatContext } from '../../context/chat';
-import CommentList from './CommentList';
-import Editor from './Editor';
+import { useChatContext } from 'context/chat';
 import {
   GET_MESSAGES,
   GetMessages,
@@ -19,7 +17,10 @@ import {
   SEND_MESSAGE,
   SendMessage,
   SendMessageVariables,
-} from '../../apollo';
+} from 'api/apollo';
+
+import CommentList from './CommentList';
+import Editor from './Editor';
 
 import s from './Chat.module.sass';
 

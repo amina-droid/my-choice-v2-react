@@ -5,11 +5,11 @@ import Spin from 'antd/es/spin';
 import Statistic from 'antd/es/statistic';
 import Card from 'antd/es/card';
 
-import { GET_USER_STATISTIC, GetUserStatistic, GetUserStatisticVariables } from '../../apollo';
+import { GET_USER_STATISTIC, GetUserStatistic, GetUserStatisticVariables } from 'api/apollo';
 
-import { withAccess } from '../../shared/AccessHOC/AccessHOC';
-import { UserRole } from '../../types';
-import { useAuth } from '../../context/auth';
+import { withAccess } from 'shared/AccessHOC/AccessHOC';
+import { UserRole } from 'types';
+import { useAuth } from 'context/auth';
 
 import { StatisticTable } from './StatisticTable';
 import { GamesStatistic, gamesToStatistic } from './utils';

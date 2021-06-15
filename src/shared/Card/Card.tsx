@@ -11,12 +11,13 @@ import {
   DeleteGame,
   DeleteGameVariables,
   GetActiveGames_getActiveGames,
-} from '../../apollo';
+} from 'api/apollo';
 
-import s from './Card.module.sass';
-import { GameStatus, UserRole } from '../../types';
+import { GameStatus, UserRole } from 'types';
 import { withAccess } from '../AccessHOC/AccessHOC';
 import CloseButton from '../CloseButton/CloseButton';
+
+import s from './Card.module.sass';
 
 const { Title } = Typography;
 

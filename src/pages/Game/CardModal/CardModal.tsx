@@ -15,14 +15,14 @@ import {
   OnOptionChoice,
   OnOptionChoiceVariables,
   ON_OPTION_CHOICE,
-} from '../../../apollo';
-import timeout from '../../../utils/timeout';
-import useDeadline from '../../../utils/useDeadline';
-import { useAuth } from '../../../context/auth';
+} from 'api/apollo';
+import timeout from 'utils/timeout';
+import useDeadline from 'utils/useDeadline';
+import { useAuth } from 'context/auth';
+import { Actions } from 'types';
+
 import OpportunityBody from './OpportunityBody';
 import ChoicesAndIncidentBody from './ChoicesAndIncidentBody';
-import { Actions } from '../../../types';
-
 import { ModalBodyProps } from './utils';
 
 import s from './CardModal.module.sass';

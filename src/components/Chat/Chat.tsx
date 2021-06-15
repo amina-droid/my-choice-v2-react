@@ -3,12 +3,11 @@ import React from 'react';
 import Tabs from 'antd/es/tabs';
 import Badge from 'antd/es/badge';
 
-import { useAuth } from '../../context/auth';
-import { useChatContext } from '../../context/chat';
+import { useAuth } from 'context/auth';
+import { useChatContext } from 'context/chat';
+import CloseButton from 'shared/CloseButton/CloseButton';
 
 import Topic from './Topic';
-import CloseButton from '../../shared/CloseButton/CloseButton';
-
 import { ReactComponent as OpenChatBtn } from './chat.svg';
 
 import s from './Chat.module.sass';

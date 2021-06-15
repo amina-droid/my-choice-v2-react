@@ -1,4 +1,4 @@
-import { OnDroppedCard } from '../../../apollo';
+import { OnDroppedCard } from 'api/apollo';
 
 export type ModalBodyProps<T = 'ChoiceCard' | 'Incident' | 'Opportunity'> = {
   card: Extract<OnDroppedCard['cardDropped']['card'], { __typename: T }>;

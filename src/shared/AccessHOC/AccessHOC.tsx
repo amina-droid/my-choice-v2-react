@@ -1,10 +1,10 @@
 import React from 'react';
 import Spin from 'antd/es/spin';
 
-import { UserRole } from '../../types';
+import { UserRole } from 'types';
 
-import { useAuth } from '../../context/auth';
-import NotFound from '../../pages/NotFound/NotFound';
+import { useAuth } from 'context/auth';
+import NotFound from 'pages/NotFound/NotFound';
 
 export const access = (currentRole: UserRole | undefined, accessedRoles: UserRole[]) => {
   switch (currentRole) {

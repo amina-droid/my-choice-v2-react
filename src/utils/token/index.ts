@@ -1,7 +1,7 @@
 import jwtDecode from 'jwt-decode';
 
-import { client, REFRESH_TOKENS, RefreshTokens, RefreshTokensVariables } from '../../apollo';
-import { CustomEventDict } from '../../types';
+import { client, REFRESH_TOKENS, RefreshTokens, RefreshTokensVariables } from 'api/apollo';
+import { CustomEventDict } from 'types';
 import { getTime } from '../getTime';
 
 const ACCESS_TOKEN = 'access_token';

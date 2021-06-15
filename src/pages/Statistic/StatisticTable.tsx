@@ -6,7 +6,8 @@ import Avatar from 'antd/es/avatar';
 import Table, { TablePaginationConfig } from 'antd/es/table';
 import Title from 'antd/es/typography/Title';
 
-import { Statistic as StatisticGame } from '../../apollo';
+import { Statistic as StatisticGame } from 'api/apollo';
+
 import s from './Statistic.module.sass';
 
 type TableProps = {

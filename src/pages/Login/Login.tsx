@@ -12,11 +12,13 @@ import {
   AuthVKVariables,
   GET_VK_OATH_REDIRECT_URL,
   GetVKOAuthRedirect,
-} from '../../apollo';
-import { useAuth } from '../../context/auth';
-import logo from '../../assets/logo.svg';
-import alliance from '../../assets/alliance.png';
-import tyumen from '../../assets/tyumen.png';
+} from 'api/apollo';
+
+import { useAuth } from 'context/auth';
+import logo from 'assets/logo.svg';
+import alliance from 'assets/alliance.png';
+import tyumen from 'assets/tyumen.png';
+
 import useOAuthSignIn from './useOAuthSignIn';
 
 import s from './Login.module.sass';

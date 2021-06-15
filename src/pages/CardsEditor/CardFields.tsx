@@ -9,7 +9,8 @@ import Text from 'antd/es/typography/Text';
 import TextArea from 'antd/es/input/TextArea';
 import MinusCircleOutlined from '@ant-design/icons/lib/icons/MinusCircleOutlined';
 
-import { FieldType } from '../../types';
+import { FieldType } from 'types';
+
 import { FIELD_DICTIONARY } from './CardsEditor';
 
 import s from './CardsEditor.module.sass';

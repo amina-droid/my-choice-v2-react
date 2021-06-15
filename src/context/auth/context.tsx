@@ -1,9 +1,10 @@
 import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { useLazyQuery } from '@apollo/client';
-import { GET_USER, GetUser, GetUserVariables } from '../../apollo';
 
-import useEventListener from '../../utils/useEventListener';
-import Token, { Tokens, UpdateEvent } from '../../utils/token';
+import { GET_USER, GetUser, GetUserVariables } from 'api/apollo';
+
+import useEventListener from 'utils/useEventListener';
+import Token, { Tokens, UpdateEvent } from 'utils/token';
 
 interface State {
   token: string | null;

@@ -4,7 +4,7 @@ import { useMutation } from '@apollo/client';
 
 import Button from 'antd/es/button';
 
-import { CHOICE, Choice, ChoiceVariables } from '../../../apollo';
+import { CHOICE, Choice, ChoiceVariables } from 'api/apollo';
 
 import { ModalBodyProps } from './utils';
 

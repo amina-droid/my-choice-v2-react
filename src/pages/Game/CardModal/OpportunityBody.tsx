@@ -7,7 +7,8 @@ import {
   SEND_OPPORTUNITY_RESULT,
   SendOpportunityResult,
   SendOpportunityResultVariables,
-} from '../../../apollo';
+} from 'api/apollo';
+
 import Dice from '../Dice/Dice';
 
 import { ModalBodyProps } from './utils';

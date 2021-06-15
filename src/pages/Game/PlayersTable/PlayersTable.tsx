@@ -1,6 +1,8 @@
 import React, { FC } from 'react';
 import CustomScroll from 'react-custom-scroll';
-import { ActivePlayer } from '../../../apollo';
+
+import { ActivePlayer } from 'api/apollo';
+
 import PlayerRow from './PlayerRow';
 
 import s from './PlayersTable.module.sass';

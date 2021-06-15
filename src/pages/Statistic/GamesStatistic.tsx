@@ -2,7 +2,6 @@ import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { useLazyQuery, useQuery } from '@apollo/client';
 
 import Select from 'antd/es/select';
-import Pagination from 'antd/es/pagination';
 
 import {
   GET_TOURNAMENTS,
@@ -10,11 +9,11 @@ import {
   GetTournaments,
   GetTournamentsStatistic,
   GetTournamentsStatisticVariables,
-} from '../../apollo';
+} from 'api/apollo';
+import { paginationModel } from 'utils/PaginationModel';
 
 import { StatisticTable } from './StatisticTable';
 import s from './Statistic.module.sass';
-import { paginationModel } from '../../utils/PaginationModel';
 
 const { Option } = Select;
 

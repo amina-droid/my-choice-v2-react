@@ -13,7 +13,8 @@ import {
   CreateChoiceVariables,
   GET_CARDS,
   GetCards,
-} from '../../apollo';
+} from 'api/apollo';
+
 import CardFields, { normalizeChoices } from './CardFields';
 
 import s from './CardsEditor.module.sass';

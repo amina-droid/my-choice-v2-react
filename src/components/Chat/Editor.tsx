@@ -5,8 +5,8 @@ import Form from 'antd/es/form';
 import Input from 'antd/es/input';
 import SendOutlined from '@ant-design/icons/lib/icons/SendOutlined';
 
-import { Actions } from '../../types';
-import { obsceneFilter } from '../../utils/obsceneFilter';
+import { Actions } from 'types';
+import { obsceneFilter } from 'utils/obsceneFilter';
 
 import s from './Chat.module.sass';
 

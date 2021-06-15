@@ -30,7 +30,14 @@ import {
   UPDATE_ACTIVE_GAME,
   UpdateActiveGame,
   UpdateActiveGameVariables,
-} from '../../apollo';
+} from 'api/apollo';
+
+import { useAuth } from 'context/auth';
+import { useChatContext } from 'context/chat';
+import { GameStatus } from 'types';
+import useNotificationTimeout from 'utils/useNotificationTimeout';
+import useClosePage from 'utils/useClosePage';
+import Rules from 'components/Rules';
 
 import LeaveGame from './LeaveGame/LeaveGame';
 import PlayersTable from './PlayersTable/PlayersTable';
@@ -38,15 +45,9 @@ import ChangeResources from './ChangeResources/ChangeResources';
 import CheckRules from './CheckRules/CheckRules';
 import CardModal from './CardModal/CardModal';
 import Dice from './Dice/Dice';
-import { useAuth } from '../../context/auth';
-import { useChatContext } from '../../context/chat';
-import { GameStatus } from '../../types';
 import GameField from './GameField/GameField';
-import Rules from '../../components/Rules';
 import useWinner from './Winner/useWinner';
 import DreamTimer from './DreamTimer/DreamTimer';
-import useNotificationTimeout from '../../utils/useNotificationTimeout';
-import useClosePage from '../../utils/useClosePage';
 
 import s from './Game.module.sass';
 

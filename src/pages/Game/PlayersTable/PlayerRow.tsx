@@ -8,15 +8,16 @@ import message from 'antd/es/message';
 import Spin from 'antd/es/spin';
 import Tooltip from 'antd/es/tooltip';
 
-import { ActivePlayer } from '../../../apollo';
+import { ActivePlayer } from 'api/apollo';
+
+import usePrevious from 'utils/usePrevious';
+import { useAuth } from 'context/auth';
 
 import { ReactComponent as Lives } from '../Resources/Lives.svg';
 import { ReactComponent as Like } from '../Resources/Like.svg';
 import { ReactComponent as Dislike } from '../Resources/Dislike.svg';
 import { ReactComponent as Money } from '../Resources/Money.svg';
 import Resource from './Resource';
-import usePrevious from '../../../utils/usePrevious';
-import { useAuth } from '../../../context/auth';
 
 import s from './PlayersTable.module.sass';
 

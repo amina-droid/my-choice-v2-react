@@ -6,10 +6,10 @@ import Modal from 'antd/es/modal';
 import Tooltip from 'antd/es/tooltip';
 import SwapOutlined from '@ant-design/icons/lib/icons/SwapOutlined';
 
-import { SHARE_RESOURCES, ShareResources, ShareResourcesVariables } from '../../../apollo';
-import { ReactComponent as ChangerBtn } from './changer.svg';
+import { SHARE_RESOURCES, ShareResources, ShareResourcesVariables } from 'api/apollo';
+import { ResourcesInput, ResourceType } from 'types';
 
-import { ResourcesInput, ResourceType } from '../../../types';
+import { ReactComponent as ChangerBtn } from './changer.svg';
 import { RESOURCES_DICT_OBJ } from '../PlayersTable/PlayerRow';
 
 import s from './ChangeResources.module.sass';

@@ -9,9 +9,10 @@ import {
   GetActiveGames,
   UPDATE_ACTIVE_GAMES,
   UpdateActiveGames,
-} from '../../apollo';
+} from 'api/apollo';
+import useNotificationTimeout from 'utils/useNotificationTimeout';
+
 import Games from './Games';
-import useNotificationTimeout from '../../utils/useNotificationTimeout';
 
 import s from './Lobby.module.sass';
 

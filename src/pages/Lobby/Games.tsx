@@ -19,11 +19,11 @@ import {
   GET_TOURNAMENTS,
   GetActiveGames,
   GetTournaments,
-} from '../../apollo';
-import Card from '../../shared/Card/Card';
-import { withAccess } from '../../shared/AccessHOC/AccessHOC';
-import { UserRole } from '../../types';
-import { formicObsceneValidator } from '../../utils/obsceneFilter';
+} from 'api/apollo';
+import Card from 'shared/Card/Card';
+import { withAccess } from 'shared/AccessHOC/AccessHOC';
+import { UserRole } from 'types';
+import { formicObsceneValidator } from 'utils/obsceneFilter';
 
 import s from './Lobby.module.sass';
 

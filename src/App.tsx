@@ -10,16 +10,16 @@ import MenuOutlined from '@ant-design/icons/lib/icons/MenuOutlined';
 
 import 'antd/dist/antd.css';
 
-import { client } from './apollo';
-import { AuthContextProvider, useAuth } from './context/auth';
-import { ChatContextProvider } from './context/chat';
-import NotFound from './pages/NotFound/NotFound';
-import ProtectedRoute from './utils/ProtectedRoute';
-import { UserRole } from './types';
-import Profile from './components/Profile/Profile';
-import Chat from './components/Chat/Chat';
-import Rules, { RulesContextProvider } from './components/Rules';
-import logo from './assets/logo.png';
+import { client } from 'api/apollo';
+import { AuthContextProvider, useAuth } from 'context/auth';
+import { ChatContextProvider } from 'context/chat';
+import { UserRole } from 'types';
+import NotFound from 'pages/NotFound/NotFound';
+import ProtectedRoute from 'utils/ProtectedRoute';
+import Profile from 'components/Profile/Profile';
+import Chat from 'components/Chat/Chat';
+import Rules, { RulesContextProvider } from 'components/Rules';
+import logo from 'assets/logo.png';
 
 import s from './App.module.sass';
 
