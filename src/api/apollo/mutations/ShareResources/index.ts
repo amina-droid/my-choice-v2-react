@@ -1,5 +1,2 @@
-import { loader } from 'graphql.macro';
-
+export { default as SHARE_RESOURCES } from './query.gql';
 export * from './types/ShareResources';
-
-export const SHARE_RESOURCES = loader('./query.gql');

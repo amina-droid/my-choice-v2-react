@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { ResourceType } from "types/globalTypes";
+import { ResourceType } from "./../../../../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: ShareResources

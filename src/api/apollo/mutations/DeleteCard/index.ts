@@ -1,5 +1,2 @@
-import { loader } from 'graphql.macro';
-
+export { default as DELETE_CARD } from './query.gql';
 export * from './types/DeleteCard';
-
-export const DELETE_CARD = loader('./query.gql');

@@ -1,5 +1,2 @@
-import { loader } from 'graphql.macro';
-
+export { default as ACTIVE_GAME } from './fragment.gql';
 export * from './types/ActiveGame';
-
-export const ACTIVE_GAME = loader('./fragment.gql');

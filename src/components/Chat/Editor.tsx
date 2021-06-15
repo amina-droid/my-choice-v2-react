@@ -34,35 +34,35 @@ const MSG_LENGTH_MAX = 255;
 
 const editorReducer = (prevState: EditorState, action: EditorActions): EditorState => {
   switch (action.type) {
-    case 'writing': {
-      if (action.payload.length > MSG_LENGTH_MAX) {
-        return {
-          ...prevState,
-          isOversize: true,
-        };
-      }
-      return {
-        message: action.payload,
-        isObscene: false,
-        isOversize: false,
-      };
-    }
-    case 'clear': {
-      return {
-        message: '',
-        isObscene: false,
-        isOversize: false,
-      };
-    }
-    case 'obsceneError': {
+  case 'writing': {
+    if (action.payload.length > MSG_LENGTH_MAX) {
       return {
         ...prevState,
-        isObscene: true,
+        isOversize: true,
       };
     }
-    default: {
-      return prevState;
-    }
+    return {
+      message: action.payload,
+      isObscene: false,
+      isOversize: false,
+    };
+  }
+  case 'clear': {
+    return {
+      message: '',
+      isObscene: false,
+      isOversize: false,
+    };
+  }
+  case 'obsceneError': {
+    return {
+      ...prevState,
+      isObscene: true,
+    };
+  }
+  default: {
+    return prevState;
+  }
   }
 };
 

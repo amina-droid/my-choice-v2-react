@@ -58,43 +58,43 @@ const initialState: State = {
 
 const chatReducer: Reducer<State, ChatActions> = (state, action) => {
   switch (action.type) {
-    case 'open': {
-      return ({
-        ...state,
-        isOpen: true,
-        newMessagesCounter: 0,
-      });
-    }
-    case 'close': {
-      return ({
-        ...state,
-        isOpen: false,
-      });
-    }
-    case 'addChat': {
-      return ({
-        ...state,
-        chats: {
-          ...state.chats,
-          [action.payload.id]: action.payload,
-        },
-      });
-    }
-    case 'removeChat': {
-      return ({
-        ...state,
-        chats: omit(state.chats, action.payload),
-      });
-    }
-    case 'newMessage': {
-      return ({
-        ...state,
-        newMessagesCounter: state.isOpen ? 0 : state.newMessagesCounter + 1,
-      });
-    }
-    default: {
-      return state;
-    }
+  case 'open': {
+    return ({
+      ...state,
+      isOpen: true,
+      newMessagesCounter: 0,
+    });
+  }
+  case 'close': {
+    return ({
+      ...state,
+      isOpen: false,
+    });
+  }
+  case 'addChat': {
+    return ({
+      ...state,
+      chats: {
+        ...state.chats,
+        [action.payload.id]: action.payload,
+      },
+    });
+  }
+  case 'removeChat': {
+    return ({
+      ...state,
+      chats: omit(state.chats, action.payload),
+    });
+  }
+  case 'newMessage': {
+    return ({
+      ...state,
+      newMessagesCounter: state.isOpen ? 0 : state.newMessagesCounter + 1,
+    });
+  }
+  default: {
+    return state;
+  }
   }
 };
 
@@ -134,11 +134,11 @@ export const ChatContextProvider: React.FC = ({ children }) => {
   }), []);
 
   const value: Context = useMemo(() => ({
-      chats,
-      isOpen,
-      messagesCounter: newMessagesCounter,
-      ...handlers,
-    }
+    chats,
+    isOpen,
+    messagesCounter: newMessagesCounter,
+    ...handlers,
+  }
   ), [chats, isOpen, newMessagesCounter]);
 
   return (

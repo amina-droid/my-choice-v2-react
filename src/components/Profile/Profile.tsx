@@ -21,21 +21,21 @@ const Profile = () => {
     UpdateNickname,
     UpdateNicknameVariables
     >(UPDATE_NICKNAME, {
-    update: (cache, mutationResult) => {
-      if (!mutationResult.data?.updateNickname.nickname) return;
-      cache.modify({
-        id: cache.identify({
-          __typename: 'User',
-          _id: user?._id,
-        }),
-        fields: {
-          nickname: () => {
-            return mutationResult.data?.updateNickname.nickname;
+      update: (cache, mutationResult) => {
+        if (!mutationResult.data?.updateNickname.nickname) return;
+        cache.modify({
+          id: cache.identify({
+            __typename: 'User',
+            _id: user?._id,
+          }),
+          fields: {
+            nickname: () => {
+              return mutationResult.data?.updateNickname.nickname;
+            },
           },
-        },
-      });
-    },
-  });
+        });
+      },
+    });
 
   const handlerOpenModal = () => {
     setVisible(true);

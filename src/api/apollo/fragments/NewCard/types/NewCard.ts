@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { FieldType } from "types/globalTypes";
+import { FieldType } from "./../../../../../types/globalTypes";
 
 // ====================================================
 // GraphQL fragment: NewCard

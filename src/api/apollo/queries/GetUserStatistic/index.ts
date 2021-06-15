@@ -1,5 +1,2 @@
-import { loader } from 'graphql.macro';
-
+export { default as GET_USER_STATISTIC } from './query.gql';
 export * from './types/GetUserStatistic';
-
-export const GET_USER_STATISTIC = loader('./query.gql');

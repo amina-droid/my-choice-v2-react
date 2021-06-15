@@ -1,5 +1,2 @@
-import { loader } from 'graphql.macro';
-
+export { default as GET_MESSAGES } from './query.gql';
 export * from './types/GetMessages';
-
-export const GET_MESSAGES = loader('./query.gql');

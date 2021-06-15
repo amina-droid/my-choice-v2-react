@@ -1,5 +1,2 @@
-import { loader } from 'graphql.macro';
-
+export { default as UPDATE_ACTIVE_GAME } from './query.gql';
 export * from './types/UpdateActiveGame';
-
-export const UPDATE_ACTIVE_GAME = loader('./query.gql');

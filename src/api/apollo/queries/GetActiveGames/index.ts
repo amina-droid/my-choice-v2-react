@@ -1,5 +1,2 @@
-import { loader } from 'graphql.macro';
-
+export { default as GET_ACTIVE_GAMES } from './query.gql';
 export * from './types/GetActiveGames';
-
-export const GET_ACTIVE_GAMES = loader('./query.gql');

@@ -1,5 +1,2 @@
-import { loader } from 'graphql.macro';
-
+export { default as REFRESH_TOKENS } from './query.gql';
 export * from './types/RefreshTokens';
-
-export const REFRESH_TOKENS = loader('./query.gql');

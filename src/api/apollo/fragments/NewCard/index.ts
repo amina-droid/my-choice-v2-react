@@ -1,5 +1,2 @@
-import { loader } from 'graphql.macro';
-
+export { default as NEW_CARD } from './fragment.gql';
 export * from './types/NewCard';
-
-export const NEW_CARD = loader('./fragment.gql');

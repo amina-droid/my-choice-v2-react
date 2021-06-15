@@ -1,5 +1,2 @@
-import { loader } from 'graphql.macro';
-
+export { default as ON_MESSAGE } from './query.gql';
 export * from './types/OnMessage';
-
-export const ON_MESSAGE = loader('./query.gql');

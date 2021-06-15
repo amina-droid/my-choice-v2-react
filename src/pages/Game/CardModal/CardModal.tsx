@@ -39,12 +39,12 @@ function CardBody<C extends DroppedCard['card'] = DroppedCard['card']>(
     return <Spin />;
   }
   switch (props.card.__typename) {
-    case 'Opportunity': {
-      return OpportunityBody(props as any);
-    }
-    default: {
-      return ChoicesAndIncidentBody(props as any);
-    }
+  case 'Opportunity': {
+    return OpportunityBody(props as any);
+  }
+  default: {
+    return ChoicesAndIncidentBody(props as any);
+  }
   }
 }
 
@@ -69,31 +69,31 @@ type CardActions = Actions<{
 
 const cardReducer = (prevState: CardState, action: CardActions): CardState => {
   switch (action.type) {
-    case 'pushCard': {
-      return {
-        ...prevState,
-        droppedCards: [...prevState.droppedCards, action.payload],
-        activeCard: action.payload,
-      };
-    }
-    case 'addChoiceId': {
-      return {
-        ...prevState,
-        selectedChoiceId: action.payload,
-      };
-    }
-    case 'removeCard': {
-      return {
-        ...prevState,
-        droppedCards: remove(prevState.droppedCards, ({ card }) => card._id === action.payload),
-        activeCard:
+  case 'pushCard': {
+    return {
+      ...prevState,
+      droppedCards: [...prevState.droppedCards, action.payload],
+      activeCard: action.payload,
+    };
+  }
+  case 'addChoiceId': {
+    return {
+      ...prevState,
+      selectedChoiceId: action.payload,
+    };
+  }
+  case 'removeCard': {
+    return {
+      ...prevState,
+      droppedCards: remove(prevState.droppedCards, ({ card }) => card._id === action.payload),
+      activeCard:
           prevState.activeCard?.card._id !== action.payload ? prevState.activeCard : undefined,
-        selectedChoiceId: undefined,
-      };
-    }
-    default: {
-      return prevState;
-    }
+      selectedChoiceId: undefined,
+    };
+  }
+  default: {
+    return prevState;
+  }
   }
 };
 

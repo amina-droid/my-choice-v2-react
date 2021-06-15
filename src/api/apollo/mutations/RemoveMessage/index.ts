@@ -1,5 +1,2 @@
-import { loader } from 'graphql.macro';
-
+export { default as REMOVE_MESSAGE } from './query.gql';
 export * from './types/RemoveMessage';
-
-export const REMOVE_MESSAGE = loader('./query.gql');

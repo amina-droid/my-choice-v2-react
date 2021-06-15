@@ -1,5 +1,2 @@
-import { loader } from 'graphql.macro';
-
+export { default as SEND_MESSAGE } from './query.gql';
 export * from './types/SendMessage';
-
-export const SEND_MESSAGE = loader('./query.gql');

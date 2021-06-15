@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { CreateChoicesCardInput, FieldType } from "types/globalTypes";
+import { CreateChoicesCardInput, FieldType } from "./../../../../../types/globalTypes";
 
 // ====================================================
 // GraphQL mutation operation: CreateChoice

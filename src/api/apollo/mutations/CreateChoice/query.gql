@@ -1,4 +1,4 @@
-#import "./../../../fragments/NewCard/fragment.gql"
+#import "./../../fragments/NewCard/fragment.gql"
 
 mutation CreateChoice ($input: CreateChoicesCardInput!) {
     createChoicesCard(createChoicesCard: $input) {

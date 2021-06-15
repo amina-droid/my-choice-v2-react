@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { PlayerPosition, UserSex } from "types/globalTypes";
+import { PlayerPosition, UserSex } from "./../../../../../types/globalTypes";
 
 // ====================================================
 // GraphQL fragment: ActivePlayer

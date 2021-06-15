@@ -3,8 +3,8 @@ import { useHistory } from 'react-router-dom';
 import { useApolloClient } from '@apollo/client';
 import { Tooltip, Button, Card } from 'antd';
 
-import { GET_VK_OATH_REDIRECT_URL, GetVKOAuthRedirect } from 'api/apollo/queries';
-import { AUTH_VK, AuthVK, AuthVKVariables } from 'api/apollo/mutations';
+import { GET_V_K_O_AUTH_REDIRECT_URL, GetVKOAuthRedirectUrl } from 'api/apollo/queries';
+import { AUTH_V_K, AuthVK, AuthVKVariables } from 'api/apollo/mutations';
 
 import { useAuth } from 'context/auth';
 import logo from 'assets/logo.svg';
@@ -26,7 +26,7 @@ const Login = () => {
         history.location.search,
       ).get('code');
       const { data, errors } = await apolloClient.mutate<AuthVK, AuthVKVariables>({
-        mutation: AUTH_VK,
+        mutation: AUTH_V_K,
         variables: { code, extra },
       });
 
@@ -36,8 +36,9 @@ const Login = () => {
       login(data.authVK);
     },
     redirectLink: async () => {
-      const { data, error } = await apolloClient.query<GetVKOAuthRedirect>({
-        query: GET_VK_OATH_REDIRECT_URL,
+      console.log(GET_V_K_O_AUTH_REDIRECT_URL);
+      const { data, error } = await apolloClient.query<GetVKOAuthRedirectUrl>({
+        query: GET_V_K_O_AUTH_REDIRECT_URL,
       });
 
       if (error) throw error;

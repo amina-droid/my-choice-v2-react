@@ -1,5 +1,2 @@
-import { loader } from 'graphql.macro';
-
+export { default as ON_DROPPED_CARD } from './query.gql';
 export * from './types/OnDroppedCard';
-
-export const ON_DROPPED_CARD = loader('./query.gql');

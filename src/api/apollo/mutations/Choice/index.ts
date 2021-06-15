@@ -1,5 +1,2 @@
-import { loader } from 'graphql.macro';
-
+export { default as CHOICE } from './query.gql';
 export * from './types/Choice';
-
-export const CHOICE = loader('./query.gql');

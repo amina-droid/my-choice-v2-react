@@ -1,5 +1,2 @@
-import { loader } from 'graphql.macro';
-
+export { default as GET_TOURNAMENTS_STATISTIC } from './query.gql';
 export * from './types/GetTournamentsStatistic';
-
-export const GET_TOURNAMENTS_STATISTIC = loader('./query.gql');

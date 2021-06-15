@@ -1,5 +1,2 @@
-import { loader } from 'graphql.macro';
-
+export { default as GET_USER } from './query.gql';
 export * from './types/GetUser';
-
-export const GET_USER = loader('./query.gql');

@@ -1,5 +1,2 @@
-import { loader } from 'graphql.macro';
-
+export { default as CREATE_TOURNAMENT } from './query.gql';
 export * from './types/CreateTournament';
-
-export const CREATE_TOURNAMENT = loader('./query.gql');

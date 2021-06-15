@@ -1,5 +1,14 @@
-const { useBabelRc, override } = require('customize-cra')
+const { useBabelRc, override, addWebpackModuleRule } = require('customize-cra')
 
 module.exports = override(
-  useBabelRc()
+  useBabelRc(),
+  addWebpackModuleRule({
+    test: /\.(graphql|gql)$/,
+    exclude: /node_modules/,
+    use: [
+      {
+        loader: 'graphql-tag/loader'
+      },
+    ]
+  }),
 );

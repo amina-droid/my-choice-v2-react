@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { GameStatus } from "types/globalTypes";
+import { GameStatus } from "./../../../../../types/globalTypes";
 
 // ====================================================
 // GraphQL query operation: GetActiveGames

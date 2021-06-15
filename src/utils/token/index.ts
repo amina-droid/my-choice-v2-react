@@ -1,6 +1,6 @@
 import jwtDecode from 'jwt-decode';
 
-import { client } from 'api/apollo';
+import { Client } from 'api/apollo';
 import { REFRESH_TOKENS, RefreshTokens, RefreshTokensVariables } from 'api/apollo/mutations';
 
 import { CustomEventDict } from 'types';
@@ -99,7 +99,7 @@ class Token extends EventTarget {
     const tokens = this.get();
 
     try {
-      const response = await client.mutate<RefreshTokens, RefreshTokensVariables>({
+      const response = await Client.mutate<RefreshTokens, RefreshTokensVariables>({
         mutation: REFRESH_TOKENS,
         variables: tokens,
       });

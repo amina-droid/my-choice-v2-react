@@ -8,7 +8,7 @@ import { MenuOutlined } from '@ant-design/icons';
 
 import 'antd/dist/antd.css';
 
-import { client } from 'api/apollo';
+import { Client } from 'api/apollo';
 import { AuthContextProvider, useAuth } from 'context/auth';
 import { ChatContextProvider } from 'context/chat';
 import { UserRole } from 'types';
@@ -122,7 +122,7 @@ const frontender = 'https://vk.com/ami_mazurova';
 
 function App() {
   return (
-    <ApolloProvider client={client}>
+    <ApolloProvider client={Client}>
       <AuthContextProvider>
         <RulesContextProvider>
           <BrowserRouter>

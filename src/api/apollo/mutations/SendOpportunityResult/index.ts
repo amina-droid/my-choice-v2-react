@@ -1,5 +1,2 @@
-import { loader } from 'graphql.macro';
-
+export { default as SEND_OPPORTUNITY_RESULT } from './query.gql';
 export * from './types/SendOpportunityResult';
-
-export const SEND_OPPORTUNITY_RESULT = loader('./query.gql');

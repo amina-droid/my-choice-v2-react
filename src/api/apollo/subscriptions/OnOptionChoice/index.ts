@@ -1,5 +1,2 @@
-import { loader } from 'graphql.macro';
-
+export { default as ON_OPTION_CHOICE } from './query.gql';
 export * from './types/OnOptionChoice';
-
-export const ON_OPTION_CHOICE = loader('./query.gql');

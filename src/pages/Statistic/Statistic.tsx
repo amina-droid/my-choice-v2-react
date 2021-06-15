@@ -72,7 +72,7 @@ const StatisticPage = () => {
                 <span
                   className={s.navItem}
                 >
-                {(loading || !data?.user) ? 'Загрузка...' : data.user.nickname}
+                  {(loading || !data?.user) ? 'Загрузка...' : data.user.nickname}
                 </span>
               }
               closable

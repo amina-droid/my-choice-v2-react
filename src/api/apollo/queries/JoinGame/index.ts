@@ -1,5 +1,2 @@
-import { loader } from 'graphql.macro';
-
+export { default as JOIN_GAME } from './query.gql';
 export * from './types/JoinGame';
-
-export const JOIN_GAME = loader('./query.gql');

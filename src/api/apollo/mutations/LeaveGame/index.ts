@@ -1,5 +1,2 @@
-import { loader } from 'graphql.macro';
-
+export { default as LEAVE_GAME } from './query.gql';
 export * from './types/LeaveGame';
-
-export const LEAVE_GAME = loader('./query.gql');

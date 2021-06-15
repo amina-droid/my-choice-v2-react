@@ -1,12 +1,10 @@
-import { loader } from 'graphql.macro';
 import { isNil } from 'lodash';
 import { TypePolicy } from '@apollo/client/cache/inmemory/policies';
-
 import { ACTIVE_GAME, ActiveGame } from '../ActiveGame';
 
+export { default as ACTIVE_PLAYER } from './fragment.gql';
 export * from './types/ActivePlayer';
 
-export const ACTIVE_PLAYER = loader('./fragment.gql');
 const COLORS = [
   '--game-green',
   '--game-blue',

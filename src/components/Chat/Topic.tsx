@@ -46,8 +46,8 @@ export const Topic: React.FC<Props> = ({ topic }) => {
       GetMessages,
       GetMessagesVariables
       >(GET_MESSAGES, {
-      nextFetchPolicy: 'cache-only',
-    });
+        nextFetchPolicy: 'cache-only',
+      });
   const [sendMessage, {
     loading: sendLoading,
   }] = useMutation<SendMessage, SendMessageVariables>(SEND_MESSAGE);

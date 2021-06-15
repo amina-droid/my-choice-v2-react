@@ -1,5 +1,2 @@
-import { loader } from 'graphql.macro';
-
+export { default as DELETE_GAME } from './query.gql';
 export * from './types/DeleteGame';
-
-export const DELETE_GAME = loader('./query.gql');

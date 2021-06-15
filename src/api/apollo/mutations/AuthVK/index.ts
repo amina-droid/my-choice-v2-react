@@ -1,5 +1,2 @@
-import { loader } from 'graphql.macro';
-
+export { default as AUTH_V_K } from './query.gql';
 export * from './types/AuthVK';
-
-export const AUTH_VK = loader('./query.gql');

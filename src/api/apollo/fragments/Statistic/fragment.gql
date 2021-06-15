@@ -1,4 +1,4 @@
-#import "./../GameUser/fragment.gql
+#import "api/apollo/fragments/GameUser/fragment.gql"
 
 fragment Statistic on Game {
     _id

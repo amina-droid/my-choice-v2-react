@@ -5,5 +5,5 @@ export * from './GetUserStatistic';
 export * from './GetTournaments';
 export * from './GetTournamentsStatistic';
 export * from './GetUser';
-export * from './GetVKRedirectUrl';
+export * from './GetVKOAuthRedirectUrl';
 export * from './JoinGame';

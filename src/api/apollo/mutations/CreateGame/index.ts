@@ -1,5 +1,2 @@
-import { loader } from 'graphql.macro';
-
+export { default as CREATE_GAME } from './query.gql';
 export * from './types/CreateGame';
-
-export const CREATE_GAME = loader('./query.gql');

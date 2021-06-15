@@ -1,5 +1,2 @@
-import { loader } from 'graphql.macro';
-
+export { default as UPDATE_CHOICES_CARD } from './query.gql';
 export * from './types/UpdateChoicesCard';
-
-export const UPDATE_CHOICES_CARD = loader('./query.gql');

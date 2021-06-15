@@ -1,5 +1,2 @@
-import { loader } from 'graphql.macro';
-
+export { default as GET_CARDS } from './query.gql';
 export * from './types/GetCards';
-
-export const GET_CARDS = loader('./query.gql');

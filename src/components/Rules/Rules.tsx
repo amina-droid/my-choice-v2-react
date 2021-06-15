@@ -156,20 +156,20 @@ const OuterCircleBlock: FC = () => (
 const Blocks: FC = () => {
   const { block } = useRulesContext();
   switch (block) {
-    case 'circles': {
-      return <CirclesBlock />;
-    }
-    case 'outer': {
-      return <OuterCircleBlock />;
-    }
-    default: {
-      return (
-        <>
-          <MainBlock />
-          <MainNavigation />
-        </>
-      );
-    }
+  case 'circles': {
+    return <CirclesBlock />;
+  }
+  case 'outer': {
+    return <OuterCircleBlock />;
+  }
+  default: {
+    return (
+      <>
+        <MainBlock />
+        <MainNavigation />
+      </>
+    );
+  }
   }
 };
 
