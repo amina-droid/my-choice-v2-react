@@ -5,7 +5,6 @@ function getFileNameForApollo(str) {
 }
 
 const FOLDERS = ['queries', 'mutations', 'subscriptions'];
-
 function getPathForApollo(folder) {
   if (FOLDERS.some((v => v === folder))) {
     return 'query.gql';
@@ -16,6 +15,17 @@ function getPathForApollo(folder) {
   }
   
   return '';
+}
+
+function getApolloFolderPath(folderName) {
+  if (folderName) {
+    const rootFolder = folderName;
+    const file = getPathForApollo(folderName);
+    
+    return [rootFolder, file];
+  }
+  
+  return ['', ''];
 }
 
 module.exports = {
@@ -36,10 +46,21 @@ module.exports = {
       'api/apollo\/?(((\\w*)?\/?)*)': {
         transform: (importName, matches) => {
           const targetName = getFileNameForApollo(importName);
-          const subpart = matches[1] ? matches[1] + '/' : '';
-          const type = matches[1] ? getPathForApollo(matches[1]) : '';
+          const [rootFolder, file] = getApolloFolderPath(matches[1]);
           
-          return `api/apollo/${subpart}${targetName}${type ? '/' + type : ''}`;
+          let path = '';
+          
+          if (rootFolder) {
+            path += `/${rootFolder}`
+          }
+          
+          path += `/${targetName}`;
+          
+          if (file) {
+            path += `/${file}`
+          }
+          
+          return `api/apollo${path}`;
         },
       },
     }]
