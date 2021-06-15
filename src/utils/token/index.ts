@@ -8,6 +8,7 @@ const ACCESS_TOKEN = 'access_token';
 const REFRESH_TOKEN = 'refresh_token';
 
 const UPDATE_EVENT = 'token:update';
+
 export type Tokens = {
   access: string;
   refresh: string;
@@ -15,8 +16,14 @@ export type Tokens = {
 
 export type UpdateEvent = CustomEventDict<typeof UPDATE_EVENT, Tokens | null, Token>;
 
+interface TokenData {
+  _id: string;
+  exp: number;
+  iat: number;
+}
+
 class Token extends EventTarget {
-  public decodedData: any;
+  public decodedData: TokenData | undefined;
 
   constructor(
     private readonly accessKey: string,
@@ -27,7 +34,7 @@ class Token extends EventTarget {
     const token = this.getAccessToken();
 
     if (token) {
-      this.decodedData = jwtDecode(token) as any;
+      this.decodedData = jwtDecode<TokenData>(token);
 
       const isExpired = this.decodedData.exp < getTime() / 1000;
 
@@ -58,7 +65,7 @@ class Token extends EventTarget {
     localStorage.setItem(ACCESS_TOKEN, tokens.access);
     localStorage.setItem(REFRESH_TOKEN, tokens.refresh);
 
-    this.decodedData = jwtDecode(tokens.access) as any;
+    this.decodedData = jwtDecode<TokenData>(tokens.access);
 
     this.dispatchTokenUpdate(tokens, reload);
   }

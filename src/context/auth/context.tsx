@@ -38,7 +38,7 @@ export const AuthContextProvider: React.FC = ({ children }) => {
 
   useEffect(() => {
     if (!loading && token && !data?.user) {
-      getUser({ variables: { userId: Token.decodedData._id } });
+      getUser({ variables: { userId: Token.decodedData?._id } });
     }
   }, [token, data, getUser, loading]);
 
