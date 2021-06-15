@@ -1,15 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { isMobile } from 'react-device-detect';
 import { useQuery } from '@apollo/client';
+import { Tabs } from 'antd';
 
-import Tabs from 'antd/es/tabs';
+import { UPDATE_ACTIVE_GAMES, UpdateActiveGames } from 'api/apollo/subscriptions';
+import { GET_ACTIVE_GAMES, GetActiveGames } from 'api/apollo/queries';
 
-import {
-  GET_ACTIVE_GAMES,
-  GetActiveGames,
-  UPDATE_ACTIVE_GAMES,
-  UpdateActiveGames,
-} from 'api/apollo';
 import useNotificationTimeout from 'utils/useNotificationTimeout';
 
 import Games from './Games';

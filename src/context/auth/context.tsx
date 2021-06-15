@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { useLazyQuery } from '@apollo/client';
 
-import { GET_USER, GetUser, GetUserVariables } from 'api/apollo';
+import { GET_USER, GetUser, GetUserVariables } from 'api/apollo/queries';
 
 import useEventListener from 'utils/useEventListener';
 import Token, { Tokens, UpdateEvent } from 'utils/token';

@@ -1,7 +1,6 @@
 import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { useLazyQuery, useQuery } from '@apollo/client';
-
-import Select from 'antd/es/select';
+import { Select } from 'antd';
 
 import {
   GET_TOURNAMENTS,
@@ -9,7 +8,7 @@ import {
   GetTournaments,
   GetTournamentsStatistic,
   GetTournamentsStatisticVariables,
-} from 'api/apollo';
+} from 'api/apollo/queries';
 import { paginationModel } from 'utils/PaginationModel';
 
 import { StatisticTable } from './StatisticTable';

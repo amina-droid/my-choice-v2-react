@@ -1,8 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-
-import Button from 'antd/es/button';
-import Result from 'antd/es/result';
+import { Button, Result } from 'antd';
 
 const NotFound = () => {
   const history = useHistory();

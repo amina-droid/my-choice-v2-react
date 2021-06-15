@@ -1,18 +1,12 @@
 import React, { useState } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
 import CustomScroll from 'react-custom-scroll';
-
-import Button from 'antd/es/button';
-import Modal from 'antd/es/modal';
-import message from 'antd/es/message';
-import Popconfirm from 'antd/es/popconfirm';
+import { Button, Modal, message, Popconfirm, Card, List } from 'antd';
 import Text from 'antd/es/typography/Text';
-import Card from 'antd/es/card';
-import List from 'antd/es/list';
-import MinusCircleOutlined from '@ant-design/icons/lib/icons/MinusCircleOutlined';
-import EditOutlined from '@ant-design/icons/lib/icons/EditOutlined';
+import { EditOutlined, MinusCircleOutlined } from '@ant-design/icons';
 
-import { GET_CARDS, GetCards, DELETE_CARD, DeleteCard, DeleteCardVariables } from 'api/apollo';
+import { DELETE_CARD, DeleteCard, DeleteCardVariables } from 'api/apollo/mutations';
+import { GET_CARDS, GetCards } from 'api/apollo/queries';
 
 import EditCard from './EditCard';
 

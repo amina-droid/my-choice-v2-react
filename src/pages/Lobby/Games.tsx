@@ -1,31 +1,20 @@
 import React, { FC, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useLazyQuery, useMutation } from '@apollo/client';
+import { Button, Select, Switch, Form, Modal, message, Input } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 
-import Button from 'antd/es/button';
-import Input from 'antd/es/input';
-import message from 'antd/es/message';
-import Modal from 'antd/es/modal';
-import Select from 'antd/es/select';
-import Switch from 'antd/es/switch';
-import Form from 'antd/es/form';
-import { useForm } from 'antd/es/form/Form';
-import PlusOutlined from '@ant-design/icons/lib/icons/PlusOutlined';
+import { CREATE_GAME, CreateGame, CreateGameVariables } from 'api/apollo/mutations';
+import { GET_TOURNAMENTS, GetActiveGames, GetTournaments } from 'api/apollo/queries';
 
-import {
-  CREATE_GAME,
-  CreateGame,
-  CreateGameVariables,
-  GET_TOURNAMENTS,
-  GetActiveGames,
-  GetTournaments,
-} from 'api/apollo';
 import Card from 'shared/Card/Card';
 import { withAccess } from 'shared/AccessHOC/AccessHOC';
 import { UserRole } from 'types';
 import { formicObsceneValidator } from 'utils/obsceneFilter';
 
 import s from './Lobby.module.sass';
+
+const { useForm } = Form;
 
 type CreateGameValues = {
   gameName: string;

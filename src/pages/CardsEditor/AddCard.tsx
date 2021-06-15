@@ -1,23 +1,23 @@
 import React, { FC, useEffect } from 'react';
 import { useMutation } from '@apollo/client';
-import { useForm } from 'antd/es/form/Form';
 
-import Button from 'antd/es/button';
-import Card from 'antd/es/card';
-import Form from 'antd/es/form';
-import message from 'antd/es/message';
+import { Button, Card, Form, message } from 'antd';
 
 import {
   CREATE_CHOICE,
   CreateChoice,
   CreateChoiceVariables,
+} from 'api/apollo/mutations';
+import {
   GET_CARDS,
   GetCards,
-} from 'api/apollo';
+} from 'api/apollo/queries';
 
 import CardFields, { normalizeChoices } from './CardFields';
 
 import s from './CardsEditor.module.sass';
+
+const { useForm } = Form;
 
 const AddCard: FC = () => {
   const [createChoice, {

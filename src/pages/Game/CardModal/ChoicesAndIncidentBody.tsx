@@ -2,9 +2,9 @@ import React, { FC } from 'react';
 import cn from 'classnames';
 import { useMutation } from '@apollo/client';
 
-import Button from 'antd/es/button';
+import { Button } from 'antd';
 
-import { CHOICE, Choice, ChoiceVariables } from 'api/apollo';
+import { CHOICE, Choice, ChoiceVariables } from 'api/apollo/mutations';
 
 import { ModalBodyProps } from './utils';
 

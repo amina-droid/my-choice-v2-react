@@ -1,6 +1,8 @@
 import jwtDecode from 'jwt-decode';
 
-import { client, REFRESH_TOKENS, RefreshTokens, RefreshTokensVariables } from 'api/apollo';
+import { client } from 'api/apollo';
+import { REFRESH_TOKENS, RefreshTokens, RefreshTokensVariables } from 'api/apollo/mutations';
+
 import { CustomEventDict } from 'types';
 import { getTime } from '../getTime';
 
@@ -70,30 +72,30 @@ class Token extends EventTarget {
     this.dispatchTokenUpdate(tokens, reload);
   }
 
-  private getRefreshToken() {
+  private getRefreshToken = () => {
     return localStorage.getItem(this.refreshKey) || '';
   }
 
-  public getAccessToken() {
+  public getAccessToken = () => {
     return localStorage.getItem(this.accessKey) || '';
   }
 
-  public login(tokens: Tokens) {
+  public login = (tokens: Tokens) => {
     this.set(tokens, true);
   }
 
-  public logout() {
+  public logout = () => {
     this.clear(true);
   }
 
-  public get() {
+  public get = () => {
     return ({
       access: this.getAccessToken(),
       refresh: this.getRefreshToken(),
     });
   }
 
-  public async refresh(): Promise<Tokens> {
+  public refresh = async (): Promise<Tokens> => {
     const tokens = this.get();
 
     try {

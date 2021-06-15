@@ -1,14 +1,10 @@
 import React, { FC, useEffect } from 'react';
-import isNil from 'lodash/isNil';
+import { isNil } from 'lodash';
 import cn from 'classnames';
 
-import Avatar from 'antd/es/avatar';
-import Badge from 'antd/es/badge';
-import message from 'antd/es/message';
-import Spin from 'antd/es/spin';
-import Tooltip from 'antd/es/tooltip';
+import { Avatar, Badge, message, Spin, Tooltip } from 'antd';
 
-import { ActivePlayer } from 'api/apollo';
+import { ActivePlayer } from 'api/apollo/fragments';
 
 import usePrevious from 'utils/usePrevious';
 import { useAuth } from 'context/auth';

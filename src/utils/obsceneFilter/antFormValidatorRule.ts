@@ -1,4 +1,4 @@
-import { FormItemProps } from 'antd/es/form';
+import { FormItemProps } from 'antd';
 import obsceneFilter from './obsceneFilter';
 
 type Rule = NonNullable<FormItemProps['rules']>[0]

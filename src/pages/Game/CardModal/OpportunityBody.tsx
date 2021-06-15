@@ -1,13 +1,13 @@
 import React, { FC } from 'react';
 import { useMutation } from '@apollo/client';
 
-import Button from 'antd/es/button';
+import { Button } from 'antd';
 
 import {
   SEND_OPPORTUNITY_RESULT,
   SendOpportunityResult,
   SendOpportunityResultVariables,
-} from 'api/apollo';
+} from 'api/apollo/mutations';
 
 import Dice from '../Dice/Dice';
 

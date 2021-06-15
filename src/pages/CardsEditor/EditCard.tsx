@@ -1,17 +1,13 @@
 import React, { FC } from 'react';
 import { useMutation } from '@apollo/client';
-
-import Button from 'antd/es/button';
-import Form from 'antd/es/form';
-import message from 'antd/es/message';
-import { useForm } from 'antd/es/form/Form';
+import { Button, Form, message } from 'antd';
 
 import {
-  NewCard,
   UPDATE_CHOICES_CARD,
   UpdateChoicesCard,
   UpdateChoicesCardVariables,
-} from 'api/apollo';
+} from 'api/apollo/mutations';
+import { NewCard } from 'api/apollo/fragments';
 
 import CardFields, { normalizeChoices } from './CardFields';
 
@@ -21,6 +17,8 @@ type EditCardProps = {
   card?: NewCard;
   onComplete?: () => void;
 };
+
+const { useForm } = Form;
 
 const EditCard: FC<EditCardProps> = ({ card, onComplete }) => {
   const [updateChoicesCard, {

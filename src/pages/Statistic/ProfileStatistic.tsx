@@ -1,11 +1,12 @@
 import React, { FC, useEffect, useMemo } from 'react';
 import { useLazyQuery } from '@apollo/client';
+import { Spin, Card, Statistic } from 'antd';
 
-import Spin from 'antd/es/spin';
-import Statistic from 'antd/es/statistic';
-import Card from 'antd/es/card';
-
-import { GET_USER_STATISTIC, GetUserStatistic, GetUserStatisticVariables } from 'api/apollo';
+import {
+  GET_USER_STATISTIC,
+  GetUserStatistic,
+  GetUserStatisticVariables,
+} from 'api/apollo/queries';
 
 import { withAccess } from 'shared/AccessHOC/AccessHOC';
 import { UserRole } from 'types';
@@ -22,7 +23,7 @@ type Props = {
 
 const ProfileStatistic: FC<Props> = ({ userId, title }) => {
   const { user } = useAuth();
-  const [fetchStatistic, { data, loading, error }] = useLazyQuery<
+  const [fetchStatistic, { data, loading }] = useLazyQuery<
     GetUserStatistic,
     GetUserStatisticVariables
   >(GET_USER_STATISTIC);

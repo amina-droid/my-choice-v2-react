@@ -4,11 +4,6 @@ import { offsetLimitPagination } from '@apollo/client/utilities';
 import { PlayerPolicy } from './fragments';
 import link from './links';
 
-export * from './queries';
-export * from './mutations';
-export * from './subscriptions';
-export * from './fragments';
-
 export const client = new ApolloClient({
   link,
   credentials: 'same-origin', // Additional fetch() options like `credentials` or `headers`

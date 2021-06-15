@@ -1,12 +1,10 @@
 import React, { FC, useState } from 'react';
 import { useMutation } from '@apollo/client';
 
-import Button from 'antd/es/button';
-import Modal from 'antd/es/modal';
-import Tooltip from 'antd/es/tooltip';
-import SwapOutlined from '@ant-design/icons/lib/icons/SwapOutlined';
+import { Button, Modal, Tooltip } from 'antd';
+import { SwapOutlined } from '@ant-design/icons';
 
-import { SHARE_RESOURCES, ShareResources, ShareResourcesVariables } from 'api/apollo';
+import { SHARE_RESOURCES, ShareResources, ShareResourcesVariables } from 'api/apollo/mutations';
 import { ResourcesInput, ResourceType } from 'types';
 
 import { ReactComponent as ChangerBtn } from './changer.svg';

@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
-
-import Modal from 'antd/es/modal';
+import { Modal } from 'antd';
 import Title from 'antd/es/typography/Title';
 import Paragraph from 'antd/es/typography/Paragraph';
 

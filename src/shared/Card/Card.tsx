@@ -1,25 +1,17 @@
 import React, { FC } from 'react';
 import cn from 'classnames';
 import { useMutation } from '@apollo/client';
+import { message, Popconfirm } from 'antd';
+import Title from 'antd/es/typography/Title';
 
-import message from 'antd/es/message';
-import Popconfirm from 'antd/es/popconfirm';
-import Typography from 'antd/es/typography';
-
-import {
-  DELETE_GAME,
-  DeleteGame,
-  DeleteGameVariables,
-  GetActiveGames_getActiveGames,
-} from 'api/apollo';
+import { DELETE_GAME, DeleteGame, DeleteGameVariables } from 'api/apollo/mutations';
+import { GetActiveGames_getActiveGames } from 'api/apollo/queries';
 
 import { GameStatus, UserRole } from 'types';
 import { withAccess } from '../AccessHOC/AccessHOC';
 import CloseButton from '../CloseButton/CloseButton';
 
 import s from './Card.module.sass';
-
-const { Title } = Typography;
 
 const GAME_STATUS_DICTIONARY = {
   [GameStatus.Awaiting]: 'В ожидании игроков',

@@ -1,18 +1,10 @@
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useApolloClient } from '@apollo/client';
+import { Tooltip, Button, Card } from 'antd';
 
-import Tooltip from 'antd/es/tooltip';
-import Button from 'antd/es/button';
-import Card from 'antd/es/card';
-
-import {
-  AUTH_VK,
-  AuthVK,
-  AuthVKVariables,
-  GET_VK_OATH_REDIRECT_URL,
-  GetVKOAuthRedirect,
-} from 'api/apollo';
+import { GET_VK_OATH_REDIRECT_URL, GetVKOAuthRedirect } from 'api/apollo/queries';
+import { AUTH_VK, AuthVK, AuthVKVariables } from 'api/apollo/mutations';
 
 import { useAuth } from 'context/auth';
 import logo from 'assets/logo.svg';

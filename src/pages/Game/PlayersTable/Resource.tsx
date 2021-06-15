@@ -1,9 +1,9 @@
 import React, { FC } from 'react';
-import isNil from 'lodash/isNil';
+import { isNil } from 'lodash';
 import { Animate } from 'react-move';
 import { easeExpOut } from 'd3-ease';
 
-import Tooltip from 'antd/es/tooltip';
+import { Tooltip } from 'antd';
 
 type ResourceProps = {
   className?: string

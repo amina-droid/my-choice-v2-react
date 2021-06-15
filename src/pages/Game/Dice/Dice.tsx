@@ -1,7 +1,7 @@
 import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
 import cn from 'classnames';
 
-import Statistic from 'antd/es/statistic';
+import { Statistic } from 'antd';
 
 import timeout from 'utils/timeout';
 import useDeadline from 'utils/useDeadline';

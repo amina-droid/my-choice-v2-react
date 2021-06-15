@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import CustomScroll from 'react-custom-scroll';
 
-import { ActivePlayer } from 'api/apollo';
+import { ActivePlayer } from 'api/apollo/fragments';
 
 import PlayerRow from './PlayerRow';
 

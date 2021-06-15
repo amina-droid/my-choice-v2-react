@@ -1,11 +1,12 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useRouteMatch, Switch, useHistory } from 'react-router-dom';
 import { useLazyQuery } from '@apollo/client';
+import { Tabs, Avatar } from 'antd';
 
-import Tabs from 'antd/es/tabs';
-import Avatar from 'antd/es/avatar';
-
-import { GET_USER, GetUser, GetUserVariables } from 'api/apollo';
+import {
+  GET_USER,
+  GetUser,
+  GetUserVariables } from 'api/apollo/queries';
 
 import usePrevious from 'utils/usePrevious';
 
@@ -21,10 +22,10 @@ type RouteMatchProps = {
 }
 
 const StatisticPage = () => {
-  const { path, url, params } = useRouteMatch<RouteMatchProps>();
+  const { url, params } = useRouteMatch<RouteMatchProps>();
   const [customUser, setCustomUser] = useState<string>();
   const history = useHistory();
-  const [getUser, { data, loading, error }] = useLazyQuery<GetUser, GetUserVariables>(GET_USER);
+  const [getUser, { data, loading }] = useLazyQuery<GetUser, GetUserVariables>(GET_USER);
   const previousUser = usePrevious(customUser);
 
   useEffect(() => {

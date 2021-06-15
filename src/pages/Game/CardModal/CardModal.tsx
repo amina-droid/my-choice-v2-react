@@ -1,10 +1,7 @@
 import React, { FC, useReducer } from 'react';
-import remove from 'lodash/remove';
+import { remove } from 'lodash';
 import { ApolloError, useSubscription } from '@apollo/client';
-
-import Spin from 'antd/es/spin';
-import Modal from 'antd/es/modal';
-import Statistic from 'antd/es/statistic';
+import { Spin, Modal, Statistic } from 'antd';
 import Title from 'antd/es/typography/Title';
 import Text from 'antd/es/typography/Text';
 
@@ -15,7 +12,8 @@ import {
   OnOptionChoice,
   OnOptionChoiceVariables,
   ON_OPTION_CHOICE,
-} from 'api/apollo';
+} from 'api/apollo/subscriptions';
+
 import timeout from 'utils/timeout';
 import useDeadline from 'utils/useDeadline';
 import { useAuth } from 'context/auth';

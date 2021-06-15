@@ -1,5 +1,5 @@
 import React, { Reducer, useCallback, useContext, useMemo, useReducer } from 'react';
-import omit from 'lodash/omit';
+import { omit } from 'lodash';
 
 import { Actions } from 'types';
 

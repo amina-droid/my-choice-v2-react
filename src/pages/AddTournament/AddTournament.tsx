@@ -1,26 +1,22 @@
 import React, { useEffect } from 'react';
-
-import Button from 'antd/es/button';
-import Input from 'antd/es/input';
-import message from 'antd/es/message';
-import Form from 'antd/es/form';
+import { Button, Input, message, Form, Card, List } from 'antd';
 import Text from 'antd/es/typography/Text';
-import Card from 'antd/es/card';
-import List from 'antd/es/list';
-
 import CustomScroll from 'react-custom-scroll';
-import { useForm } from 'antd/es/form/Form';
 import { useLazyQuery, useMutation } from '@apollo/client';
 
+import {
+  GET_TOURNAMENTS,
+  GetTournaments,
+} from 'api/apollo/queries';
 import {
   CREATE_TOURNAMENT,
   CreateTournament,
   CreateTournamentVariables,
-  GET_TOURNAMENTS,
-  GetTournaments,
-} from 'api/apollo';
+} from 'api/apollo/mutations';
 
 import s from './AddTournament.module.sass';
+
+const { useForm } = Form;
 
 const AddTournament = () => {
   const [form] = useForm();

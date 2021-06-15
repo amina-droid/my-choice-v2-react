@@ -1,23 +1,18 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useLazyQuery, useMutation } from '@apollo/client';
+import { Comment } from 'antd';
 
-import Comment from 'antd/es/comment';
-
-import { useChatContext } from 'context/chat';
 import {
-  GET_MESSAGES,
-  GetMessages,
-  GetMessagesVariables,
-  ON_MESSAGE,
-  OnMessage,
-  OnMessageVariables,
   REMOVE_MESSAGE,
   RemoveMessage,
   RemoveMessageVariables,
-  SEND_MESSAGE,
-  SendMessage,
+  SEND_MESSAGE, SendMessage,
   SendMessageVariables,
-} from 'api/apollo';
+} from 'api/apollo/mutations';
+import { GET_MESSAGES, GetMessages, GetMessagesVariables } from 'api/apollo/queries';
+import { ON_MESSAGE, OnMessage, OnMessageVariables } from 'api/apollo/subscriptions';
+
+import { useChatContext } from 'context/chat';
 
 import CommentList from './CommentList';
 import Editor from './Editor';

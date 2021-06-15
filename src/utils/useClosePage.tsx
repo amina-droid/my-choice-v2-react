@@ -1,5 +1,5 @@
 import React from 'react';
-import Modal, { ModalFuncProps } from 'antd/es/modal';
+import { Modal, ModalFuncProps } from 'antd';
 import useEventListener from './useEventListener';
 
 const closePage = (onOk: () => void, props?: ModalFuncProps) => (e: BeforeUnloadEvent) => {

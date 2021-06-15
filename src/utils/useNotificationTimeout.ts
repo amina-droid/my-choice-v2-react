@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef } from 'react';
-import notification from 'antd/es/notification';
+import { notification } from 'antd';
 
 type NotificationType = 'info' | 'warning' | 'error' | 'success';
 

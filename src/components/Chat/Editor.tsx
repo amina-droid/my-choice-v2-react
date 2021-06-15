@@ -1,9 +1,6 @@
 import React, { useEffect, useReducer } from 'react';
-
-import Button from 'antd/es/button';
-import Form from 'antd/es/form';
-import Input from 'antd/es/input';
-import SendOutlined from '@ant-design/icons/lib/icons/SendOutlined';
+import { Button, Form, Input } from 'antd';
+import { SendOutlined } from '@ant-design/icons';
 
 import { Actions } from 'types';
 import { obsceneFilter } from 'utils/obsceneFilter';

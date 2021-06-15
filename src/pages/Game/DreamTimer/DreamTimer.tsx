@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 
-import Statistic from 'antd/es/statistic';
+import { Statistic } from 'antd';
 
 import useDeadline from 'utils/useDeadline';
 

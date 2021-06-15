@@ -1,5 +1,5 @@
 import { useRef, useEffect } from 'react';
-import isNil from 'lodash/isNil';
+import { isNil } from 'lodash';
 
 const useAnimationFrame = (cb: (time: number) => void) => {
   // Use useRef for mutable variables that we want to persist

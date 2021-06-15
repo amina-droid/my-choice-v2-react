@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import cn from 'classnames';
 
-import Tooltip from 'antd/es/tooltip';
+import { Tooltip } from 'antd';
 
 import { ReactComponent as LeaveGameBtn } from './Leave.svg';
 

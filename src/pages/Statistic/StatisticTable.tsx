@@ -2,11 +2,10 @@ import React, { ComponentProps, FC } from 'react';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 
-import Avatar from 'antd/es/avatar';
-import Table, { TablePaginationConfig } from 'antd/es/table';
+import { Avatar, Table, TablePaginationConfig } from 'antd';
 import Title from 'antd/es/typography/Title';
 
-import { Statistic as StatisticGame } from 'api/apollo';
+import { Statistic as StatisticGame } from 'api/apollo/fragments';
 
 import s from './Statistic.module.sass';
 

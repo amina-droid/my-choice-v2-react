@@ -3,34 +3,21 @@ import { withOrientationChange } from 'react-device-detect';
 import { RouteComponentProps, useHistory } from 'react-router-dom';
 import { ApolloError, useLazyQuery, useMutation } from '@apollo/client';
 import cn from 'classnames';
-
-import Button from 'antd/es/button';
-import Modal from 'antd/es/modal';
-import message from 'antd/es/message';
-import Popconfirm from 'antd/es/popconfirm';
-import Typography from 'antd/es/typography';
-import Spin from 'antd/es/spin';
+import { Button, Modal, message, Popconfirm, Spin } from 'antd';
+import Title from 'antd/es/typography/Title';
 
 import {
   CHOICE_DREAM,
-  ChoiceDream,
-  ChoiceDreamVariables,
-  GAME_MOVE,
-  GameMove,
-  GameMoveVariables,
-  JOIN_GAME,
-  JoinGame,
-  JoinGameVariables,
+  ChoiceDream, ChoiceDreamVariables, GAME_MOVE,
+  GameMove, GameMoveVariables,
   LEAVE_GAME,
   LeaveGame as TLeaveGame,
   LeaveGameVariables,
-  START_GAME,
-  StartGame,
+  START_GAME, StartGame,
   StartGameVariables,
-  UPDATE_ACTIVE_GAME,
-  UpdateActiveGame,
-  UpdateActiveGameVariables,
-} from 'api/apollo';
+} from 'api/apollo/mutations';
+import { JOIN_GAME, JoinGame, JoinGameVariables } from 'api/apollo/queries';
+import { UPDATE_ACTIVE_GAME, UpdateActiveGame, UpdateActiveGameVariables } from 'api/apollo/subscriptions';
 
 import { useAuth } from 'context/auth';
 import { useChatContext } from 'context/chat';
@@ -277,9 +264,9 @@ const Game: FC<GameProps> = ({ match, isPortrait }) => {
           onError={onGameError}
         />
         <div className={s.header}>
-          <Typography.Title level={3} className={s.gameName}>
+          <Title level={3} className={s.gameName}>
             {game?.name}
-          </Typography.Title>
+          </Title>
           {status === GameStatus.Awaiting && creator === user?._id && (
             <Button
               type="primary"

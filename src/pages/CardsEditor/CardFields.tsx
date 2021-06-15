@@ -1,13 +1,9 @@
 import React from 'react';
 
-import Button from 'antd/es/button';
-import InputNumber from 'antd/es/input-number';
-import Select from 'antd/es/select';
-import Space from 'antd/es/space';
-import Form from 'antd/es/form';
+import { Button, InputNumber, Select, Space, Form } from 'antd';
 import Text from 'antd/es/typography/Text';
 import TextArea from 'antd/es/input/TextArea';
-import MinusCircleOutlined from '@ant-design/icons/lib/icons/MinusCircleOutlined';
+import { MinusCircleOutlined } from '@ant-design/icons';
 
 import { FieldType } from 'types';
 

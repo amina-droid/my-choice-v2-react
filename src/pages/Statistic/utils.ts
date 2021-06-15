@@ -1,4 +1,4 @@
-import { Statistic as StatisticGame } from 'api/apollo';
+import { Statistic as StatisticGame } from 'api/apollo/fragments';
 
 export type GamesStatistic = {
   winCount: number;
