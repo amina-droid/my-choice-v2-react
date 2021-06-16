@@ -1,8 +1,8 @@
 import { ApolloClient } from '@apollo/client/core/ApolloClient';
 import { InMemoryCache } from '@apollo/client/cache/inmemory/inMemoryCache';
 import { offsetLimitPagination } from '@apollo/client/utilities/policies/pagination';
+import { PlayerPolicy } from 'api/apollo/policies';
 
-import { PlayerPolicy } from './fragments/ActivePlayer';
 import link from './links';
 
 const client = new ApolloClient({

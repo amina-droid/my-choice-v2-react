@@ -1,32 +1,5 @@
-const _ = require('lodash');
-
-function getFileNameForApollo(str) {
-  return _.upperFirst(_.camelCase(str))
-}
-
-const FOLDERS = ['queries', 'mutations', 'subscriptions'];
-function getPathForApollo(folder) {
-  if (FOLDERS.some((v => v === folder))) {
-    return 'query.gql';
-  }
-  
-  if (folder === 'fragments') {
-    return 'fragment.gql';
-  }
-  
-  return '';
-}
-
-function getApolloFolderPath(folderName) {
-  if (folderName) {
-    const rootFolder = folderName;
-    const file = getPathForApollo(folderName);
-    
-    return [rootFolder, file];
-  }
-  
-  return ['', ''];
-}
+const kebabCase = require('lodash/kebabCase');
+const apiApollo = require('./scripts/api-apollo/utils')
 
 module.exports = {
   plugins: [
@@ -36,7 +9,7 @@ module.exports = {
         preventFullImport: true
       },
       antd: {
-        transform: (importName) => `antd/es/${_.kebabCase(importName)}`,
+        transform: (importName) => `antd/es/${kebabCase(importName)}`,
         preventFullImport: true,
       },
       '@ant-design/icons': {
@@ -45,8 +18,8 @@ module.exports = {
       },
       'api/apollo\/?(((\\w*)?\/?)*)': {
         transform: (importName, matches) => {
-          const targetName = getFileNameForApollo(importName);
-          const [rootFolder, file] = getApolloFolderPath(matches[1]);
+          const targetName = apiApollo.toFileName(importName);
+          const [rootFolder, file] = apiApollo.toApolloPath(matches[1]);
           
           let path = '';
           
