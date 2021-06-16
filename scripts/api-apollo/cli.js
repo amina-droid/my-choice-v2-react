@@ -25,7 +25,8 @@ const file = apiApollo.toFilePath(folderName);
 const queryName = apiApollo.toQueryName(name)
 const INDEX_TEMPLATE = `export { default as ${queryName} } from './${file}';
 export * from './types/${moduleName}';`
-const TYPES_TEMPLATE = `export interface ${moduleName} {}`
+const TYPES_TEMPLATE = `export interface ${moduleName} {}
+`
 const EXTENDS_TEMPLATE = `export * from './${moduleName}';
 `
 
