@@ -74,10 +74,4 @@ const pathToTypesFile = path.join(pathToModuleFolder, 'types', moduleName);
   } catch (err) {
     throw err;
   }
-  
-  try {
-  } catch (err) {
-    throw err;
-  }
-
 })()
