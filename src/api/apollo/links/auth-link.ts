@@ -11,7 +11,7 @@ const authLink = setContext((_, { headers }) => {
   return {
     headers: {
       ...headers,
-      Authorization: token ? token : '',
+      Authorization: token || undefined,
     },
   };
 });
@@ -29,7 +29,7 @@ const errorLink = onError(
                   throw new Error('Unable to fetch new access token');
                 }
 
-                operation.setContext(({ headers = {} }: any) => ({
+                operation.setContext(({ headers = {} }) => ({
                   headers: {
                     ...headers,
                     Authorization: tokens.access || undefined,
