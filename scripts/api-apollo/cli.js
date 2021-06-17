@@ -22,7 +22,7 @@ const [, parserPath, type, name] = process.argv;
 const folderName = FOLDER_DICT[type];
 
 if (!folderName) {
-  throw Error('Not found type! (q, f, m, s)')
+  throw Error(`Not found type! (${Object.entries(FOLDER_DICT).map(([k, v]) => `${k} => ${v}`).join(', ')})`)
 }
 
 const moduleName = apiApollo.toFileName(name);
