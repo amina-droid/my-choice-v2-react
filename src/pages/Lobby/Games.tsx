@@ -42,7 +42,7 @@ const ModeratorFields = withAccess(
         <Switch onChange={setVisibleTournaments} />
       </Form.Item>
       {visibleTournaments && (
-        <Form.Item name="tournament" label="Выберете турнир">
+        <Form.Item name="tournament" label="Выберите турнир">
           <Select loading={loading}>
             {data?.tournaments.map(tournament => (
               <Select.Option value={tournament._id} key={tournament._id}>
