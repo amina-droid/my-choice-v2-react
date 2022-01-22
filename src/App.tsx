@@ -17,6 +17,7 @@ const AuthorizedApp = React.lazy(() => import('./AuthorizedApp'));
 
 const backender = 'https://vk.com/deivoff';
 const frontender = 'https://vk.com/ami_mazurova';
+const currentYear = new Date().getFullYear();
 
 function App() {
   return (
@@ -41,7 +42,7 @@ function App() {
               <a style={{ color: 'black' }} href={frontender} target="_blank" rel="noreferrer">
                 Амина Мазурова
               </a>
-              . Мой выбор ©2020
+              . Мой выбор ©2019 — {currentYear}
             </Layout.Footer>
           </BrowserRouter>
       </AuthContextProvider>
