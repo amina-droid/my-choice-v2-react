@@ -30,4 +30,4 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           password: ${{ secrets.SSH_PASS }}
           source: "build"
-          target: "~/my-choice/frontend"
+          target: "/var/www/moi-vibor.rf/frontend"
