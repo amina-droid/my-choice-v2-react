@@ -38,9 +38,8 @@ module.exports = {
   },
   plugins: ['react', 'graphql', 'react-hooks', '@typescript-eslint'],
   rules: {
-    'security/detect-object-injection': 0,
-    'react-hooks/exhaustive-deps': 0,
-    'react-hooks/rules-of-hooks': 0, // Checks rules of Hooks
+    'react-hooks/rules-of-hooks': 'error', // Checks rules of Hooks
+    'react-hooks/exhaustive-deps': 'warn', // Checks effect dependencies
     'react/jsx-one-expression-per-line': 0,
     'react/jsx-props-no-spreading': [
       1,
